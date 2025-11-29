@@ -33,6 +33,7 @@ if __name__ == "__main__":
     root = tk.Tk()
     root.geometry("320x240")
 
+    # TODO: Get actual username corresponding to user id and display it here for ease of use
     usernames = []
     for user_path in USER_PATH_LIST:
         usernames.append(user_path.name)
