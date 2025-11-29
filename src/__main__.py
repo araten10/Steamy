@@ -5,6 +5,7 @@ import tkinter as tk
 import urllib.request
 from pathlib import Path
 from tkinter import ttk
+import booru
 
 # TODO: There can be other paths, maybe multiple?
 match platform.system():
