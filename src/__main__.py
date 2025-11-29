@@ -1,6 +1,8 @@
+import asyncio
 import platform
-import shutil
+import random
 import tkinter as tk
+import urllib.request
 from pathlib import Path
 from tkinter import ttk
 
@@ -13,14 +15,16 @@ match platform.system():
 
 USER_PATH_LIST = list((STEAM_PATH / "userdata").iterdir())
 
-def pornify(user: str) -> None:
+async def pornify(user: str) -> None:
 
     # TODO: There can be multiple users
     grid_path = STEAM_PATH / "userdata" / user / "config" / "grid"
     grid_path.mkdir(parents=True, exist_ok=True)
 
-    example = Path(__file__).parent.parent / "example.png"
-    shutil.copyfile(example, grid_path / "4000_hero.png")
+    dan = booru.Danbooru()
+    res = await dan.search_image(query="order:rank")
+    image = random.choice(booru.resolve(res))
+    urllib.request.urlretrieve(image, grid_path / "4000_hero.png")
 
     print("Done")
 
@@ -36,5 +40,5 @@ if __name__ == "__main__":
     user_selection_dropdown = ttk.Combobox(root, state="readonly", values=usernames)
     user_selection_dropdown.set("Select Steam Account")
     user_selection_dropdown.pack(pady=5, expand=1)
-    ttk.Button(root, text="Pornify", command=pornify(user_selection_dropdown.get())).pack(pady=5, ipady=10, ipadx=5, expand=1)
+    ttk.Button(root, text="Pornify", command=lambda: asyncio.run(pornify(user_selection_dropdown.get()))).pack(pady=5, ipady=10, ipadx=5, expand=1)
     root.mainloop()
