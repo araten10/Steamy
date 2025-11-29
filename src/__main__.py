@@ -11,7 +11,7 @@ def pornify() -> None:
         case "Linux":
             steam_path = Path("~/.local/share/Steam").expanduser()
         case "Windows":
-            steam_path = Path()
+            steam_path = Path("C:/Program Files (x86)/Steam")
 
     # TODO: There can be multiple users
     user_path = list((steam_path / "userdata").iterdir())[0]
