@@ -3,10 +3,10 @@ import platform
 import random
 import shutil
 import tkinter as tk
-from tkinter import Frame
 import urllib.request
 from pathlib import Path
-from tkinter import ttk
+from tkinter import Frame, ttk
+
 import booru
 
 # TODO: There can be other paths, maybe multiple?
@@ -18,8 +18,8 @@ match platform.system():
 
 USER_PATH_LIST = list((STEAM_PATH / "userdata").iterdir())
 
-async def pornify(user: str) -> None:
 
+async def pornify(user: str) -> None:
     # TODO: There can be multiple users
     grid_path = STEAM_PATH / "userdata" / user / "config" / "grid"
     grid_path.mkdir(parents=True, exist_ok=True)
@@ -31,14 +31,15 @@ async def pornify(user: str) -> None:
 
     print("Done Pornify")
 
-async def resteam(user: str) -> None:
 
+async def resteam(user: str) -> None:
     # TODO: There can be multiple users
     grid_path = STEAM_PATH / "userdata" / user / "config" / "grid"
     grid_path.mkdir(parents=True, exist_ok=True)
 
     shutil.rmtree(grid_path)
     print("Done Resteam")
+
 
 if __name__ == "__main__":
     root = tk.Tk()
@@ -56,7 +57,7 @@ if __name__ == "__main__":
     user_select_frame.pack()
 
     # For making sure that the "Select Steam Account" folder isn't accidentally created
-    def enable_buttons(*args):
+    def enable_buttons(*_args) -> None:
         if user_var.get() != "Select Steam Account":
             pornify_button.config(state="normal")
             resteam_button.config(state="normal")
