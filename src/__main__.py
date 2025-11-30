@@ -1,6 +1,7 @@
 import asyncio
 import platform
 import random
+import shutil
 import tkinter as tk
 from tkinter import Frame
 import urllib.request
@@ -36,6 +37,7 @@ async def resteam(user: str) -> None:
     grid_path = STEAM_PATH / "userdata" / user / "config" / "grid"
     grid_path.mkdir(parents=True, exist_ok=True)
 
+    shutil.rmtree(grid_path)
     print("Done Resteam")
 
 if __name__ == "__main__":
