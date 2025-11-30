@@ -31,15 +31,13 @@ async def pornify(user: str) -> None:
 
     print("Done Pornify")
 
-
-async def resteam(user: str) -> None:
+def resteam(user: str) -> None:
     # TODO: There can be multiple users
     grid_path = STEAM_PATH / "userdata" / user / "config" / "grid"
     grid_path.mkdir(parents=True, exist_ok=True)
 
     shutil.rmtree(grid_path)
     print("Done Resteam")
-
 
 if __name__ == "__main__":
     root = tk.Tk()
@@ -72,7 +70,7 @@ if __name__ == "__main__":
     start_stop_frame.pack()
     pornify_button = ttk.Button(start_stop_frame, text="Pornify", command=lambda: asyncio.run(pornify(user_selection_dropdown.get())))
     pornify_button.grid(row=0, column=0, ipady=5)
-    resteam_button = ttk.Button(start_stop_frame, text="Resteam", command=lambda: asyncio.run(resteam(user_selection_dropdown.get())))
+    resteam_button = ttk.Button(start_stop_frame, text="Resteam", command=lambda: resteam(user_selection_dropdown.get()))
     resteam_button.grid(row=0, column=1, ipady=5)
     # Initially disable buttons to wait for user to be properly selected
     pornify_button.config(state="disabled")
