@@ -2,6 +2,7 @@ import asyncio
 import platform
 import random
 import tkinter as tk
+from tkinter import Frame
 import urllib.request
 from pathlib import Path
 from tkinter import ttk
@@ -27,8 +28,15 @@ async def pornify(user: str) -> None:
     image = random.choice(booru.resolve(res))
     urllib.request.urlretrieve(image, grid_path / "4000_hero.png")
 
-    print("Done")
+    print("Done Pornify")
 
+async def resteam(user: str) -> None:
+
+    # TODO: There can be multiple users
+    grid_path = STEAM_PATH / "userdata" / user / "config" / "grid"
+    grid_path.mkdir(parents=True, exist_ok=True)
+
+    print("Done Resteam")
 
 if __name__ == "__main__":
     root = tk.Tk()
@@ -39,8 +47,17 @@ if __name__ == "__main__":
     for user_path in USER_PATH_LIST:
         usernames.append(user_path.name)
 
-    user_selection_dropdown = ttk.Combobox(root, state="readonly", values=usernames)
+    run_frame = Frame(root)
+    run_frame.pack(expand=1)
+
+    user_select_frame = Frame(run_frame)
+    user_select_frame.pack()
+    user_selection_dropdown = ttk.Combobox(user_select_frame, state="readonly", values=usernames)
     user_selection_dropdown.set("Select Steam Account")
-    user_selection_dropdown.pack(pady=5, expand=1)
-    ttk.Button(root, text="Pornify", command=lambda: asyncio.run(pornify(user_selection_dropdown.get()))).pack(pady=5, ipady=10, ipadx=5, expand=1)
+    user_selection_dropdown.pack(pady=5)
+    start_stop_frame = Frame(run_frame)
+    start_stop_frame.pack()
+    ttk.Button(start_stop_frame, text="Pornify", command=lambda: asyncio.run(pornify(user_selection_dropdown.get()))).grid(row=0, column=0, ipady=5)
+    ttk.Button(start_stop_frame, text="Resteam", command=lambda: asyncio.run(resteam(user_selection_dropdown.get()))).grid(row=0, column=1, ipady=5)
+
     root.mainloop()
