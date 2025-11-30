@@ -19,19 +19,19 @@ def get_steam_path() -> Path:
             return Path("C:/Program Files (x86)/Steam")
 
 
-def paths_to_ids(dir: Path) -> list[str]:
-    return [path.name for path in dir.iterdir() if path.is_dir()]
+def dirs_to_ids(parent: Path) -> list[str]:
+    return [path.name for path in parent.iterdir() if path.is_dir()]
 
 
 def get_game_ids() -> list[str]:
-    return paths_to_ids(get_steam_path() / "appcache" / "librarycache")
+    return dirs_to_ids(get_steam_path() / "appcache" / "librarycache")
 
 
-def get_user_ids() -> list[Path]:
-    return paths_to_ids(get_steam_path() / "userdata")
+def get_user_ids() -> list[str]:
+    return dirs_to_ids(get_steam_path() / "userdata")
 
 
-def get_grid_path(user_id: str) -> None:
+def get_grid_path(user_id: str) -> Path:
     return get_steam_path() / "userdata" / user_id / "config" / "grid"
 
 
