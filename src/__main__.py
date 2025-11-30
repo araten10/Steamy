@@ -52,12 +52,27 @@ if __name__ == "__main__":
 
     user_select_frame = Frame(run_frame)
     user_select_frame.pack()
-    user_selection_dropdown = ttk.Combobox(user_select_frame, state="readonly", values=usernames)
+
+    # For making sure that the "Select Steam Account" folder isn't accidentally created
+    def enable_buttons(*args):
+        if user_var.get() != "Select Steam Account":
+            pornify_button.config(state="normal")
+            resteam_button.config(state="normal")
+
+    user_var = tk.StringVar(root)
+    user_var.trace("w", enable_buttons)
+    user_selection_dropdown = ttk.Combobox(user_select_frame, state="readonly", textvariable=user_var, values=usernames)
     user_selection_dropdown.set("Select Steam Account")
     user_selection_dropdown.pack(pady=5)
+
     start_stop_frame = Frame(run_frame)
     start_stop_frame.pack()
-    ttk.Button(start_stop_frame, text="Pornify", command=lambda: asyncio.run(pornify(user_selection_dropdown.get()))).grid(row=0, column=0, ipady=5)
-    ttk.Button(start_stop_frame, text="Resteam", command=lambda: asyncio.run(resteam(user_selection_dropdown.get()))).grid(row=0, column=1, ipady=5)
+    pornify_button = ttk.Button(start_stop_frame, text="Pornify", command=lambda: asyncio.run(pornify(user_selection_dropdown.get())))
+    pornify_button.grid(row=0, column=0, ipady=5)
+    resteam_button = ttk.Button(start_stop_frame, text="Resteam", command=lambda: asyncio.run(resteam(user_selection_dropdown.get())))
+    resteam_button.grid(row=0, column=1, ipady=5)
+    # Initially disable buttons to wait for user to be properly selected
+    pornify_button.config(state="disabled")
+    resteam_button.config(state="disabled")
 
     root.mainloop()
