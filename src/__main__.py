@@ -9,6 +9,8 @@ from tkinter import ttk
 
 import booru
 
+import requests
+from bs4 import BeautifulSoup
 
 def get_steam_path() -> Path:
     # TODO: There can be other paths, maybe multiple?
@@ -30,6 +32,18 @@ def get_game_ids() -> list[str]:
 def get_user_ids() -> list[str]:
     return dirs_to_ids(get_steam_path() / "userdata")
 
+def convert_user_ids() -> list[str]:
+    steamID3_list = get_user_ids()
+    converted_dict = {}
+    for steamID3 in steamID3_list:
+        # The steam ID3 format is [U:1:<steamid>], we need to add the extra stuff
+        completeID3 = "[U:1:" + steamID3 + "]"
+
+        profile_url = "https://steamcommunity.com/profiles/" + completeID3
+        response = requests.get(profile_url)
+        steam_soup = BeautifulSoup(response.text, features="html.parser")
+        converted_dict[steam_soup.find("span", {"class": "actual_persona_name"}).text] = steamID3
+    return converted_dict
 
 def get_grid_path(user_id: str) -> Path:
     return get_steam_path() / "userdata" / user_id / "config" / "grid"
@@ -77,15 +91,17 @@ if __name__ == "__main__":
     # TODO: Get actual username corresponding to user id and display it here for ease of use
     user_var = tk.StringVar(root)
     user_var.trace("w", enable_buttons)
-    user_selection_dropdown = ttk.Combobox(user_select_frame, state="readonly", textvariable=user_var, values=get_user_ids())
+    user_dict = convert_user_ids()
+
+    user_selection_dropdown = ttk.Combobox(user_select_frame, state="readonly", textvariable=user_var, values=list(user_dict.keys()))
     user_selection_dropdown.set("Select Steam Account")
     user_selection_dropdown.pack(pady=5)
 
     start_stop_frame = tk.Frame(run_frame)
     start_stop_frame.pack()
-    pornify_button = ttk.Button(start_stop_frame, text="Pornify", command=lambda: asyncio.run(pornify(user_var.get())))
+    pornify_button = ttk.Button(start_stop_frame, text="Pornify", command=lambda: asyncio.run(pornify(user_dict[user_var.get()])))
     pornify_button.grid(row=0, column=0, ipady=5)
-    resteam_button = ttk.Button(start_stop_frame, text="Resteam", command=lambda: resteam(user_var.get()))
+    resteam_button = ttk.Button(start_stop_frame, text="Resteam", command=lambda: resteam(user_dict[user_var.get()]))
     resteam_button.grid(row=0, column=1, ipady=5)
     # Initially disable buttons to wait for user to be properly selected
     pornify_button.config(state="disabled")

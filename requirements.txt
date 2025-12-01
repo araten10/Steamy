@@ -1,1 +1,3 @@
 booru
+requests
+bs4
