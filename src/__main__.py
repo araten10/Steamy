@@ -56,6 +56,11 @@ async def pornify(user_id: str) -> None:
     grid_path = get_grid_path(user_id)
     grid_path.mkdir(parents=True, exist_ok=True)
 
+    # Progress bar stuff
+    grid_length = len(get_game_ids())
+    grid_progress = tk.IntVar()
+    porn_progress.config(maximum=grid_length+1, variable=grid_progress)
+
     dan = booru.Danbooru()
     res = await dan.search_image(query="order:rank")
     image = random.choice(booru.resolve(res))
@@ -64,6 +69,8 @@ async def pornify(user_id: str) -> None:
     for game_id in get_game_ids():
         for art_suffix in ["", "p", "_hero"]:
             shutil.copyfile(grid_path / "image.png", grid_path / f"{game_id}{art_suffix}.png")
+        grid_progress.set(grid_progress.get() + 1)
+        print(f"{grid_progress.get()}/{grid_length}")
 
     print("Done Pornify")
 
@@ -72,6 +79,8 @@ def resteam(user_id: str) -> None:
     grid_path = get_grid_path(user_id)
     if grid_path.exists():
         shutil.rmtree(grid_path)
+
+    # TODO: Find a more productive way to resteam without deleting all the porn you just downloaded, then add progressbar to it
     print("Done Resteam")
 
 
@@ -84,6 +93,8 @@ if __name__ == "__main__":
 
     user_select_frame = tk.Frame(run_frame)
     user_select_frame.pack()
+
+    porn_progress = ttk.Progressbar(run_frame, mode="determinate")
 
     # For making sure that the "Select Steam Account" folder isn't accidentally created
     def enable_buttons(*_args) -> None:
@@ -109,5 +120,7 @@ if __name__ == "__main__":
     # Initially disable buttons to wait for user to be properly selected
     pornify_button.config(state="disabled")
     resteam_button.config(state="disabled")
+
+    porn_progress.pack(pady=5, fill="x")
 
     root.mainloop()
