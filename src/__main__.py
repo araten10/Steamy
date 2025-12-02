@@ -9,8 +9,10 @@ from tkinter import ttk
 
 import booru
 
-import requests
-from bs4 import BeautifulSoup
+import vdf
+#for scraping if we end up using that
+#import requests
+#from bs4 import BeautifulSoup
 
 def get_steam_path() -> Path:
     # TODO: There can be other paths, maybe multiple?
@@ -39,10 +41,11 @@ def convert_user_ids() -> list[str]:
         # The steam ID3 format is [U:1:<steamid>], we need to add the extra stuff
         completeID3 = "[U:1:" + steamID3 + "]"
 
-        profile_url = "https://steamcommunity.com/profiles/" + completeID3
-        response = requests.get(profile_url)
-        steam_soup = BeautifulSoup(response.text, features="html.parser")
-        converted_dict[steam_soup.find("span", {"class": "actual_persona_name"}).text] = steamID3
+
+        vdf_file = vdf.dumps(vdf.load(open(f"{get_steam_path()}/userdata/{steamID3}/config/localconfig.vdf", encoding="utf8")))
+        vdf_dict = vdf.loads(vdf_file)
+
+        converted_dict[vdf_dict['UserLocalConfigStore']['friends']['PersonaName']] = steamID3
     return converted_dict
 
 def get_grid_path(user_id: str) -> Path:
