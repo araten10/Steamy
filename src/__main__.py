@@ -47,23 +47,23 @@ def get_grid_path(user_id: str) -> Path:
     return get_steam_path() / "userdata" / user_id / "config" / "grid"
 
 
-async def pornify(user_id: str) -> None:
+async def pornify(user_id: str, progress: ttk.Progressbar) -> None:
     grid_path = get_grid_path(user_id)
     grid_path.mkdir(parents=True, exist_ok=True)
 
     # Progress bar stuff
     grid_length = len(get_game_ids())
     grid_progress = tk.IntVar()
-    porn_progress.config(maximum=grid_length + 1, variable=grid_progress)
+    progress.config(maximum=grid_length + 1, variable=grid_progress)
 
     dan = booru.Danbooru()
-    res = await dan.search_image(query="order:rank")
-    image = random.choice(booru.resolve(res))
-    urllib.request.urlretrieve(image, grid_path / "image.png")
 
     for game_id in get_game_ids():
+        res = await dan.search(query="order:rank", limit=3)
+        posts = booru.resolve(res)
         for art_suffix in ["", "p", "_hero"]:
-            shutil.copyfile(grid_path / "image.png", grid_path / f"{game_id}{art_suffix}.png")
+            post = random.choice(posts)
+            urllib.request.urlretrieve(post["media_asset"]["variants"][0]["url"], grid_path / f"{game_id}{art_suffix}.png")
         grid_progress.set(grid_progress.get() + 1)
         print(f"{grid_progress.get()}/{grid_length}")
 
@@ -108,7 +108,7 @@ if __name__ == "__main__":
 
     start_stop_frame = tk.Frame(run_frame)
     start_stop_frame.pack()
-    pornify_button = ttk.Button(start_stop_frame, text="Pornify", command=lambda: asyncio.run(pornify(username_to_id[user_var.get()])))
+    pornify_button = ttk.Button(start_stop_frame, text="Pornify", command=lambda: asyncio.run(pornify(username_to_id[user_var.get()], porn_progress)))
     pornify_button.grid(row=0, column=0, ipady=5)
     resteam_button = ttk.Button(start_stop_frame, text="Resteam", command=lambda: resteam(username_to_id[user_var.get()]))
     resteam_button.grid(row=0, column=1, ipady=5)
