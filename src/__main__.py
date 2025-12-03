@@ -1,12 +1,16 @@
 import asyncio
+import logging
 import platform
 import random
 import shutil
+import sys
 import tkinter as tk
-import urllib.request
 from pathlib import Path
+from threading import Thread
 from tkinter import ttk
+from typing import Callable
 
+import aiohttp
 import booru
 import vdf
 
@@ -47,27 +51,58 @@ def get_grid_path(user_id: str) -> Path:
     return get_steam_path() / "userdata" / user_id / "config" / "grid"
 
 
-async def pornify(user_id: str, progress: ttk.Progressbar) -> None:
+async def pornify_game(
+    dan: booru.Danbooru, session: aiohttp.ClientSession, grid_path: Path, game_id: str, max_sleep: float, update_progress: Callable[[str], None]
+) -> None:
+    await asyncio.sleep(random.uniform(0, max_sleep))  # Wait a random amount to preemptively avoid rate limit
+
+    while True:
+        try:
+            search_res = await dan.search(query="order:rank")
+            posts = booru.resolve(search_res)
+            break
+        except Exception as e:
+            logging.warning(f"Booru search failed with {type(e).__name__}: {e}, retrying...")
+            await asyncio.sleep(random.uniform(1, 2))
+
+    for art_suffix in ["", "p", "_hero"]:
+        post = random.choice(posts)
+        while True:
+            try:
+                async with session.get(post["large_file_url"]) as image_res:
+                    with open(grid_path / f"{game_id}{art_suffix}.png", "wb") as f:
+                        f.write(await image_res.read())
+                    break
+            except Exception as e:
+                logging.warning(f"Image download failed with {type(e).__name__}: {e}, retrying...")
+                await asyncio.sleep(random.uniform(1, 2))
+
+    update_progress(game_id)
+
+
+async def pornify(user_id: str, progress_var: tk.IntVar) -> None:
     grid_path = get_grid_path(user_id)
     grid_path.mkdir(parents=True, exist_ok=True)
+    game_ids = get_game_ids()
 
-    # Progress bar stuff
-    grid_length = len(get_game_ids())
-    grid_progress = tk.IntVar()
-    progress.config(maximum=grid_length + 1, variable=grid_progress)
+    progress_var.set(0)
+    games_done = {game_id: False for game_id in game_ids}
 
-    dan = booru.Danbooru()
+    def update_progress(game_id: str) -> None:
+        games_done[game_id] = True
+        progress = 0
+        for done in games_done.values():
+            if done:
+                progress += 1
+        progress_var.set(progress)
 
-    for game_id in get_game_ids():
-        res = await dan.search(query="order:rank", limit=3)
-        posts = booru.resolve(res)
-        for art_suffix in ["", "p", "_hero"]:
-            post = random.choice(posts)
-            urllib.request.urlretrieve(post["media_asset"]["variants"][0]["url"], grid_path / f"{game_id}{art_suffix}.png")
-        grid_progress.set(grid_progress.get() + 1)
-        print(f"{grid_progress.get()}/{grid_length}")
+    async with aiohttp.ClientSession() as session:
+        dan = booru.Danbooru()
+        max_sleep = float(len(game_ids)) / 10
+        tasks = [asyncio.create_task(pornify_game(dan, session, grid_path, game_id, max_sleep, update_progress)) for game_id in game_ids]
+        await asyncio.gather(*tasks)
 
-    print("Done Pornify")
+    logging.info("Pornify done")
 
 
 def resteam(user_id: str) -> None:
@@ -76,10 +111,12 @@ def resteam(user_id: str) -> None:
         shutil.rmtree(grid_path)
 
     # TODO: Find a more productive way to resteam without deleting all the porn you just downloaded, then add progressbar to it
-    print("Done Resteam")
+    logging.info("Resteam done")
 
 
 if __name__ == "__main__":
+    logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
+
     root = tk.Tk()
     root.geometry("320x240")
 
@@ -88,8 +125,6 @@ if __name__ == "__main__":
 
     user_select_frame = tk.Frame(run_frame)
     user_select_frame.pack()
-
-    porn_progress = ttk.Progressbar(run_frame, mode="determinate")
 
     # For making sure that the "Select Steam Account" folder isn't accidentally created
     def enable_buttons(*_args) -> None:
@@ -108,14 +143,20 @@ if __name__ == "__main__":
 
     start_stop_frame = tk.Frame(run_frame)
     start_stop_frame.pack()
-    pornify_button = ttk.Button(start_stop_frame, text="Pornify", command=lambda: asyncio.run(pornify(username_to_id[user_var.get()], porn_progress)))
+
+    pornify_progress_var = tk.IntVar()
+    pornify_progressbar = ttk.Progressbar(run_frame, mode="determinate", maximum=len(get_game_ids()), variable=pornify_progress_var)
+    pornify_button = ttk.Button(
+        start_stop_frame,
+        text="Pornify",
+        command=lambda: Thread(target=lambda: asyncio.run(pornify(username_to_id[user_var.get()], pornify_progress_var))).start(),
+    )
     pornify_button.grid(row=0, column=0, ipady=5)
     resteam_button = ttk.Button(start_stop_frame, text="Resteam", command=lambda: resteam(username_to_id[user_var.get()]))
     resteam_button.grid(row=0, column=1, ipady=5)
     # Initially disable buttons to wait for user to be properly selected
     pornify_button.config(state="disabled")
     resteam_button.config(state="disabled")
-
-    porn_progress.pack(pady=5, fill="x")
+    pornify_progressbar.pack(pady=5, fill="x")
 
     root.mainloop()
