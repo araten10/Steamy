@@ -6,11 +6,12 @@ from threading import Thread
 from tkinter import ttk
 
 from pornify import pornify, resteam
-from steam import get_game_ids, get_username_to_id
+from steam import Steam
 
 if __name__ == "__main__":
     logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
 
+    steam = Steam()
     root = tk.Tk()
     root.geometry("320x240")
 
@@ -26,12 +27,9 @@ if __name__ == "__main__":
             pornify_button.config(state="normal")
             resteam_button.config(state="normal")
 
-    # TODO: Get actual username corresponding to user id and display it here for ease of use
     user_var = tk.StringVar(root)
     user_var.trace("w", enable_buttons)
-    username_to_id = get_username_to_id()
-
-    user_selection_dropdown = ttk.Combobox(user_select_frame, state="readonly", textvariable=user_var, values=list(username_to_id.keys()))
+    user_selection_dropdown = ttk.Combobox(user_select_frame, state="readonly", textvariable=user_var, values=steam.usernames)
     user_selection_dropdown.set("Select Steam Account")
     user_selection_dropdown.pack(pady=5)
 
@@ -39,14 +37,14 @@ if __name__ == "__main__":
     start_stop_frame.pack()
 
     pornify_progress_var = tk.IntVar()
-    pornify_progressbar = ttk.Progressbar(run_frame, mode="determinate", maximum=len(get_game_ids()), variable=pornify_progress_var)
+    pornify_progressbar = ttk.Progressbar(run_frame, mode="determinate", maximum=len(steam.game_ids), variable=pornify_progress_var)
     pornify_button = ttk.Button(
         start_stop_frame,
         text="Pornify",
-        command=lambda: Thread(target=lambda: asyncio.run(pornify(username_to_id[user_var.get()], pornify_progress_var))).start(),
+        command=lambda: Thread(target=lambda: asyncio.run(pornify(steam, user_var.get(), pornify_progress_var))).start(),
     )
     pornify_button.grid(row=0, column=0, ipady=5)
-    resteam_button = ttk.Button(start_stop_frame, text="Resteam", command=lambda: resteam(username_to_id[user_var.get()]))
+    resteam_button = ttk.Button(start_stop_frame, text="Resteam", command=lambda: resteam(steam, user_var.get()))
     resteam_button.grid(row=0, column=1, ipady=5)
     # Initially disable buttons to wait for user to be properly selected
     pornify_button.config(state="disabled")

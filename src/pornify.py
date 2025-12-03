@@ -4,16 +4,15 @@ import random
 import shutil
 import tkinter as tk
 from pathlib import Path
-from typing import Callable
 
 import aiohttp
 import booru
 
-from steam import get_game_ids, get_grid_path
+from steam import Steam
 
 
 async def pornify_game(
-    dan: booru.Danbooru, session: aiohttp.ClientSession, grid_path: Path, game_id: str, max_sleep: float, update_progress: Callable[[str], None]
+    dan: booru.Danbooru, session: aiohttp.ClientSession, grid_path: Path, game_id: str, max_sleep: float, progress_var: tk.IntVar, progress_lock: asyncio.Lock
 ) -> None:
     await asyncio.sleep(random.uniform(0, max_sleep))  # Wait a random amount to preemptively avoid rate limit
 
@@ -38,36 +37,27 @@ async def pornify_game(
                 logging.warning(f"Image download failed with {type(e).__name__}: {e}, retrying...")
                 await asyncio.sleep(random.uniform(1, 2))
 
-    update_progress(game_id)
+    async with progress_lock:
+        progress_var.set(progress_var.get() + 1)
 
 
-async def pornify(user_id: str, progress_var: tk.IntVar) -> None:
-    grid_path = get_grid_path(user_id)
+async def pornify(steam: Steam, username: str, progress_var: tk.IntVar) -> None:
+    grid_path = steam.get_grid_path(username)
     grid_path.mkdir(parents=True, exist_ok=True)
-    game_ids = get_game_ids()
-
-    progress_var.set(0)
-    games_done = {game_id: False for game_id in game_ids}
-
-    def update_progress(game_id: str) -> None:
-        games_done[game_id] = True
-        progress = 0
-        for done in games_done.values():
-            if done:
-                progress += 1
-        progress_var.set(progress)
 
     async with aiohttp.ClientSession() as session:
         dan = booru.Danbooru()
-        max_sleep = float(len(game_ids)) / 10
-        tasks = [asyncio.create_task(pornify_game(dan, session, grid_path, game_id, max_sleep, update_progress)) for game_id in game_ids]
+        max_sleep = float(len(steam.game_ids)) / 10
+        progress_lock = asyncio.Lock()
+
+        tasks = [asyncio.create_task(pornify_game(dan, session, grid_path, game_id, max_sleep, progress_var, progress_lock)) for game_id in steam.game_ids]
         await asyncio.gather(*tasks)
 
     logging.info("Pornify done")
 
 
-def resteam(user_id: str) -> None:
-    grid_path = get_grid_path(user_id)
+def resteam(steam: Steam, username: str) -> None:
+    grid_path = steam.get_grid_path(username)
     if grid_path.exists():
         shutil.rmtree(grid_path)
 
