@@ -1,3 +1,2 @@
 booru
-requests
-bs4
+vdf
