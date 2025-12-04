@@ -3,10 +3,12 @@ import logging
 import random
 import shutil
 import tkinter as tk
+from json.decoder import JSONDecodeError
 from pathlib import Path
 
 import aiohttp
 import booru
+from aiohttp.client_exceptions import ClientError
 
 from steam import Steam
 
@@ -21,7 +23,7 @@ async def pornify_game(
             search_res = await dan.search(query="order:rank")
             posts = booru.resolve(search_res)
             break
-        except Exception as e:
+        except (ClientError, JSONDecodeError) as e:
             logging.warning(f"Booru search failed with {type(e).__name__}: {e}, retrying...")
             await asyncio.sleep(random.uniform(1, 2))
 
@@ -29,11 +31,11 @@ async def pornify_game(
         post = random.choice(posts)
         while True:
             try:
-                async with session.get(post["large_file_url"]) as image_res:
+                async with session.get(post["file_url"]) as image_res:
                     with open(grid_path / f"{game_id}{art_suffix}.png", "wb") as f:
                         f.write(await image_res.read())
                     break
-            except Exception as e:
+            except ClientError as e:
                 logging.warning(f"Image download failed with {type(e).__name__}: {e}, retrying...")
                 await asyncio.sleep(random.uniform(1, 2))
 
