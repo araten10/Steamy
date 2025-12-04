@@ -10,7 +10,7 @@ import aiohttp
 import booru
 from aiohttp.client_exceptions import ClientError
 
-from steam import Steam
+from steam import Art, Steam
 
 
 async def pornify_game(
@@ -21,18 +21,25 @@ async def pornify_game(
     while True:
         try:
             search_res = await dan.search(query="order:rank")
-            posts = booru.resolve(search_res)
+            posts = list(filter(lambda post: post["file_ext"] in ["png", "jpg", "jpeg"], booru.resolve(search_res)))
             break
         except (ClientError, JSONDecodeError) as e:
             logging.warning(f"Booru search failed with {type(e).__name__}: {e}, retrying...")
             await asyncio.sleep(random.uniform(1, 2))
 
-    for art_suffix in ["", "p", "_hero"]:
-        post = random.choice(posts)
+    for art in [
+        Art("Cover", "p", 600, 900),
+        Art("Background", "_hero", 3840, 1240),
+        Art("Wide Cover", "", 920, 430),
+    ]:
+        scores = [(post, art.score(post["image_width"], post["image_height"])) for post in posts]
+        post, _ = min(scores, key=lambda scored: scored[1])
+        posts.remove(post)  # No duplicates
+
         while True:
             try:
-                async with session.get(post["file_url"]) as image_res:
-                    with open(grid_path / f"{game_id}{art_suffix}.png", "wb") as f:
+                async with session.get(post["file_url"]) as image_res:  # TODO: Choose the best variant?
+                    with open(grid_path / f"{game_id}{art.suffix}.png", "wb") as f:
                         f.write(await image_res.read())
                     break
             except ClientError as e:

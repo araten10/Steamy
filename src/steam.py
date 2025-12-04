@@ -1,4 +1,5 @@
 import platform
+from dataclasses import dataclass
 from pathlib import Path
 
 import vdf
@@ -6,6 +7,22 @@ import vdf
 
 def get_dir_names(parent: Path) -> list[str]:
     return [path.name for path in parent.iterdir() if path.is_dir()]
+
+
+@dataclass
+class Art:
+    name: str  # Not required but useful for documentation
+    suffix: str
+    width: int
+    height: int
+
+    # Lower is better
+    def score(self, width: int, height: int) -> float:
+        aspect_ratio_diff = abs(float(self.width) / self.height - float(width) / height)
+        width_diff = abs(self.width - min(self.width, width))
+        height_diff = abs(self.height - min(self.height, height))
+
+        return width_diff + height_diff + aspect_ratio_diff
 
 
 class Steam:
