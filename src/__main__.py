@@ -3,9 +3,10 @@ import logging
 import sys
 import tkinter as tk
 from threading import Thread
+
 import ttkbootstrap as ttk
-from ttkbootstrap.constants import *
 from tkextrafont import Font
+from ttkbootstrap.constants import *
 
 from pornify import pornify, resteam
 from steam import Steam
@@ -50,16 +51,16 @@ if __name__ == "__main__":
     start_stop_frame.pack()
 
     pornify_progress_var = tk.IntVar()
-    pornify_progressbar = ttk.Progressbar(run_frame, mode="determinate", maximum=len(steam.game_ids), variable=pornify_progress_var)
+    pornify_progressbar = ttk.Progressbar(run_frame, mode="determinate", maximum=len(steam.game_ids), variable=pornify_progress_var, bootstyle="success")
     pornify_button = ttk.Button(
         start_stop_frame,
         text="PORNIFY",
         command=lambda: Thread(target=lambda: asyncio.run(pornify(steam, user_var.get(), pornify_progress_var))).start(),
-        bootstyle="success"
+        bootstyle="success",
     )
-    pornify_button.grid(row=0, column=0, ipadx=5, padx=(0,5))
+    pornify_button.grid(row=0, column=0, ipadx=5, padx=(0, 5))
     resteam_button = ttk.Button(start_stop_frame, text="RESTEAM", command=lambda: resteam(steam, user_var.get()))
-    resteam_button.grid(row=0, column=1, ipadx=5, padx=(5,0))
+    resteam_button.grid(row=0, column=1, ipadx=5, padx=(5, 0))
     # Initially disable buttons to wait for user to be properly selected
     pornify_button.config(state="disabled")
     resteam_button.config(state="disabled")
