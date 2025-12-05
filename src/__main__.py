@@ -19,13 +19,14 @@ if __name__ == "__main__":
 
     # Styles
     style = ttk.Style(theme="steamythemey")
-    main_font = Font(file="resources/MonaSans-Regular.ttf", family="Mona Sans Regular")
-    bold_font = Font(file="resources/MonaSans-ExtraBold.ttf", family="Mona Sans ExtraBold")
-    style.configure('.', font=(main_font, 9))
-    root.option_add('*TCombobox*Listbox.font', (main_font, 9))
-    root.option_add('*TCombobox.font', (main_font, 9))
-    root.option_add('*TEntry.font', (main_font, 9))
-    root.option_add('*TSpinbox.font', (main_font, 9))
+    main_font = Font(file="resources/MonaSans-Medium.ttf", family="Mona Sans Medium")
+    bold_font = Font(file="resources/MonaSans-Bold.ttf", family="Mona Sans Bold")
+    style.configure(".", font=("Mona Sans Medium", 12))
+    style.configure("TButton", font=("Mona Sans Bold", 16))
+    root.option_add("*TCombobox*Listbox.font", ("Mona Sans Medium", 12))
+    root.option_add("*TCombobox.font", ("Mona Sans Medium", 12))
+    root.option_add("*TEntry.font", ("Mona Sans Medium", 12))
+    root.option_add("*TSpinbox.font", ("Mona Sans Medium", 12))
 
     run_frame = tk.Frame(root)
     run_frame.pack(expand=1)
@@ -52,11 +53,11 @@ if __name__ == "__main__":
     pornify_progressbar = ttk.Progressbar(run_frame, mode="determinate", maximum=len(steam.game_ids), variable=pornify_progress_var)
     pornify_button = ttk.Button(
         start_stop_frame,
-        text="Pornify",
+        text="PORNIFY",
         command=lambda: Thread(target=lambda: asyncio.run(pornify(steam, user_var.get(), pornify_progress_var))).start(),
     )
     pornify_button.grid(row=0, column=0, ipady=5, padx=5)
-    resteam_button = ttk.Button(start_stop_frame, text="Resteam", command=lambda: resteam(steam, user_var.get()))
+    resteam_button = ttk.Button(start_stop_frame, text="RESTEAM", command=lambda: resteam(steam, user_var.get()))
     resteam_button.grid(row=0, column=1, ipady=5, padx=5)
     # Initially disable buttons to wait for user to be properly selected
     pornify_button.config(state="disabled")
