@@ -2,67 +2,72 @@ import asyncio
 import logging
 import random
 import shutil
-import tkinter as tk
 from json.decoder import JSONDecodeError
-from pathlib import Path
 
 import aiohttp
 import booru
 from aiohttp.client_exceptions import ClientError
+from PyQt6.QtCore import QThread, pyqtSignal
 
 from steam import Art, Steam
 
 
-async def pornify_game(
-    dan: booru.Danbooru, session: aiohttp.ClientSession, grid_path: Path, game_id: str, max_sleep: float, progress_var: tk.IntVar, progress_lock: asyncio.Lock
-) -> None:
-    await asyncio.sleep(random.uniform(0, max_sleep))  # Wait a random amount to preemptively avoid rate limit
+class PornifyThread(QThread):
+    progress = pyqtSignal()
+    done = pyqtSignal()
 
-    while True:
-        try:
-            search_res = await dan.search(query="order:rank")
-            posts = list(filter(lambda post: post["file_ext"] in ["png", "jpg", "jpeg"], booru.resolve(search_res)))
-            break
-        except (ClientError, JSONDecodeError) as e:
-            logging.warning(f"Booru search failed with {type(e).__name__}: {e}, retrying...")
-            await asyncio.sleep(random.uniform(1, 2))
+    def __init__(self, steam: Steam, username: str) -> None:
+        super().__init__()
 
-    for art in [
-        Art("Cover", "p", 600, 900),
-        Art("Background", "_hero", 3840, 1240),
-        Art("Wide Cover", "", 920, 430),
-    ]:
-        scores = [(post, art.score(post["image_width"], post["image_height"])) for post in posts]
-        post, _ = min(scores, key=lambda scored: scored[1])
-        posts.remove(post)  # No duplicates
+        self.game_ids = steam.game_ids
+        self.grid_path = steam.get_grid_path(username)
+        self.dan = booru.Danbooru()
+
+    def run(self) -> None:
+        asyncio.run(self.pornify())
+        self.done.emit()
+
+    async def pornify(self) -> None:
+        self.grid_path.mkdir(parents=True, exist_ok=True)
+
+        async with aiohttp.ClientSession() as session:
+            tasks = [asyncio.create_task(self.pornify_game(session, game_id)) for game_id in self.game_ids]
+            await asyncio.gather(*tasks)
+
+        logging.info("Pornify done")
+
+    async def pornify_game(self, session: aiohttp.ClientSession, game_id: str) -> None:
+        await asyncio.sleep(random.uniform(0, float(len(self.game_ids)) / 10))  # Wait a random amount to preemptively avoid rate limit
 
         while True:
             try:
-                async with session.get(post["file_url"]) as image_res:  # TODO: Choose the best variant?
-                    with open(grid_path / f"{game_id}{art.suffix}.png", "wb") as f:
-                        f.write(await image_res.read())
-                    break
-            except ClientError as e:
-                logging.warning(f"Image download failed with {type(e).__name__}: {e}, retrying...")
+                search_res = await self.dan.search(query="order:rank")
+                posts = list(filter(lambda post: post["file_ext"] in ["png", "jpg", "jpeg"], booru.resolve(search_res)))
+                break
+            except (ClientError, JSONDecodeError) as e:
+                logging.warning(f"Booru search failed with {type(e).__name__}: {e}, retrying...")
                 await asyncio.sleep(random.uniform(1, 2))
 
-    async with progress_lock:
-        progress_var.set(progress_var.get() + 1)
+        for art in [
+            Art("Cover", "p", 600, 900),
+            Art("Background", "_hero", 3840, 1240),
+            Art("Wide Cover", "", 920, 430),
+        ]:
+            scores = [(post, art.score(post["image_width"], post["image_height"])) for post in posts]
+            post, _ = min(scores, key=lambda scored: scored[1])
+            posts.remove(post)  # No duplicates
 
+            while True:
+                try:
+                    async with session.get(post["large_file_url"]) as image_res:  # TODO: Choose the best variant?
+                        with open(self.grid_path / f"{game_id}{art.suffix}.png", "wb") as f:
+                            f.write(await image_res.read())
+                        break
+                except ClientError as e:
+                    logging.warning(f"Image download failed with {type(e).__name__}: {e}, retrying...")
+                    await asyncio.sleep(random.uniform(1, 2))
 
-async def pornify(steam: Steam, username: str, progress_var: tk.IntVar) -> None:
-    grid_path = steam.get_grid_path(username)
-    grid_path.mkdir(parents=True, exist_ok=True)
-
-    async with aiohttp.ClientSession() as session:
-        dan = booru.Danbooru()
-        max_sleep = float(len(steam.game_ids)) / 10
-        progress_lock = asyncio.Lock()
-
-        tasks = [asyncio.create_task(pornify_game(dan, session, grid_path, game_id, max_sleep, progress_var, progress_lock)) for game_id in steam.game_ids]
-        await asyncio.gather(*tasks)
-
-    logging.info("Pornify done")
+        self.progress.emit()  # TODO: Is an asyncio.Lock necessary?
 
 
 def resteam(steam: Steam, username: str) -> None:

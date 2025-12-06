@@ -1,5 +1,6 @@
 aiohttp
 booru
 pyinstaller
+PyQt6
 ruff
 vdf
