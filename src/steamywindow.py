@@ -19,7 +19,13 @@ class SteamyMainWindow(qtw.QMainWindow):
         # Layouts are similar to frames in tkinter... i think. QV is vert packing QH is hori packing
         root_layout = qtw.QVBoxLayout()
         button_layout = qtw.QHBoxLayout()
+        dropdown_layout = qtw.QHBoxLayout()
+        root_layout.addLayout(dropdown_layout)
         root_layout.addLayout(button_layout)
+
+        user_selection_dropdown = qtw.QComboBox()
+        user_selection_dropdown.addItems(["Test", "Test2"])
+        dropdown_layout.addWidget(user_selection_dropdown)
 
         pornify_button = qtw.QPushButton("PORNIFY")
         pornify_button.setCheckable(True)
