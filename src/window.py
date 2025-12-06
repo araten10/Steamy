@@ -15,16 +15,23 @@ class SteamyMainWindow(QtW.QMainWindow):
         self.setFixedSize(QSize(400, 300))
 
         root_layout = QtW.QVBoxLayout()
+
+        # === USER SELECTION ===
+
         dropdown_layout = QtW.QHBoxLayout()
-        button_layout = QtW.QHBoxLayout()
         root_layout.addLayout(dropdown_layout)
-        root_layout.addLayout(button_layout)
 
         select_label = QtW.QLabel("Select Steam Account")
         dropdown_layout.addWidget(select_label)
+
         self.user_dropdown = QtW.QComboBox()
         self.user_dropdown.addItems(self.steam.usernames)
         dropdown_layout.addWidget(self.user_dropdown)
+
+        # === BUTTONS ===
+
+        button_layout = QtW.QHBoxLayout()
+        root_layout.addLayout(button_layout)
 
         self.pornify_button = QtW.QPushButton("PORNIFY")
         self.pornify_button.clicked.connect(self.on_pornify_click)
@@ -34,9 +41,15 @@ class SteamyMainWindow(QtW.QMainWindow):
         self.resteam_button.clicked.connect(lambda: resteam(self.steam, self.user_dropdown.currentText()))
         button_layout.addWidget(self.resteam_button)
 
+        # === PROGRESS BAR ===
+
+        progress_layout = QtW.QHBoxLayout()
+        root_layout.addLayout(progress_layout)
+
         self.pornify_progress = QtW.QProgressBar()
+        self.pornify_progress.setGeometry(50, 100, 250, 30)
         self.pornify_progress.setRange(0, len(self.steam.game_ids))
-        root_layout.addWidget(self.pornify_progress)
+        progress_layout.addWidget(self.pornify_progress)
 
         # wrap all of that in a container widget, apply the root layout, then set it
         root = QtW.QWidget()
