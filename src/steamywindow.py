@@ -18,14 +18,18 @@ class SteamyMainWindow(qtw.QMainWindow):
 
         # Layouts are similar to frames in tkinter... i think. QV is vert packing QH is hori packing
         root_layout = qtw.QVBoxLayout()
-        button_layout = qtw.QHBoxLayout()
-        dropdown_layout = qtw.QHBoxLayout()
-        root_layout.addLayout(dropdown_layout)
-        root_layout.addLayout(button_layout)
 
+        # === USER SELECTION ===
+
+        dropdown_layout = qtw.QHBoxLayout()
         user_selection_dropdown = qtw.QComboBox()
-        user_selection_dropdown.addItems(["Test", "Test2"])
+        user_selection_dropdown.addItems(steam.usernames)
         dropdown_layout.addWidget(user_selection_dropdown)
+        root_layout.addLayout(dropdown_layout)
+
+        # === BUTTONS ===
+
+        button_layout = qtw.QHBoxLayout()
 
         pornify_button = qtw.QPushButton("PORNIFY")
         pornify_button.setCheckable(True)
@@ -36,6 +40,18 @@ class SteamyMainWindow(qtw.QMainWindow):
         resteam_button.setCheckable(True)
         resteam_button.clicked.connect(lambda: resteam(steam, user_var.get()))
         button_layout.addWidget(resteam_button)
+
+        root_layout.addLayout(button_layout)
+
+        # === PROGRESS BAR ===
+
+        progress_layout = qtw.QHBoxLayout()
+        pornify_progressbar = qtw.QProgressBar()
+        progress_layout.addWidget(pornify_progressbar)
+        #placeholder testing
+        pornify_progressbar.setGeometry(50, 100, 250, 30)
+        pornify_progressbar.setValue(50)
+        root_layout.addLayout(progress_layout)
 
         # wrap all of that in a container widget, apply the root layout, then set it
         root = qtw.QWidget()
