@@ -1,4 +1,3 @@
-import asyncio
 import logging
 import sys
 
@@ -13,7 +12,6 @@ from steamywindow import SteamyMainWindow
 if __name__ == "__main__":
     logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
 
-    steam = Steam()
     # holds all events that happen while interfacing with qt program
     app = qtw.QApplication(sys.argv)
 
@@ -70,4 +68,3 @@ if __name__ == "__main__":
     #pornify_progressbar.pack(pady=5, fill="x")
 
     app.exec()
-    root.mainloop()
