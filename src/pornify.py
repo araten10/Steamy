@@ -6,10 +6,11 @@ from json.decoder import JSONDecodeError
 
 import aiohttp
 import booru
+import PyQt6.QtWidgets as QtW
 from aiohttp.client_exceptions import ClientError
 from PyQt6.QtCore import QThread, pyqtSignal
 
-from steam import Art, Steam
+from steam import Art, Grid, Steam
 
 
 class PornifyThread(QThread):
@@ -20,15 +21,49 @@ class PornifyThread(QThread):
         super().__init__()
 
         self.game_ids = steam.game_ids
-        self.grid_path = steam.get_grid_path(username)
+        self.grid = Grid(steam, username)
         self.dan = booru.Danbooru()
 
+        self.should_run = True
+
+        if self.grid.path.exists():
+            if self.grid.porn_flag.is_file():
+                message = QtW.QMessageBox()
+                message.setIcon(QtW.QMessageBox.Icon.Question)
+                message.setText("Already Pornified")
+                message.setInformativeText("You are currently already using porn art. Do you want to redownload new porn?")
+
+                message.setStandardButtons(QtW.QMessageBox.StandardButton.Yes | QtW.QMessageBox.StandardButton.No)
+                self.should_run = message.exec() == QtW.QMessageBox.StandardButton.Yes
+            else:
+                self.should_run = self.grid.make_backup()
+
+        if self.should_run and self.grid.porn_backup_path.exists():
+            message = QtW.QMessageBox()
+            message.setIcon(QtW.QMessageBox.Icon.Question)
+            message.setText("Porn Art Backup Exists")
+            message.setInformativeText("A porn art backup exists. Do you want to restore the backup or download new porn and delete the old backup?")
+
+            restore = message.addButton("Restore backup", QtW.QMessageBox.ButtonRole.ApplyRole)
+            download = message.addButton("Download and delete backup", QtW.QMessageBox.ButtonRole.DestructiveRole)
+            message.addButton(QtW.QMessageBox.StandardButton.Cancel)
+            message.exec()
+
+            if message.clickedButton() == restore:
+                self.grid.restore_backup(self.grid.porn_backup_path)
+                self.should_run = False
+            elif message.clickedButton() == download:
+                shutil.rmtree(self.grid.porn_backup_path)
+            else:
+                self.should_run = False
+
     def run(self) -> None:
-        asyncio.run(self.pornify())
+        if self.should_run:
+            asyncio.run(self.pornify())
         self.done.emit()
 
     async def pornify(self) -> None:
-        self.grid_path.mkdir(parents=True, exist_ok=True)
+        self.grid.path.mkdir(parents=True, exist_ok=True)
 
         async with aiohttp.ClientSession() as session:
             tasks = [asyncio.create_task(self.pornify_game(session, game_id)) for game_id in self.game_ids]
@@ -60,7 +95,7 @@ class PornifyThread(QThread):
             while True:
                 try:
                     async with session.get(post["large_file_url"]) as image_res:  # TODO: Choose the best variant?
-                        with open(self.grid_path / f"{game_id}{art.suffix}.png", "wb") as f:
+                        with open(self.grid.path / f"{game_id}{art.suffix}.png", "wb") as f:
                             f.write(await image_res.read())
                         break
                 except ClientError as e:
@@ -71,9 +106,12 @@ class PornifyThread(QThread):
 
 
 def resteam(steam: Steam, username: str) -> None:
-    grid_path = steam.get_grid_path(username)
-    if grid_path.exists():
-        shutil.rmtree(grid_path)
+    grid = Grid(steam, username)
 
-    # TODO: Find a more productive way to resteam without deleting all the porn you just downloaded, then add progressbar to it
+    if grid.porn_flag.is_file():
+        proceed = grid.make_backup()
+        if not proceed:
+            return
+        grid.restore_backup(grid.custom_backup_path)
+
     logging.info("Resteam done")

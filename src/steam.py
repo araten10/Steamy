@@ -1,7 +1,10 @@
+import logging
 import platform
+import shutil
 from dataclasses import dataclass
 from pathlib import Path
 
+import PyQt6.QtWidgets as QtW
 import vdf
 
 
@@ -50,5 +53,61 @@ class Steam:
             self.usernames.append(username)
             self.username_to_id[username] = user_id
 
-    def get_grid_path(self, username: str) -> Path:
-        return self.path / "userdata" / self.username_to_id[username] / "config" / "grid"
+
+class Grid:
+    def __init__(self, steam: Steam, username: str) -> None:
+        config_path = steam.path / "userdata" / steam.username_to_id[username] / "config"
+
+        self.path = config_path / "grid"
+        self.porn_flag = self.path / "flag.steamy"
+
+        self.custom_backup_path = (config_path / "grid-custom-backup.steamy",)
+        self.porn_backup_path = config_path / "grid-porn-backup.steamy"
+
+    def restore_backup(self, backup_path: Path) -> None:
+        if not backup_path.exists():
+            return
+
+        if self.path.exists():
+            logging.error(f"Cannot restore {type.lower()} art backup, grid path already exists")
+            return
+
+        shutil.move(backup_path, self.path)
+
+    def make_backup(self) -> bool:
+        if not self.path.exists():
+            return True
+
+        if self.porn_flag.is_file():
+            backup_path = self.porn_backup_path
+            type = "Porn"
+        else:
+            backup_path = self.custom_backup_path
+            type = "Custom"
+
+        if backup_path.exists():
+            message = QtW.QMessageBox()
+            message.setIcon(QtW.QMessageBox.Icon.Question)
+            message.setText(f"{type} Art Backup Exists")
+            message.setInformativeText(
+                f"A {type.lower()} art backup already exists. Do you want to "
+                "overwrite your backup or keep your current backup and delete "
+                f"your current {type.lower()} art?"
+            )
+
+            overwrite = message.addButton("Overwrite backup", QtW.QMessageBox.ButtonRole.DestructiveRole)
+            delete = message.addButton("Delete current art", QtW.QMessageBox.ButtonRole.DestructiveRole)
+            message.addButton(QtW.QMessageBox.StandardButton.Cancel)
+            message.exec()
+
+            if message.clickedButton() == overwrite:
+                shutil.rmtree(backup_path)
+                shutil.move(self.path, backup_path)
+            elif message.clickedButton() == delete:
+                shutil.rmtree(self.path)
+            else:
+                return False
+        else:
+            shutil.move(self.path, backup_path)
+
+        return True
