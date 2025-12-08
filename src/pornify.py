@@ -64,15 +64,16 @@ class PornifyThread(QThread):
 
     async def pornify(self) -> None:
         self.grid.path.mkdir(parents=True, exist_ok=True)
+        self.grid.porn_flag.touch(exist_ok=True)
 
         async with aiohttp.ClientSession() as session:
-            tasks = [asyncio.create_task(self.pornify_game(session, game_id)) for game_id in self.game_ids]
+            tasks = [asyncio.create_task(self.pornify_game(session, index, game_id)) for index, game_id in enumerate(self.game_ids)]
             await asyncio.gather(*tasks)
 
         logging.info("Pornify done")
 
-    async def pornify_game(self, session: aiohttp.ClientSession, game_id: str) -> None:
-        await asyncio.sleep(random.uniform(0, float(len(self.game_ids)) / 10))  # Wait a random amount to preemptively avoid rate limit
+    async def pornify_game(self, session: aiohttp.ClientSession, index: int, game_id: str) -> None:
+        await asyncio.sleep(random.uniform(0, float(index) / 10))  # Wait according to index to preemptively avoid rate limit
 
         while True:
             try:
