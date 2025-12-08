@@ -19,8 +19,8 @@ for game_id in sorted_ids:
         name = requests.get(store_url).json()[str(game_id)]["data"]["name"]
         converted_dict[str(game_id)] = name
         print(f"{converted_dict[str(game_id)]} added to dict. Total games: {len(converted_dict)}")
-    except:
-        print(f"Error in getting name for ID {game_id}. Most likely a program and not a game. Skipping...")
+    except KeyError:
+        print(f"Error in getting name for ID {game_id}. Most likely a program and not a game, or removed from the steam store. Skipping...")
     sleep(random.uniform(1.6, 2))
 
 with open("dumped_game_list.json", "w") as f:
