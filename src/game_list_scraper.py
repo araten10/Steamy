@@ -24,4 +24,4 @@ for game_id in sorted_ids:
     sleep(random.uniform(1.6, 2))
 
 with open("dumped_game_list.json", "w") as f:
-    json.dump(converted_dict, f)
+    json.dump(converted_dict, f, indent=2)
