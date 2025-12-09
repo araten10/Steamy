@@ -2,18 +2,16 @@ import subprocess
 import sys
 from pathlib import Path
 
-# TODO: Running individual features
 print("""Which feature would you like to run?
 0. Quit
 1. Main Program (__main__.py)
 2. Game Scraper (game_list_scraper.py)""")
 
-MAIN_PATH = str(Path(__file__) / "__main__.py")
-SCRAPER_PATH = str(Path(__file__) / "game_list_scraper.py")
+src = Path(__file__).parent / "src"
 
 processes = [
-    MAIN_PATH,
-    SCRAPER_PATH
+    [src / "__main__.py"],
+    [src / "game_list_scraper.py"]
 ]  # fmt: off
 
 while True:

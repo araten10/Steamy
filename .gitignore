@@ -214,4 +214,5 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
-src/dumped_game_list.json
+
+dumped_game_list.json
