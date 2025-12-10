@@ -1,0 +1,96 @@
+{
+  "games": {
+    "10": {
+      "name": "Counter-Strike",
+      "danbooru": "counter-strike"
+    },
+    "50": {
+      "name": "Half-Life: Opposing Force",
+      "danbooru": "half-life_1"
+    },
+    "70": {
+      "name": "Half-Life",
+      "danbooru": "half-life_1"
+    },
+    "80": {
+      "name": "Counter-Strike: Condition Zero",
+      "danbooru": "counter-strike"
+    },
+    "100": {
+      "name": "Counter-Strike: Condition Zero",
+      "danbooru": "counter-strike"
+    },
+    "130": {
+      "name": "Half-Life: Blue Shift",
+      "danbooru": "half-life_1"
+    },
+    "219": {
+      "name": "Half-Life 2: Demo",
+      "danbooru": "half-life_2"
+    },
+    "220": {
+      "name": "Half-Life 2",
+      "danbooru": "half-life_2"
+    },
+    "240": {
+      "name": "Counter-Strike: Source",
+      "danbooru": "counter-strike"
+    },
+    "280": {
+      "name": "Half-Life: Source",
+      "danbooru": "half-life_1"
+    },
+    "320": {
+      "name": "Half-Life 2: Deathmatch",
+      "danbooru": "half-life_2"
+    },
+    "340": {
+      "name": "Half-Life 2: Lost Coast",
+      "danbooru": "half-life_2"
+    },
+    "360": {
+      "name": "Half-Life Deathmatch: Source",
+      "danbooru": "half-life_1"
+    },
+    "380": {
+      "name": "Half-Life 2: Episode One",
+      "danbooru": "half-life_2"
+    },
+    "400": {
+      "name": "Portal",
+      "danbooru": "portal_1"
+    },
+    "410": {
+      "name": "Portal: First Slice",
+      "danbooru": "portal_1"
+    },
+    "420": {
+      "name": "Half-Life 2: Episode Two",
+      "danbooru": "half-life_2"
+    },
+    "440": {
+      "name": "Team Fortress 2",
+      "danbooru": "Team Fortress 2"
+    },
+    "500": {
+      "name": "Left 4 Dead",
+      "danbooru": "left_4_dead_1"
+    },
+    "550": {
+      "name": "Left 4 Dead 2",
+      "danbooru": "left_4_dead_2"
+    },
+    "570": {
+      "name": "Dota 2",
+      "danbooru": "dota_2"
+    },
+    "620": {
+      "name": "Portal 2",
+      "danbooru": "portal_2"
+    },
+    "730": {
+      "name": "Counter-Strike 2",
+      "danbooru": "counter-strike_2"
+    }
+  }
+}

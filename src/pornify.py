@@ -1,7 +1,5 @@
 import asyncio
-import json
 import logging
-import os
 import random
 import shutil
 from json.decoder import JSONDecodeError
@@ -12,6 +10,7 @@ import PyQt6.QtWidgets as QtW
 from aiohttp.client_exceptions import ClientError
 from PyQt6.QtCore import QThread, pyqtSignal
 
+from game_db import Game
 from steam import Art, Grid, Steam
 
 
@@ -19,9 +18,10 @@ class PornifyThread(QThread):
     progress = pyqtSignal()
     done = pyqtSignal()
 
-    def __init__(self, steam: Steam, username: str) -> None:
+    def __init__(self, steam: Steam, game_db: dict[str, Game], username: str) -> None:
         super().__init__()
 
+        self.game_db = game_db
         self.game_ids = steam.game_ids
         self.grid = Grid(steam, username)
         self.dan = booru.Danbooru()
@@ -65,28 +65,23 @@ class PornifyThread(QThread):
         self.done.emit()
 
     async def pornify(self) -> None:
-        game_list = {}
-
-        if os.path.isfile("game_list.json"):
-            with open("game_list.json", "r", encoding="utf8") as f:
-                game_list = json.load(f)
-
         self.grid.path.mkdir(parents=True, exist_ok=True)
         self.grid.porn_flag.touch(exist_ok=True)
 
         async with aiohttp.ClientSession() as session:
-            tasks = [asyncio.create_task(self.pornify_game(session, index, game_id, game_list)) for index, game_id in enumerate(self.game_ids)]
+            tasks = [asyncio.create_task(self.pornify_game(session, index, game_id)) for index, game_id in enumerate(self.game_ids)]
             await asyncio.gather(*tasks)
 
         logging.info("Pornify done")
 
-    async def pornify_game(self, session: aiohttp.ClientSession, index: int, game_id: str, game_list: dict) -> None:
+    async def pornify_game(self, session: aiohttp.ClientSession, index: int, game_id: str) -> None:
         await asyncio.sleep(random.uniform(0, float(index) / 10))  # Wait according to index to preemptively avoid rate limit
+
+        if game_id in self.game_db:
+            logging.info(f"ID {game_id} found in game list with tags {self.game_db[game_id]}")
 
         while True:
             try:
-                if game_id in game_list.keys():
-                    print(f"ID {game_id} found in game list with tags {game_list[game_id]}")
                 search_res = await self.dan.search(query="order:rank")
                 posts = list(filter(lambda post: post["file_ext"] in ["png", "jpg", "jpeg"], booru.resolve(search_res)))
                 break

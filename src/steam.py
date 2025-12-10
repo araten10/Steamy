@@ -40,6 +40,8 @@ class Steam:
                 pass
 
         self.game_ids = get_dir_names(self.path / "appcache" / "librarycache")
+        self.game_ids.sort(key=int)
+
         self.user_ids = get_dir_names(self.path / "userdata")
 
         self.usernames = []
