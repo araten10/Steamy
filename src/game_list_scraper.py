@@ -30,7 +30,7 @@ for game_id in sorted_ids:
                 print(f'Game ID {game_id} already found in database as "{game_list[str(game_id)]}". Skipping...')
                 continue
         # Don't take this out! this is a rate limiter so steam doesn't block requests.
-        sleep(random.uniform(0.7, 1))
+        sleep(random.uniform(1.5, 2))
         store_url = "https://store.steampowered.com/api/appdetails?appids=" + str(game_id)
         name = requests.get(store_url).json()[str(game_id)]["data"]["name"]
         converted_dict[str(game_id)] = name

@@ -2,6 +2,8 @@ import asyncio
 import logging
 import random
 import shutil
+import json
+import os
 from json.decoder import JSONDecodeError
 
 import aiohttp
@@ -57,26 +59,35 @@ class PornifyThread(QThread):
             else:
                 self.should_run = False
 
-    def run(self) -> None:
+    def run(self) -> None: 
         if self.should_run:
             asyncio.run(self.pornify())
         self.done.emit()
 
     async def pornify(self) -> None:
+
+        game_list = {}
+
+        if os.path.isfile("game_list.json"):
+            with open("game_list.json", "r", encoding="utf8") as f:
+                game_list = json.load(f)
+
         self.grid.path.mkdir(parents=True, exist_ok=True)
         self.grid.porn_flag.touch(exist_ok=True)
 
         async with aiohttp.ClientSession() as session:
-            tasks = [asyncio.create_task(self.pornify_game(session, index, game_id)) for index, game_id in enumerate(self.game_ids)]
+            tasks = [asyncio.create_task(self.pornify_game(session, index, game_id, game_list)) for index, game_id in enumerate(self.game_ids)]
             await asyncio.gather(*tasks)
 
         logging.info("Pornify done")
 
-    async def pornify_game(self, session: aiohttp.ClientSession, index: int, game_id: str) -> None:
+    async def pornify_game(self, session: aiohttp.ClientSession, index: int, game_id: str, game_list: dict) -> None:
         await asyncio.sleep(random.uniform(0, float(index) / 10))  # Wait according to index to preemptively avoid rate limit
 
         while True:
             try:
+                if game_id in game_list.keys():
+                    print(f"ID {game_id} found in game list with tags {game_list[game_id]}")
                 search_res = await self.dan.search(query="order:rank")
                 posts = list(filter(lambda post: post["file_ext"] in ["png", "jpg", "jpeg"], booru.resolve(search_res)))
                 break
