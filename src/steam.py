@@ -61,7 +61,7 @@ class Grid:
         self.path = config_path / "grid"
         self.porn_flag = self.path / "flag.steamy"
 
-        self.custom_backup_path = (config_path / "grid-custom-backup.steamy",)
+        self.custom_backup_path = config_path / "grid-custom-backup.steamy"
         self.porn_backup_path = config_path / "grid-porn-backup.steamy"
 
     def restore_backup(self, backup_path: Path) -> None:
