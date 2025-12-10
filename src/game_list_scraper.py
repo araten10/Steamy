@@ -38,5 +38,5 @@ for game_id in sorted_ids:
     except KeyError:
         print(f"Error in getting name for ID {game_id}. Most likely a program and not a game, or removed from the steam store. Skipping...")
 
-with open("dumped_game_list.json", "w") as f:
-    json.dump(converted_dict, f, indent=2)
+with open("dumped_game_list.json", "w", encoding="utf8") as f:
+    json.dump(converted_dict, f, indent=2, ensure_ascii=False)
