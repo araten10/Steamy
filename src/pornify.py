@@ -1,9 +1,9 @@
 import asyncio
+import json
 import logging
+import os
 import random
 import shutil
-import json
-import os
 from json.decoder import JSONDecodeError
 
 import aiohttp
@@ -59,13 +59,12 @@ class PornifyThread(QThread):
             else:
                 self.should_run = False
 
-    def run(self) -> None: 
+    def run(self) -> None:
         if self.should_run:
             asyncio.run(self.pornify())
         self.done.emit()
 
     async def pornify(self) -> None:
-
         game_list = {}
 
         if os.path.isfile("game_list.json"):
