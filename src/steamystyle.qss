@@ -1,0 +1,16 @@
+QComboBox {
+  font-family: Mona Sans;
+  font-size: 12pt;
+}
+QPushButton#Pornify {
+  font-family: Mona Sans;
+  font-weight: bold;
+  font-size: 16pt;
+  background-color: qlineargradient(x1:0, y1:0, x2:1, y2:0, stop: 0 #50c930, stop: 1 #18b14e);
+}
+QPushButton#Resteam {
+  font-family: Mona Sans;
+  font-weight: bold;
+  font-size: 16pt;
+  background-color: qlineargradient(x1:0, y1:0, x2:1, y2:0, stop: 0 #3a9aed, stop: 1 #245ecf);
+}

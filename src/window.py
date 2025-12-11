@@ -35,11 +35,13 @@ class SteamyMainWindow(QtW.QMainWindow):
         button_layout = QtW.QHBoxLayout()
         root_layout.addLayout(button_layout)
 
-        self.pornify_button = QtW.QPushButton("Pornify")
+        self.pornify_button = QtW.QPushButton("PORNIFY")
+        self.pornify_button.setObjectName("Pornify")
         self.pornify_button.clicked.connect(self.on_pornify_click)
         button_layout.addWidget(self.pornify_button)
 
-        self.resteam_button = QtW.QPushButton("Resteam")
+        self.resteam_button = QtW.QPushButton("RESTEAM")
+        self.resteam_button.setObjectName("Resteam")
         self.resteam_button.clicked.connect(lambda: resteam(self.steam, self.user_dropdown.currentText()))
         button_layout.addWidget(self.resteam_button)
 
