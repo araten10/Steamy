@@ -7,6 +7,7 @@ from time import sleep
 
 import PyQt6.QtWidgets as QtW
 import requests
+from PyQt6.QtCore import QThread, pyqtSignal
 
 from steam import Steam
 
@@ -32,32 +33,54 @@ def get_game_db() -> dict[str, Game]:
     return game_db
 
 
-def dump_game_library(steam: Steam, game_db: dict[str, Game]) -> None:
-    dialog = QtW.QFileDialog()
-    dialog.setWindowTitle("Dump Directory")
-    dialog.setFileMode(QtW.QFileDialog.FileMode.Directory)
-    dialog.exec()
-    output = Path(dialog.selectedFiles()[0]) / "dumped_game_database.json"
+class LibraryDumperThread(QThread):
+    done = pyqtSignal()
 
-    logging.info(f"There are {len(game_db)} games already in the database. These will be skipped if detected.")
+    def __init__(self, steam: Steam, game_db: dict[str, Game]) -> None:
+        super().__init__()
 
-    converted_dict = {}
-    for game_id in steam.game_ids:
-        if game_id in game_db:
-            logging.info(f'Game ID {game_id} already found in database as "{game_db[game_id].name}". Skipping...')
-            continue
+        self.steam = steam
+        self.game_db = game_db
 
-        sleep(random.uniform(1.5, 2))  # Don't take this out! This is a rate limiter so Steam doesn't block requests.
+        dialog = QtW.QFileDialog()
+        dialog.setWindowTitle("Dump Directory")
+        dialog.setFileMode(QtW.QFileDialog.FileMode.Directory)
+        dialog.exec()
 
-        store_url = "https://store.steampowered.com/api/appdetails?appids=" + game_id
-        body = requests.get(store_url).json()[game_id]
-        if not body["success"]:
-            logging.info(f"Failed retrieving name for ID {game_id}. Most likely a program and not a game, or removed from the steam store. Skipping...")
-            continue
+        self.output_dir = Path(dialog.selectedFiles()[0]) / "dumped_game_database.json"
+        self.dump = {}
 
-        name = body["data"]["name"]
-        converted_dict[game_id] = {"name": name}
-        logging.info(f"{name} added to dict. Total games: {len(converted_dict)}")
+    def run(self) -> None:
+        logging.info(f"There are {len(self.game_db)} games already in the database. These will be skipped if detected.")
 
-    with open(output, "w", encoding="utf8") as f:
-        json.dump(converted_dict, f, indent=2, ensure_ascii=False)
+        checkpoint_progress = 0
+        checkpoint = 10
+
+        for game_id in self.steam.game_ids:
+            if game_id in self.game_db:
+                logging.info(f'Game ID {game_id} already found in database as "{self.game_db[game_id].name}". Skipping...')
+                continue
+
+            sleep(random.uniform(1.5, 2))  # Don't take this out! This is a rate limiter so Steam doesn't block requests.
+
+            store_url = "https://store.steampowered.com/api/appdetails?appids=" + game_id
+            body = requests.get(store_url).json()[game_id]
+            if not body["success"]:
+                logging.info(f"Failed retrieving name for ID {game_id}. Most likely a program and not a game, or removed from the steam store. Skipping...")
+                continue
+
+            name = body["data"]["name"]
+            self.dump[game_id] = {"name": name}
+            logging.info(f"{name} added to dict. Total games: {len(self.dump)}")
+
+            checkpoint_progress += 1
+            if checkpoint_progress >= checkpoint:
+                checkpoint_progress = 0
+                self.write_dump()  # Write a checkpoint every so often in case something goes wrong
+
+        self.write_dump()
+        self.done.emit()
+
+    def write_dump(self) -> None:
+        with open(self.output_dir, "w", encoding="utf8") as f:
+            json.dump(self.dump, f, indent=2, ensure_ascii=False)

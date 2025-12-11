@@ -1,7 +1,7 @@
 import PyQt6.QtWidgets as QtW
 from PyQt6.QtCore import QSize
 
-from game_db import dump_game_library, get_game_db
+from game_db import LibraryDumperThread, get_game_db
 from pornify import PornifyThread, resteam
 from steam import Steam
 
@@ -53,28 +53,35 @@ class SteamyMainWindow(QtW.QMainWindow):
         self.pornify_progress.setRange(0, len(self.steam.game_ids))
         progress_layout.addWidget(self.pornify_progress)
 
-        dump_button = QtW.QPushButton("Dump Game LIbrary")
-        dump_button.clicked.connect(lambda: dump_game_library(self.steam, self.game_db))
-        root_layout.addWidget(dump_button)
+        self.dump_button = QtW.QPushButton("Dump Game LIbrary")
+        self.dump_button.clicked.connect(self.on_dump_click)
+        root_layout.addWidget(self.dump_button)
 
         # wrap all of that in a container widget, apply the root layout, then set it
         root = QtW.QWidget()
         root.setLayout(root_layout)
         self.setCentralWidget(root)
 
+    def set_buttons_enabled(self, enabled: bool) -> None:
+        self.pornify_button.setEnabled(enabled)
+        self.resteam_button.setEnabled(enabled)
+        self.dump_button.setEnabled(enabled)
+
     def update_pornify_progress(self) -> None:
         self.pornify_progress.setValue(self.pornify_progress.value() + 1)
 
     def on_pornify_click(self) -> None:
-        self.pornify_button.setEnabled(False)
-        self.resteam_button.setEnabled(False)
+        self.set_buttons_enabled(False)
         self.pornify_progress.setValue(0)
 
         self.pornify_thread = PornifyThread(self.steam, self.game_db, self.user_dropdown.currentText())
-        self.pornify_thread.done.connect(self.on_pornify_done)
+        self.pornify_thread.done.connect(lambda: self.set_buttons_enabled(True))
         self.pornify_thread.progress.connect(self.update_pornify_progress)
         self.pornify_thread.start()
 
-    def on_pornify_done(self) -> None:
-        self.pornify_button.setEnabled(True)
-        self.resteam_button.setEnabled(True)
+    def on_dump_click(self) -> None:
+        self.set_buttons_enabled(False)
+
+        self.dump_thread = LibraryDumperThread(self.steam, self.game_db)
+        self.dump_thread.done.connect(lambda: self.set_buttons_enabled(True))
+        self.dump_thread.start()
