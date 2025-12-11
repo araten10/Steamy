@@ -15,7 +15,7 @@ from steam import Steam
 @dataclass
 class Game:
     name: str = ""
-    danbooru: str = ""
+    danbooru: str = "order:rank"
     rule34: str = ""
 
 

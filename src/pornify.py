@@ -80,9 +80,14 @@ class PornifyThread(QThread):
         if game_id in self.game_db:
             logging.info(f"ID {game_id} found in game list with tags {self.game_db[game_id]}")
 
+        game = self.game_db.get(game_id, Game())
+
         while True:
             try:
-                search_res = await self.dan.search(query="order:rank")
+                # TODO: What if there are no results for a search?
+                search_res = await self.dan.search(query=game.danbooru)
+
+                # TODO: What if this filters out everything?
                 posts = list(filter(lambda post: post["file_ext"] in ["png", "jpg", "jpeg"], booru.resolve(search_res)))
                 break
             except (ClientError, JSONDecodeError) as e:
@@ -94,6 +99,7 @@ class PornifyThread(QThread):
             Art("Background", "_hero", 3840, 1240),
             Art("Wide Cover", "", 920, 430),
         ]:
+            # TODO: What if we run out of posts?
             scores = [(post, art.score(post["image_width"], post["image_height"])) for post in posts]
             post, _ = min(scores, key=lambda scored: scored[1])
             posts.remove(post)  # No duplicates
