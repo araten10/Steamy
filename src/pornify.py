@@ -95,18 +95,21 @@ class PornifyThread(QThread):
                 await asyncio.sleep(random.uniform(1, 2))
 
         for art in [
-            Art("Cover", "p", 600, 900),
-            Art("Background", "_hero", 3840, 1240),
-            Art("Wide Cover", "", 920, 430),
+            Art("Cover", "p", 600, 900, sample=True),
+            Art("Background", "_hero", 3840, 1240, sample=False),
+            Art("Wide Cover", "", 920, 430, sample=True),
         ]:
             # TODO: What if we run out of posts?
+            # TODO: What if no post is a good enough match?
             scores = [(post, art.score(post["image_width"], post["image_height"])) for post in posts]
             post, _ = min(scores, key=lambda scored: scored[1])
             posts.remove(post)  # No duplicates
 
+            # Samples (large_file_url) are always 850 wide
+            url = post["large_file_url"] if art.sample else post["file_url"]
             while True:
                 try:
-                    async with session.get(post["large_file_url"]) as image_res:  # TODO: Choose the best variant?
+                    async with session.get(url) as image_res:
                         with open(self.grid.path / f"{game_id}{art.suffix}.png", "wb") as f:
                             f.write(await image_res.read())
                         break

@@ -18,6 +18,7 @@ class Art:
     suffix: str
     width: int
     height: int
+    sample: bool
 
     # Lower is better
     def score(self, width: int, height: int) -> float:
