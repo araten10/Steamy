@@ -35,7 +35,7 @@ class SteamyMainWindow(QtW.QMainWindow):
         button_layout = QtW.QHBoxLayout()
         root_layout.addLayout(button_layout)
 
-        self.pornify_button = QtW.QPushButton("PLAY")
+        self.pornify_button = QtW.QPushButton("PORNIFY")
         self.pornify_button.setObjectName("Pornify")
         self.pornify_button.clicked.connect(self.on_pornify_click)
         button_layout.addWidget(self.pornify_button)
