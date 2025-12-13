@@ -14,19 +14,24 @@ class SteamyMainWindow(QtW.QMainWindow):
         self.game_db = get_game_db()
 
         self.setWindowTitle("Steamy")
-        self.setFixedSize(QSize(400, 300))
+        self.setFixedSize(QSize(400, 600))
 
         root_layout = QtW.QVBoxLayout()
+        # Contains the logo, dropdown, and buttons
+        top_layout = QtW.QVBoxLayout()
+        # Contains the settings notebook and anything inside of it
+        bottom_layout = QtW.QVBoxLayout()
 
         # === LOGO ===
         logo_layout = QtW.QHBoxLayout()
-        root_layout.addLayout(logo_layout)
+        top_layout.addLayout(logo_layout)
 
         self.logo_ascii = QtW.QPlainTextEdit()
         self.logo_ascii.setObjectName("AsciiLogo")
         self.logo_ascii.setReadOnly(True)
         self.logo_ascii.setTextInteractionFlags(Qt.TextInteractionFlag.NoTextInteraction)
         self.logo_ascii.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        # TODO: Set height and width to be dynamic so it is easier to center, might not change anything
         self.logo_ascii.setFixedHeight(96)
         self.logo_ascii.setFixedWidth(375)
         self.logo_ascii.viewport().setCursor(Qt.CursorShape.ArrowCursor)
@@ -42,7 +47,7 @@ class SteamyMainWindow(QtW.QMainWindow):
         # === USER SELECTION ===
 
         dropdown_layout = QtW.QHBoxLayout()
-        root_layout.addLayout(dropdown_layout)
+        top_layout.addLayout(dropdown_layout)
 
         select_label = QtW.QLabel("Select Steam Account")
         dropdown_layout.addWidget(select_label)
@@ -54,7 +59,7 @@ class SteamyMainWindow(QtW.QMainWindow):
         # === BUTTONS ===
 
         button_layout = QtW.QHBoxLayout()
-        root_layout.addLayout(button_layout)
+        top_layout.addLayout(button_layout)
 
         self.pornify_button = QtW.QPushButton("PORNIFY")
         self.pornify_button.setObjectName("Pornify")
@@ -69,19 +74,45 @@ class SteamyMainWindow(QtW.QMainWindow):
         # === PROGRESS BAR ===
 
         progress_layout = QtW.QHBoxLayout()
-        root_layout.addLayout(progress_layout)
+        top_layout.addLayout(progress_layout)
 
         self.pornify_progress = QtW.QProgressBar()
         self.pornify_progress.setGeometry(50, 100, 250, 30)
         self.pornify_progress.setRange(0, len(self.steam.game_ids))
         progress_layout.addWidget(self.pornify_progress)
 
+        # === TAB WIDGET ===
+
+        self.tab_master = QtW.QTabWidget()
+        self.tab_booru = QtW.QWidget()
+        self.tab_dev = QtW.QWidget()
+        self.tab_master.setFixedHeight(300)
+
+        self.tab_master.addTab(self.tab_booru, "Booru")
+        self.tab_master.addTab(self.tab_dev, "Tools")
+
+        # === BOORU TAB ===
+        self.tab_booru.layout = QtW.QVBoxLayout()
+
+        self.tab_booru.setLayout(self.tab_booru.layout)
+
+        # === DEV TAB ===
+        self.tab_dev.layout = QtW.QVBoxLayout()
+
         self.dump_button = QtW.QPushButton("Dump Game Library")
         self.dump_button.clicked.connect(self.on_dump_click)
-        root_layout.addWidget(self.dump_button)
+        self.tab_dev.layout.addWidget(self.dump_button)
+
+        self.tab_dev.setLayout(self.tab_dev.layout)
+
+        # === TAB WIDGET END ===
+
+        bottom_layout.addWidget(self.tab_master)
 
         # wrap all of that in a container widget, apply the root layout, then set it
         root = QtW.QWidget()
+        root_layout.addLayout(top_layout)
+        root_layout.addLayout(bottom_layout)
         root.setLayout(root_layout)
         self.setCentralWidget(root)
 
