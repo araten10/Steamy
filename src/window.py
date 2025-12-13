@@ -1,5 +1,6 @@
 import PyQt6.QtWidgets as QtW
-from PyQt6.QtCore import QSize
+from PyQt6.QtCore import QSize, Qt
+from PyQt6.QtGui import QCursor
 
 from game_db import LibraryDumperThread, get_game_db
 from pornify import PornifyThread, resteam
@@ -17,6 +18,27 @@ class SteamyMainWindow(QtW.QMainWindow):
         self.setFixedSize(QSize(400, 300))
 
         root_layout = QtW.QVBoxLayout()
+
+        # === LOGO ===
+        logo_layout = QtW.QHBoxLayout()
+        root_layout.addLayout(logo_layout)
+
+        self.logo_ascii = QtW.QPlainTextEdit()
+        self.logo_ascii.setObjectName("AsciiLogo")
+        self.logo_ascii.setReadOnly(True)
+        self.logo_ascii.setTextInteractionFlags(Qt.TextInteractionFlag.NoTextInteraction)
+        self.logo_ascii.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        self.logo_ascii.setFixedHeight(96)
+        self.logo_ascii.setFixedWidth(375)
+        self.logo_ascii.viewport().setCursor(Qt.CursorShape.ArrowCursor)
+        self.logo_ascii.setPlainText(r"""      :::::::: ::::::::::: ::::::::::     :::       :::   :::  :::   :::
+    :+:    :+:    :+:     :+:          :+: :+:    :+:+: :+:+: :+:   :+:
+   +:+           +:+     +:+         +:+   +:+  +:+ +:+:+ +:+ +:+ +:+
+  +#++:++#++    +#+     +#++:++#   +#++:++#++: +#+  +:+  +#+  +#++:
+        +#+    +#+     +#+        +#+     +#+ +#+       +#+   +#+
+#+#    #+#    #+#     #+#        #+#     #+# #+#       #+#   #+#
+########     ###     ########## ###     ### ###       ###   ###             """)
+        logo_layout.addWidget(self.logo_ascii)
 
         # === USER SELECTION ===
 

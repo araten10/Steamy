@@ -4,6 +4,11 @@ QWidget {
   font-size: 11pt;
   color: #cacbcd;
 }
+QPlainTextEdit#AsciiLogo {
+  font-family: Consolas;
+  font-size: 7pt;
+  border: 0;
+}
 QComboBox {
   background-color: #25272c;
 }
