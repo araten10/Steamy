@@ -1,6 +1,5 @@
 import PyQt6.QtWidgets as QtW
 from PyQt6.QtCore import QSize, Qt
-from PyQt6.QtGui import QCursor
 
 from game_db import LibraryDumperThread, get_game_db
 from pornify import PornifyThread, resteam

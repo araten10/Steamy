@@ -13,6 +13,8 @@ from PyQt6.QtCore import QThread, pyqtSignal
 from game_db import Game
 from steam import Art, Grid, Steam
 
+NO_RESULTS_ERROR = "no results, make sure you spelled everything right"
+
 
 class PornifyThread(QThread):
     progress = pyqtSignal()
@@ -69,37 +71,47 @@ class PornifyThread(QThread):
         self.grid.porn_flag.touch(exist_ok=True)
 
         async with aiohttp.ClientSession() as session:
-            tasks = [asyncio.create_task(self.pornify_game(session, index, game_id)) for index, game_id in enumerate(self.game_ids)]
-            await asyncio.gather(*tasks)
+            queue = self.game_ids
+            while len(queue) > 0:
+                tasks = [asyncio.create_task(self.pornify_game(session, game_id)) for game_id in queue[0:10]]
+                del queue[0:10]
+                await asyncio.gather(*tasks)
+                await asyncio.sleep(1)
 
         logging.info("Pornify done")
 
-    async def pornify_game(self, session: aiohttp.ClientSession, index: int, game_id: str) -> None:
-        await asyncio.sleep(random.uniform(0, float(index) / 10))  # Wait according to index to preemptively avoid rate limit
-
-        if game_id in self.game_db:
-            logging.info(f"ID {game_id} found in game list with tags {self.game_db[game_id]}")
-
+    async def pornify_game(self, session: aiohttp.ClientSession, game_id: str) -> None:
         game = self.game_db.get(game_id, Game())
+        posts = await self.search_booru(game)
+        if len(posts) >= 3:
+            await self.download_images(session, game_id, posts)
+        else:
+            logging.warning(f"Not enough results for query {game.danbooru}, got {len(posts)} but expected at least 3")
 
+        self.progress.emit()
+
+    async def search_booru(self, game: Game) -> list:
         while True:
             try:
-                # TODO: What if there are no results for a search?
-                search_res = await self.dan.search(query=game.danbooru)
-
-                # TODO: What if this filters out everything?
-                posts = list(filter(lambda post: post["file_ext"] in ["png", "jpg", "jpeg"], booru.resolve(search_res)))
-                break
+                res = await self.dan.search(query=game.danbooru)
+                return list(filter(lambda post: post["file_ext"] in ["png", "jpg", "jpeg"], booru.resolve(res)))
             except (ClientError, JSONDecodeError) as e:
                 logging.warning(f"Booru search failed with {type(e).__name__}: {e}, retrying...")
                 await asyncio.sleep(random.uniform(1, 2))
+            except Exception as e:
+                if NO_RESULTS_ERROR in e.args:
+                    return []  # No results from booru
+                else:
+                    raise e  # Unexpected error
+
+    async def download_images(self, session: aiohttp.ClientSession, game_id: str, posts: list) -> None:
+        assert len(posts) >= 3
 
         for art in [
             Art("Cover", "p", 600, 900, sample=True),
             Art("Background", "_hero", 3840, 1240, sample=False),
             Art("Wide Cover", "", 920, 430, sample=True),
         ]:
-            # TODO: What if we run out of posts?
             # TODO: What if no post is a good enough match?
             scores = [(post, art.score(post["image_width"], post["image_height"])) for post in posts]
             post, _ = min(scores, key=lambda scored: scored[1])
@@ -116,8 +128,6 @@ class PornifyThread(QThread):
                 except ClientError as e:
                     logging.warning(f"Image download failed with {type(e).__name__}: {e}, retrying...")
                     await asyncio.sleep(random.uniform(1, 2))
-
-        self.progress.emit()  # TODO: Is an asyncio.Lock necessary?
 
 
 def resteam(steam: Steam, username: str) -> None:
