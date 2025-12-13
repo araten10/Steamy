@@ -12,7 +12,7 @@ if __name__ == "__main__":
     # holds all events that happen while interfacing with qt program
     app = QtW.QApplication(sys.argv)
     QFontDatabase.addApplicationFont("resources/MonaSans-Regular.ttf")
-    QFontDatabase.addApplicationFont("resources/Inconsolata-Regular.ttf")
+    QFontDatabase.addApplicationFont("resources/Consolas-Regular.ttf")
     with open("src/steamystyle.qss", "r") as f:
         style = f.read()
         app.setStyleSheet(style)
