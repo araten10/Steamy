@@ -77,7 +77,7 @@ class SteamyMainWindow(QtW.QMainWindow):
         self.pornify_progress.setRange(0, len(self.steam.game_ids))
         progress_layout.addWidget(self.pornify_progress)
 
-        self.dump_button = QtW.QPushButton("Dump Game LIbrary")
+        self.dump_button = QtW.QPushButton("Dump Game Library")
         self.dump_button.clicked.connect(self.on_dump_click)
         root_layout.addWidget(self.dump_button)
 
