@@ -14,6 +14,7 @@ from steam import Steam
 
 @dataclass
 class Game:
+    id: str = ""
     name: str = ""
     danbooru: str = "order:rank"
     rule34: str = ""
@@ -28,7 +29,7 @@ def get_game_db() -> dict[str, Game]:
             game_db_json = json.load(f)
 
         for game_id, data in game_db_json["games"].items():
-            game_db[game_id] = Game(**data)
+            game_db[game_id] = Game(game_id, **data)
 
     return game_db
 

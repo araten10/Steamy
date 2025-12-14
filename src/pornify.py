@@ -14,6 +14,7 @@ from game_db import Game
 from steam import Art, Grid, Steam
 
 NO_RESULTS_ERROR = "no results, make sure you spelled everything right"
+CONCURRENT_DOWNLOADS = 10  # TODO: Make a setting
 
 
 class PornifyThread(QThread):
@@ -24,9 +25,13 @@ class PornifyThread(QThread):
         super().__init__()
 
         self.game_db = game_db
-        self.game_ids = steam.game_ids
         self.grid = Grid(steam, username)
         self.dan = booru.Danbooru()
+
+        self.search_queue: list[Game] = [self.game_db.get(game_id, Game()) for game_id in steam.game_ids]
+        self.download_queue: list[Game, list] = []
+        self.search_done = False
+        self.download_start = asyncio.Event()
 
         self.should_run = True
 
@@ -64,49 +69,80 @@ class PornifyThread(QThread):
     def run(self) -> None:
         if self.should_run:
             asyncio.run(self.pornify())
+
         self.done.emit()
+        logging.info("Pornify done")
 
     async def pornify(self) -> None:
         self.grid.path.mkdir(parents=True, exist_ok=True)
         self.grid.porn_flag.touch(exist_ok=True)
+        await asyncio.gather(
+            asyncio.create_task(self.handle_search()),
+            asyncio.create_task(self.handle_download()),
+        )
 
-        async with aiohttp.ClientSession() as session:
-            queue = self.game_ids
-            while len(queue) > 0:
-                tasks = [asyncio.create_task(self.pornify_game(session, game_id)) for game_id in queue[0:10]]
-                del queue[0:10]
-                await asyncio.gather(*tasks)
-                await asyncio.sleep(1)
+    async def handle_search(self) -> None:
+        tasks = []
 
-        logging.info("Pornify done")
+        def callback(task: asyncio.Task, game_id: str) -> None:
+            # TODO: Race conditions?
+            posts = task.result()
+            if posts is None:
+                self.search_queue.append(game_id)
+            elif len(posts) > 3:
+                tasks.remove(task)
+                self.download_queue.append((game_id, posts))
+                self.download_start.set()
+            else:
+                logging.warning(f"Not enough results for query {game.danbooru}, got {len(posts)} but expected at least 3")
 
-    async def pornify_game(self, session: aiohttp.ClientSession, game_id: str) -> None:
-        game = self.game_db.get(game_id, Game())
-        posts = await self.search_booru(game)
-        if len(posts) >= 3:
-            await self.download_images(session, game_id, posts)
-        else:
-            logging.warning(f"Not enough results for query {game.danbooru}, got {len(posts)} but expected at least 3")
+        while len(tasks) > 0 or len(self.search_queue) > 0:
+            while len(self.search_queue) > 0:
+                game = self.search_queue.pop(0)
+                task = asyncio.create_task(self.search_booru(game))
+                task.add_done_callback(lambda t: callback(t, game))
+                tasks.append(task)
+                await asyncio.sleep(0.1)  # TODO: Adjust based on booru, maybe dynamically?
 
-        self.progress.emit()
+            await asyncio.wait(tasks, return_when=asyncio.FIRST_COMPLETED)
+
+        self.search_done = True
+        logging.info("Booru searches done")
+
+    async def handle_download(self) -> None:
+        tasks = []
+
+        def callback(task: asyncio.Task) -> None:
+            # TODO: Race conditions?
+            tasks.remove(task)
+            self.progress.emit()
+
+        await self.download_start.wait()
+        while len(tasks) > 0 or len(self.download_queue) > 0 or not self.search_done:
+            while len(tasks) < CONCURRENT_DOWNLOADS and len(self.download_queue) > 0:
+                game, posts = self.download_queue.pop(0)
+                task = asyncio.create_task(self.download_images(game, posts))
+                task.add_done_callback(callback)
+                tasks.append(task)
+
+            await asyncio.wait(tasks, return_when=asyncio.FIRST_COMPLETED)
+
+        logging.info("Image downloads done")
 
     async def search_booru(self, game: Game) -> list:
-        while True:
-            try:
-                res = await self.dan.search(query=game.danbooru)
-                return list(filter(lambda post: post["file_ext"] in ["png", "jpg", "jpeg"], booru.resolve(res)))
-            except (ClientError, JSONDecodeError) as e:
-                logging.warning(f"Booru search failed with {type(e).__name__}: {e}, retrying...")
-                await asyncio.sleep(random.uniform(1, 2))
-            except Exception as e:
-                if NO_RESULTS_ERROR in e.args:
-                    return []  # No results from booru
-                else:
-                    raise e  # Unexpected error
+        try:
+            res = await self.dan.search(query=game.danbooru)
+            return list(filter(lambda post: post["file_ext"] in ["png", "jpg", "jpeg"], booru.resolve(res)))
+        except (ClientError, JSONDecodeError) as e:
+            logging.warning(f"Booru search failed with {type(e).__name__}: {e}, requeueing...")
+            return None
+        except Exception as e:
+            if NO_RESULTS_ERROR in e.args:
+                return []  # No results from booru
+            else:
+                raise e  # Unexpected error
 
-    async def download_images(self, session: aiohttp.ClientSession, game_id: str, posts: list) -> None:
-        assert len(posts) >= 3
-
+    async def download_images(self, game: Game, posts: list) -> None:
         for art in [
             Art("Cover", "p", 600, 900, sample=True),
             Art("Background", "_hero", 3840, 1240, sample=False),
@@ -121,10 +157,11 @@ class PornifyThread(QThread):
             url = post["large_file_url"] if art.sample else post["file_url"]
             while True:
                 try:
-                    async with session.get(url) as image_res:
-                        with open(self.grid.path / f"{game_id}{art.suffix}.png", "wb") as f:
-                            f.write(await image_res.read())
-                        break
+                    async with aiohttp.ClientSession() as session:
+                        async with session.get(url) as image_res:
+                            with open(self.grid.path / f"{game.id}{art.suffix}.png", "wb") as f:
+                                f.write(await image_res.read())
+                            break
                 except ClientError as e:
                     logging.warning(f"Image download failed with {type(e).__name__}: {e}, retrying...")
                     await asyncio.sleep(random.uniform(1, 2))
