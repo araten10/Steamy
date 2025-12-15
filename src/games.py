@@ -14,15 +14,15 @@ from steam import Steam
 
 @dataclass
 class Game:
-    id: str = ""
+    id: str
     name: str = ""
-    danbooru: str = "order:rank"
-    rule34: str = ""
+    danbooru: str | None = None
+    rule34: str | None = None
 
 
 def get_game_db() -> dict[str, Game]:
     game_db = {}
-    path = Path(__file__).parent.parent / "game_database.json"
+    path = Path(__file__).parent.parent / "resources" / "game_database.json"
 
     if path.is_file():
         with open(path, "r") as f:
