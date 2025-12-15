@@ -4,6 +4,10 @@ QWidget {
   font-size: 11pt;
   color: #cacbcd;
 }
+QLabel#Title {
+  color: #5b636a;
+  font-size: 9pt;
+}
 QToolButton {
   border: 0;
 }

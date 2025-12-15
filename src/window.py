@@ -17,8 +17,9 @@ class SteamyTitleBar(QtW.QWidget):
         title_bar_layout.setSpacing(2)
 
         self.title = QtW.QLabel("Steamy", self)
+        self.title.setObjectName("Title")
 
-        self.title.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.title.setAlignment(Qt.AlignmentFlag.AlignLeft)
         title_bar_layout.addWidget(self.title)
         effect = QtW.QGraphicsColorizeEffect()
         effect.setColor(QColor("#ffffff"))
@@ -159,6 +160,7 @@ class SteamyMainWindow(QtW.QMainWindow):
 
         # wrap all of that in a container widget, apply the root layout, then set it
         root = QtW.QWidget()
+        root.setObjectName("RootWindow")
         root_layout = QtW.QVBoxLayout()
         root_layout.setContentsMargins(0, 0, 0, 0)
         root_layout.setAlignment(Qt.AlignmentFlag.AlignTop)
