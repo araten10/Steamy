@@ -216,3 +216,4 @@ __marimo__/
 .streamlit/secrets.toml
 
 *dumped_game_database.json
+resources/config.json

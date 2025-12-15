@@ -10,7 +10,8 @@ import PyQt6.QtWidgets as QtW
 from aiohttp.client_exceptions import ClientError
 from PyQt6.QtCore import QThread, pyqtSignal
 
-from game_db import Game
+from boorus import get_booru
+from games import Game
 from steam import Art, Grid, Steam
 
 NO_RESULTS_ERROR = "no results, make sure you spelled everything right"
@@ -26,9 +27,9 @@ class PornifyThread(QThread):
 
         self.game_db = game_db
         self.grid = Grid(steam, username)
-        self.dan = booru.Danbooru()
+        self.booru = get_booru()
 
-        self.search_queue: list[Game] = [self.game_db.get(game_id, Game()) for game_id in steam.game_ids]
+        self.search_queue: list[Game] = [self.game_db.get(game_id, Game(game_id)) for game_id in steam.game_ids]
         self.download_queue: list[Game, list] = []
         self.search_done = False
         self.download_start = asyncio.Event()
@@ -102,7 +103,9 @@ class PornifyThread(QThread):
                 task = asyncio.create_task(self.search_booru(game))
                 task.add_done_callback(lambda t: callback(t, game))
                 tasks.append(task)
-                await asyncio.sleep(0.1)  # TODO: Adjust based on booru, maybe dynamically?
+
+                # Chance to be slightly slower than required to be on the safe side
+                await asyncio.sleep(random.uniform(self.booru.rate_limit, self.booru.rate_limit * 1.25))
 
             await asyncio.wait(tasks, return_when=asyncio.FIRST_COMPLETED)
 
@@ -131,8 +134,8 @@ class PornifyThread(QThread):
 
     async def search_booru(self, game: Game) -> list:
         try:
-            res = await self.dan.search(query=game.danbooru)
-            return list(filter(lambda post: post["file_ext"] in ["png", "jpg", "jpeg"], booru.resolve(res)))
+            res = await self.booru.search(game)
+            return self.booru.filter_images(booru.resolve(res))
         except (ClientError, JSONDecodeError) as e:
             logging.warning(f"Booru search failed with {type(e).__name__}: {e}, requeueing...")
             return None
@@ -149,12 +152,12 @@ class PornifyThread(QThread):
             Art("Wide Cover", "", 920, 430, sample=True),
         ]:
             # TODO: What if no post is a good enough match?
-            scores = [(post, art.score(post["image_width"], post["image_height"])) for post in posts]
+            scores = [(post, art.score(post[self.booru.width], post[self.booru.height])) for post in posts]
             post, _ = min(scores, key=lambda scored: scored[1])
             posts.remove(post)  # No duplicates
 
-            # Samples (large_file_url) are always 850 wide
-            url = post["large_file_url"] if art.sample else post["file_url"]
+            # Samples are always 850 wide
+            url = post[self.booru.sample_url] if art.sample else post[self.booru.file_url]
             while True:
                 try:
                     async with aiohttp.ClientSession() as session:
