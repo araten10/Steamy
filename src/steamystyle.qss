@@ -4,6 +4,9 @@ QWidget {
   font-size: 11pt;
   color: #cacbcd;
 }
+QToolButton {
+  border: 0;
+}
 QPlainTextEdit#AsciiLogo {
   font-family: Consolas;
   font-size: 7pt;

@@ -1,10 +1,53 @@
 import PyQt6.QtWidgets as QtW
 from PyQt6.QtCore import QSize, Qt
+from PyQt6.QtGui import QPalette, QColor
 
 from game_db import LibraryDumperThread, get_game_db
 from pornify import PornifyThread, resteam
 from steam import Steam
 
+class SteamyTitleBar(QtW.QWidget):
+    def __init__(self, parent):
+        super().__init__(parent)
+        self.setAutoFillBackground(True)
+        self.setBackgroundRole(QPalette.ColorRole.Highlight)
+        self.initial_pos = None
+        title_bar_layout = QtW.QHBoxLayout(self)
+        title_bar_layout.setContentsMargins(1, 1, 1, 1)
+        title_bar_layout.setSpacing(2)
+
+        self.title = QtW.QLabel("Steamy", self)
+
+        self.title.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        title_bar_layout.addWidget(self.title)
+        effect = QtW.QGraphicsColorizeEffect()
+        effect.setColor(QColor("#ffffff"))
+        effect.setStrength(1)
+         # Min button
+        self.min_button = QtW.QToolButton(self)
+        min_icon = self.style().standardIcon(
+            QtW.QStyle.StandardPixmap.SP_TitleBarMinButton
+        )
+        self.min_button.setIcon(min_icon)
+        self.min_button.setGraphicsEffect(effect)
+        self.min_button.clicked.connect(self.window().showMinimized)
+
+        # Close button
+        self.close_button = QtW.QToolButton(self)
+        close_icon = self.style().standardIcon(
+            QtW.QStyle.StandardPixmap.SP_TitleBarCloseButton
+        )
+        self.close_button.setIcon(close_icon)
+        self.close_button.clicked.connect(self.window().close)
+
+        buttons = [
+            self.min_button,
+            self.close_button,
+        ]
+        for button in buttons:
+            button.setFocusPolicy(Qt.FocusPolicy.NoFocus)
+            button.setFixedSize(QSize(28, 28))
+            title_bar_layout.addWidget(button)
 
 class SteamyMainWindow(QtW.QMainWindow):
     def __init__(self) -> None:
@@ -14,9 +57,14 @@ class SteamyMainWindow(QtW.QMainWindow):
         self.game_db = get_game_db()
 
         self.setWindowTitle("Steamy")
-        self.setFixedSize(QSize(400, 600))
+        # Total Height = 300 for top_layout, 300 for bottom layout, add title bar
+        self.setFixedSize(QSize(400, 630))
+        self.setWindowFlags(Qt.WindowType.FramelessWindowHint)
 
-        root_layout = QtW.QVBoxLayout()
+        # Titlebar
+        self.title_bar = SteamyTitleBar(self)
+        self.title_bar.setFixedHeight(30)
+
         # Contains the logo, dropdown, and buttons
         top_layout = QtW.QVBoxLayout()
         # Contains the settings notebook and anything inside of it
@@ -111,10 +159,35 @@ class SteamyMainWindow(QtW.QMainWindow):
 
         # wrap all of that in a container widget, apply the root layout, then set it
         root = QtW.QWidget()
+        root_layout = QtW.QVBoxLayout()
+        root_layout.setContentsMargins(0, 0, 0, 0)
+        root_layout.setAlignment(Qt.AlignmentFlag.AlignTop)
+        root_layout.addWidget(self.title_bar)
         root_layout.addLayout(top_layout)
         root_layout.addLayout(bottom_layout)
         root.setLayout(root_layout)
         self.setCentralWidget(root)
+
+    def mousePressEvent(self, event):
+        if event.button() == Qt.MouseButton.LeftButton:
+            self.initial_pos = event.position().toPoint()
+        super().mousePressEvent(event)
+        event.accept()
+
+    def mouseMoveEvent(self, event):
+        if self.initial_pos is not None:
+            delta = event.position().toPoint() - self.initial_pos
+            self.window().move(
+                self.window().x() + delta.x(),
+                self.window().y() + delta.y(),
+            )
+        super().mouseMoveEvent(event)
+        event.accept()
+
+    def mouseReleaseEvent(self, event):
+        self.initial_pos = None
+        super().mouseReleaseEvent(event)
+        event.accept()
 
     def set_buttons_enabled(self, enabled: bool) -> None:
         self.pornify_button.setEnabled(enabled)
