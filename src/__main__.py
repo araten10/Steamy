@@ -13,7 +13,7 @@ if __name__ == "__main__":
     app = QtW.QApplication(sys.argv)
     QFontDatabase.addApplicationFont("resources/MonaSans-Regular.ttf")
     QFontDatabase.addApplicationFont("resources/Consolas-Regular.ttf")
-    with open("src/steamystyle.qss", "r") as f:
+    with open("resources/steamystyle.qss", "r") as f:
         style = f.read()
         app.setStyleSheet(style)
     window = SteamyMainWindow()
