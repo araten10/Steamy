@@ -1,13 +1,22 @@
 import PyQt6.QtWidgets as QtW
 from PyQt6.QtCore import QSize, Qt
-from PyQt6.QtGui import QPalette, QColor
+from PyQt6.QtGui import QColor, QMouseEvent, QPalette
 
 from games import LibraryDumperThread, get_game_db
 from pornify import PornifyThread, resteam
 from steam import Steam
 
+LOGO = r"""      :::::::: ::::::::::: ::::::::::     :::       :::   :::  :::   :::
+    :+:    :+:    :+:     :+:          :+: :+:    :+:+: :+:+: :+:   :+:
+   +:+           +:+     +:+         +:+   +:+  +:+ +:+:+ +:+ +:+ +:+
+  +#++:++#++    +#+     +#++:++#   +#++:++#++: +#+  +:+  +#+  +#++:
+        +#+    +#+     +#+        +#+     +#+ +#+       +#+   +#+
+#+#    #+#    #+#     #+#        #+#     #+# #+#       #+#   #+#
+########     ###     ########## ###     ### ###       ###   ###             """
+
+
 class SteamyTitleBar(QtW.QWidget):
-    def __init__(self, parent):
+    def __init__(self, parent: QtW.QWidget) -> None:
         super().__init__(parent)
         self.setAutoFillBackground(True)
         self.setBackgroundRole(QPalette.ColorRole.Highlight)
@@ -24,31 +33,47 @@ class SteamyTitleBar(QtW.QWidget):
         effect = QtW.QGraphicsColorizeEffect()
         effect.setColor(QColor("#ffffff"))
         effect.setStrength(1)
-         # Min button
+        # Min button
         self.min_button = QtW.QToolButton(self)
-        min_icon = self.style().standardIcon(
-            QtW.QStyle.StandardPixmap.SP_TitleBarMinButton
-        )
+        min_icon = self.style().standardIcon(QtW.QStyle.StandardPixmap.SP_TitleBarMinButton)
         self.min_button.setIcon(min_icon)
         self.min_button.setGraphicsEffect(effect)
         self.min_button.clicked.connect(self.window().showMinimized)
 
         # Close button
         self.close_button = QtW.QToolButton(self)
-        close_icon = self.style().standardIcon(
-            QtW.QStyle.StandardPixmap.SP_TitleBarCloseButton
-        )
+        close_icon = self.style().standardIcon(QtW.QStyle.StandardPixmap.SP_TitleBarCloseButton)
         self.close_button.setIcon(close_icon)
         self.close_button.clicked.connect(self.window().close)
 
-        buttons = [
-            self.min_button,
-            self.close_button,
-        ]
+        buttons = [self.min_button, self.close_button]
         for button in buttons:
             button.setFocusPolicy(Qt.FocusPolicy.NoFocus)
             button.setFixedSize(QSize(28, 28))
             title_bar_layout.addWidget(button)
+
+    def mousePressEvent(self, event: QMouseEvent) -> None:  # noqa: N802
+        self.window().windowHandle().startSystemMove()
+        # if event.button() == Qt.MouseButton.LeftButton:
+        #     self.initial_pos = event.position().toPoint()
+        super().mousePressEvent(event)
+        event.accept()
+
+    # def mouseMoveEvent(self, event: QMouseEvent) -> None:
+    #     if self.initial_pos is not None:
+    #         delta = event.position().toPoint() - self.initial_pos
+    #         self.window().move(
+    #             self.window().x() + delta.x(),
+    #             self.window().y() + delta.y(),
+    #         )
+    #     super().mouseMoveEvent(event)
+    #     event.accept()
+
+    # def mouseReleaseEvent(self, event: QMouseEvent) -> None:
+    #     self.initial_pos = None
+    #     super().mouseReleaseEvent(event)
+    #     event.accept()
+
 
 class SteamyMainWindow(QtW.QMainWindow):
     def __init__(self) -> None:
@@ -84,13 +109,7 @@ class SteamyMainWindow(QtW.QMainWindow):
         self.logo_ascii.setFixedHeight(96)
         self.logo_ascii.setFixedWidth(375)
         self.logo_ascii.viewport().setCursor(Qt.CursorShape.ArrowCursor)
-        self.logo_ascii.setPlainText(r"""      :::::::: ::::::::::: ::::::::::     :::       :::   :::  :::   :::
-    :+:    :+:    :+:     :+:          :+: :+:    :+:+: :+:+: :+:   :+:
-   +:+           +:+     +:+         +:+   +:+  +:+ +:+:+ +:+ +:+ +:+
-  +#++:++#++    +#+     +#++:++#   +#++:++#++: +#+  +:+  +#+  +#++:
-        +#+    +#+     +#+        +#+     +#+ +#+       +#+   +#+
-#+#    #+#    #+#     #+#        #+#     #+# #+#       #+#   #+#
-########     ###     ########## ###     ### ###       ###   ###             """)
+        self.logo_ascii.setPlainText(LOGO)
         logo_layout.addWidget(self.logo_ascii)
 
         # === USER SELECTION ===
@@ -169,27 +188,6 @@ class SteamyMainWindow(QtW.QMainWindow):
         root_layout.addLayout(bottom_layout)
         root.setLayout(root_layout)
         self.setCentralWidget(root)
-
-    def mousePressEvent(self, event):
-        if event.button() == Qt.MouseButton.LeftButton:
-            self.initial_pos = event.position().toPoint()
-        super().mousePressEvent(event)
-        event.accept()
-
-    def mouseMoveEvent(self, event):
-        if self.initial_pos is not None:
-            delta = event.position().toPoint() - self.initial_pos
-            self.window().move(
-                self.window().x() + delta.x(),
-                self.window().y() + delta.y(),
-            )
-        super().mouseMoveEvent(event)
-        event.accept()
-
-    def mouseReleaseEvent(self, event):
-        self.initial_pos = None
-        super().mouseReleaseEvent(event)
-        event.accept()
 
     def set_buttons_enabled(self, enabled: bool) -> None:
         self.pornify_button.setEnabled(enabled)
