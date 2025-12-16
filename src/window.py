@@ -2,6 +2,7 @@ import PyQt6.QtWidgets as QtW
 from PyQt6.QtCore import QSize, Qt
 from PyQt6.QtGui import QMouseEvent
 
+from config import Config
 from games import LibraryDumperThread, get_game_db
 from pornify import PornifyThread, resteam
 from steam import Steam
@@ -59,6 +60,7 @@ class SteamyMainWindow(QtW.QMainWindow):
     def __init__(self) -> None:
         super().__init__()
 
+        self.config = Config()
         self.steam = Steam()
         self.game_db = get_game_db()
 
@@ -187,7 +189,7 @@ class SteamyMainWindow(QtW.QMainWindow):
         self.set_buttons_enabled(False)
         self.pornify_progress.setValue(0)
 
-        self.pornify_thread = PornifyThread(self.steam, self.game_db, self.user_dropdown.currentText())
+        self.pornify_thread = PornifyThread(self.config, self.steam, self.game_db, self.user_dropdown.currentText())
         self.pornify_thread.done.connect(lambda: self.set_buttons_enabled(True))
         self.pornify_thread.progress.connect(self.update_pornify_progress)
         self.pornify_thread.start()

@@ -26,7 +26,7 @@ def get_game_db() -> dict[str, Game]:
 
     if path.is_file():
         with open(path, "r") as f:
-            game_db_json = json.load(f)
+            game_db_json = json.load(f)  # TODO: Validation
 
         for game_id, data in game_db_json["games"].items():
             game_db[game_id] = Game(game_id, **data)

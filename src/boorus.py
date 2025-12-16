@@ -1,16 +1,7 @@
-import json
-from pathlib import Path
-
 import booru
 
+from config import Config
 from games import Game
-
-# TODO: This is bad, refactor!!!
-config_path = Path(__file__).parent.parent / "resources" / "config.json"
-config = None
-if config_path.exists():
-    with open(config_path, "r") as f:
-        config = json.load(f)
 
 
 class SteamyDanbooru(booru.Danbooru):
@@ -35,9 +26,9 @@ class SteamyDanbooru(booru.Danbooru):
 
 
 class SteamyRule34(booru.Rule34):
-    def __init__(self) -> None:
+    def __init__(self, config: Config) -> None:
         super().__init__()
-        self.specs = {"api_key": config["rule34"]["api_key"], "user_id": config["rule34"]["user_id"]}
+        self.specs = {"api_key": config.r34_api_key, "user_id": config.r34_user_id}
 
         self.base_query = "sort:random score:>500 -video -animated"
         self.fallback_query = "-rating:safe"
@@ -56,9 +47,9 @@ class SteamyRule34(booru.Rule34):
         return list(filter(lambda post: post["file_url"].split(".")[-1] in ["png", "jpg", "jpeg"], posts))
 
 
-def get_booru() -> SteamyDanbooru | SteamyRule34:
+def get_booru(config: Config) -> SteamyDanbooru | SteamyRule34:
     boorus = {
         "danbooru": SteamyDanbooru(),
-        "rule34": SteamyRule34(),
+        "rule34": SteamyRule34(config),  # TODO: Check if API key is available
     }
-    return boorus[config["default_booru"]]
+    return boorus[config.default_booru]

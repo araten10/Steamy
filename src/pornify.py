@@ -11,6 +11,7 @@ from aiohttp.client_exceptions import ClientError
 from PyQt6.QtCore import QThread, pyqtSignal
 
 from boorus import get_booru
+from config import Config
 from games import Game
 from steam import Art, Grid, Steam
 
@@ -22,12 +23,12 @@ class PornifyThread(QThread):
     progress = pyqtSignal()
     done = pyqtSignal()
 
-    def __init__(self, steam: Steam, game_db: dict[str, Game], username: str) -> None:
+    def __init__(self, config: Config, steam: Steam, game_db: dict[str, Game], username: str) -> None:
         super().__init__()
 
         self.game_db = game_db
         self.grid = Grid(steam, username)
-        self.booru = get_booru()
+        self.booru = get_booru(config)
 
         self.search_queue: list[Game] = [self.game_db.get(game_id, Game(game_id)) for game_id in steam.game_ids]
         self.download_queue: list[Game, list] = []

@@ -5,3 +5,4 @@ PyQt6
 requests
 ruff
 vdf
+voluptuous
