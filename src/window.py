@@ -1,6 +1,6 @@
 import PyQt6.QtWidgets as QtW
 from PyQt6.QtCore import QSize, Qt
-from PyQt6.QtGui import QColor, QMouseEvent, QPalette
+from PyQt6.QtGui import QColor, QMouseEvent
 
 from games import LibraryDumperThread, get_game_db
 from pornify import PornifyThread, resteam
@@ -18,30 +18,26 @@ LOGO = r"""      :::::::: ::::::::::: ::::::::::     :::       :::   :::  :::   
 class SteamyTitleBar(QtW.QWidget):
     def __init__(self, parent: QtW.QWidget) -> None:
         super().__init__(parent)
-        self.setAutoFillBackground(True)
-        self.setBackgroundRole(QPalette.ColorRole.Highlight)
         self.initial_pos = None
         title_bar_layout = QtW.QHBoxLayout(self)
-        title_bar_layout.setContentsMargins(1, 1, 1, 1)
-        title_bar_layout.setSpacing(2)
+        title_bar_layout.setContentsMargins(0, 0, 0, 0)
+        title_bar_layout.setSpacing(0)
 
         self.title = QtW.QLabel("Steamy", self)
         self.title.setObjectName("Title")
+        self.title.setContentsMargins(5, 5, 0, 0)
 
         self.title.setAlignment(Qt.AlignmentFlag.AlignLeft)
         title_bar_layout.addWidget(self.title)
-        effect = QtW.QGraphicsColorizeEffect()
-        effect.setColor(QColor("#ffffff"))
-        effect.setStrength(1)
         # Min button
         self.min_button = QtW.QToolButton(self)
         min_icon = self.style().standardIcon(QtW.QStyle.StandardPixmap.SP_TitleBarMinButton)
         self.min_button.setIcon(min_icon)
-        self.min_button.setGraphicsEffect(effect)
         self.min_button.clicked.connect(self.window().showMinimized)
 
         # Close button
         self.close_button = QtW.QToolButton(self)
+        self.close_button.setObjectName("Close")
         close_icon = self.style().standardIcon(QtW.QStyle.StandardPixmap.SP_TitleBarCloseButton)
         self.close_button.setIcon(close_icon)
         self.close_button.clicked.connect(self.window().close)
@@ -49,7 +45,7 @@ class SteamyTitleBar(QtW.QWidget):
         buttons = [self.min_button, self.close_button]
         for button in buttons:
             button.setFocusPolicy(Qt.FocusPolicy.NoFocus)
-            button.setFixedSize(QSize(28, 28))
+            button.setFixedSize(QSize(30, 30))
             title_bar_layout.addWidget(button)
 
     def mousePressEvent(self, event: QMouseEvent) -> None:  # noqa: N802
@@ -69,14 +65,19 @@ class SteamyMainWindow(QtW.QMainWindow):
         self.setFixedSize(QSize(400, 630))
         self.setWindowFlags(Qt.WindowType.FramelessWindowHint)
 
-        # Titlebar
         self.title_bar = SteamyTitleBar(self)
-        self.title_bar.setFixedHeight(30)
+        self.title_bar.setFixedSize(391, 30)
 
         # Contains the logo, dropdown, and buttons
-        top_layout = QtW.QVBoxLayout()
+        top_container = QtW.QWidget()
+        top_container.setFixedSize(QSize(400,300))
+        #top_container.setStyleSheet("background: red")
+        top_layout = QtW.QVBoxLayout(top_container)
         # Contains the settings notebook and anything inside of it
-        bottom_layout = QtW.QVBoxLayout()
+        bottom_container = QtW.QWidget()
+        bottom_container.setFixedSize(QSize(400,300))
+        bottom_container.setStyleSheet("border-bottom-left-radius: 5px; border-bottom-right-radius: 5px")
+        bottom_layout = QtW.QVBoxLayout(bottom_container)
 
         # === LOGO ===
         logo_layout = QtW.QHBoxLayout()
@@ -136,7 +137,7 @@ class SteamyMainWindow(QtW.QMainWindow):
         self.tab_master = QtW.QTabWidget()
         self.tab_booru = QtW.QWidget()
         self.tab_dev = QtW.QWidget()
-        self.tab_master.setFixedHeight(300)
+        self.tab_master.setFixedHeight(250)
 
         self.tab_master.addTab(self.tab_booru, "Booru")
         self.tab_master.addTab(self.tab_dev, "Tools")
@@ -161,13 +162,13 @@ class SteamyMainWindow(QtW.QMainWindow):
 
         # wrap all of that in a container widget, apply the root layout, then set it
         root = QtW.QWidget()
-        root.setObjectName("RootWindow")
+        root.setAttribute(Qt.WidgetAttribute.WA_TranslucentBackground)
         root_layout = QtW.QVBoxLayout()
-        root_layout.setContentsMargins(0, 0, 0, 0)
+        root_layout.setSpacing(0)
         root_layout.setAlignment(Qt.AlignmentFlag.AlignTop)
         root_layout.addWidget(self.title_bar)
-        root_layout.addLayout(top_layout)
-        root_layout.addLayout(bottom_layout)
+        root_layout.addWidget(top_container)
+        root_layout.addWidget(bottom_container)
         root.setLayout(root_layout)
         self.setCentralWidget(root)
 

@@ -3,6 +3,7 @@ import sys
 
 import PyQt6.QtWidgets as QtW
 from PyQt6.QtGui import QFontDatabase
+from PyQt6.QtCore import Qt
 
 from window import SteamyMainWindow
 
@@ -17,6 +18,8 @@ if __name__ == "__main__":
         style = f.read()
         app.setStyleSheet(style)
     window = SteamyMainWindow()
+    window.setAttribute(Qt.WidgetAttribute.WA_TranslucentBackground)
+    window.setContentsMargins(0,0,0,0)
 
     window.show()
     app.exec()

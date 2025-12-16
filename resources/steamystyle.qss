@@ -7,9 +7,13 @@ QWidget {
 QLabel#Title {
   color: #5b636a;
   font-size: 9pt;
+  border-top-left-radius: 5px;
 }
 QToolButton {
   border: 0;
+}
+QToolButton#Close {
+  border-top-right-radius: 5px;
 }
 QPlainTextEdit#AsciiLogo {
   font-family: Consolas;
@@ -53,4 +57,7 @@ QPushButton#Resteam:hover {
 QPushButton#Resteam:disabled {
   background-color: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop: 0 #181b21, stop: 1 #22272f);
   color: #878c93;
+}
+QTabWidget {
+  border: 2px solid #ffffff;
 }
