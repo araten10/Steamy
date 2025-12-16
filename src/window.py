@@ -49,7 +49,8 @@ class SteamyTitleBar(QtW.QWidget):
             title_bar_layout.addWidget(button)
 
     def mousePressEvent(self, event: QMouseEvent) -> None:  # noqa: N802
-        self.window().windowHandle().startSystemMove()
+        if event.button() == Qt.MouseButton.LeftButton:
+            self.window().windowHandle().startSystemMove()
         super().mousePressEvent(event)
         event.accept()
 
