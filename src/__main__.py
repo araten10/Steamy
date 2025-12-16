@@ -2,8 +2,8 @@ import logging
 import sys
 
 import PyQt6.QtWidgets as QtW
-from PyQt6.QtGui import QFontDatabase
 from PyQt6.QtCore import Qt
+from PyQt6.QtGui import QFontDatabase
 
 from window import SteamyMainWindow
 

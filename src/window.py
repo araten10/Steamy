@@ -1,6 +1,6 @@
 import PyQt6.QtWidgets as QtW
 from PyQt6.QtCore import QSize, Qt
-from PyQt6.QtGui import QColor, QMouseEvent
+from PyQt6.QtGui import QMouseEvent
 
 from games import LibraryDumperThread, get_game_db
 from pornify import PornifyThread, resteam
@@ -54,6 +54,7 @@ class SteamyTitleBar(QtW.QWidget):
         super().mousePressEvent(event)
         event.accept()
 
+
 class SteamyMainWindow(QtW.QMainWindow):
     def __init__(self) -> None:
         super().__init__()
@@ -71,12 +72,12 @@ class SteamyMainWindow(QtW.QMainWindow):
 
         # Contains the logo, dropdown, and buttons
         top_container = QtW.QWidget()
-        top_container.setFixedSize(QSize(400,300))
-        #top_container.setStyleSheet("background: red")
+        top_container.setFixedSize(QSize(400, 300))
+        # top_container.setStyleSheet("background: red")
         top_layout = QtW.QVBoxLayout(top_container)
         # Contains the settings notebook and anything inside of it
         bottom_container = QtW.QWidget()
-        bottom_container.setFixedSize(QSize(400,300))
+        bottom_container.setFixedSize(QSize(400, 300))
         bottom_container.setStyleSheet("border-bottom-left-radius: 5px; border-bottom-right-radius: 5px")
         bottom_layout = QtW.QVBoxLayout(bottom_container)
 
@@ -165,7 +166,7 @@ class SteamyMainWindow(QtW.QMainWindow):
         root = QtW.QWidget()
         root.setAttribute(Qt.WidgetAttribute.WA_TranslucentBackground)
         root_layout = QtW.QVBoxLayout()
-        root_layout.setContentsMargins(0,0,0,0)
+        root_layout.setContentsMargins(0, 0, 0, 0)
         root_layout.setSpacing(0)
         root_layout.setAlignment(Qt.AlignmentFlag.AlignTop)
         root_layout.addWidget(self.title_bar)
