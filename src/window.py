@@ -66,7 +66,7 @@ class SteamyMainWindow(QtW.QMainWindow):
         self.setWindowFlags(Qt.WindowType.FramelessWindowHint)
 
         self.title_bar = SteamyTitleBar(self)
-        self.title_bar.setFixedSize(391, 30)
+        self.title_bar.setFixedSize(400, 30)
 
         # Contains the logo, dropdown, and buttons
         top_container = QtW.QWidget()
@@ -164,6 +164,7 @@ class SteamyMainWindow(QtW.QMainWindow):
         root = QtW.QWidget()
         root.setAttribute(Qt.WidgetAttribute.WA_TranslucentBackground)
         root_layout = QtW.QVBoxLayout()
+        root_layout.setContentsMargins(0,0,0,0)
         root_layout.setSpacing(0)
         root_layout.setAlignment(Qt.AlignmentFlag.AlignTop)
         root_layout.addWidget(self.title_bar)

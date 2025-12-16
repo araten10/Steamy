@@ -19,7 +19,6 @@ if __name__ == "__main__":
         app.setStyleSheet(style)
     window = SteamyMainWindow()
     window.setAttribute(Qt.WidgetAttribute.WA_TranslucentBackground)
-    window.setContentsMargins(0,0,0,0)
 
     window.show()
     app.exec()
