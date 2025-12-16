@@ -54,26 +54,8 @@ class SteamyTitleBar(QtW.QWidget):
 
     def mousePressEvent(self, event: QMouseEvent) -> None:  # noqa: N802
         self.window().windowHandle().startSystemMove()
-        # if event.button() == Qt.MouseButton.LeftButton:
-        #     self.initial_pos = event.position().toPoint()
         super().mousePressEvent(event)
         event.accept()
-
-    # def mouseMoveEvent(self, event: QMouseEvent) -> None:
-    #     if self.initial_pos is not None:
-    #         delta = event.position().toPoint() - self.initial_pos
-    #         self.window().move(
-    #             self.window().x() + delta.x(),
-    #             self.window().y() + delta.y(),
-    #         )
-    #     super().mouseMoveEvent(event)
-    #     event.accept()
-
-    # def mouseReleaseEvent(self, event: QMouseEvent) -> None:
-    #     self.initial_pos = None
-    #     super().mouseReleaseEvent(event)
-    #     event.accept()
-
 
 class SteamyMainWindow(QtW.QMainWindow):
     def __init__(self) -> None:
