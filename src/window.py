@@ -156,7 +156,7 @@ class SteamyMainWindow(QtW.QMainWindow):
         self.r34_api_key_edit = QtW.QLineEdit(self.config.r34_api_key)
         tab_booru.layout.addWidget(self.r34_api_key_edit)
 
-        self.r34_user_id_edit = QtW.QLineEdit(str(self.config.r34_user_id))
+        self.r34_user_id_edit = QtW.QLineEdit(str(self.config.r34_user_id or ""))
         tab_booru.layout.addWidget(self.r34_user_id_edit)
 
         save_button = QtW.QPushButton("Save")
