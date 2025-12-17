@@ -21,8 +21,9 @@ class SteamyDanbooru(booru.Danbooru):
         query = f"{game.danbooru or self.fallback_query} {self.base_query}"
         return await super().search(query=query)
 
-    def filter_images(self, posts: list) -> list:
-        return list(filter(lambda post: post["file_ext"] in ["png", "jpg", "jpeg"], posts))
+    def filter(self, posts: list) -> list:
+        # Filter out non-images and removed posts
+        return list(filter(lambda post: post["file_ext"] in ["png", "jpg", "jpeg"] and "file_url" in post, posts))
 
 
 class SteamyRule34(booru.Rule34):
@@ -43,7 +44,7 @@ class SteamyRule34(booru.Rule34):
         query = f"{game.rule34 or self.fallback_query} {self.base_query}"
         return await super().search(query=query)
 
-    def filter_images(self, posts: list) -> list:
+    def filter(self, posts: list) -> list:
         return list(filter(lambda post: post["file_url"].split(".")[-1] in ["png", "jpg", "jpeg"], posts))
 
 
