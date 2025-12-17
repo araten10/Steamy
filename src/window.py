@@ -69,8 +69,8 @@ class SteamyMainWindow(QtW.QMainWindow):
         self.setFixedSize(QSize(400, 630))
         self.setWindowFlags(Qt.WindowType.FramelessWindowHint)
 
-        self.title_bar = SteamyTitleBar(self)
-        self.title_bar.setFixedSize(400, 30)
+        title_bar = SteamyTitleBar(self)
+        title_bar.setFixedSize(400, 30)
 
         # Contains the logo, dropdown, and buttons
         top_container = QtW.QWidget()
@@ -87,17 +87,17 @@ class SteamyMainWindow(QtW.QMainWindow):
         logo_layout = QtW.QHBoxLayout()
         top_layout.addLayout(logo_layout)
 
-        self.logo_ascii = QtW.QPlainTextEdit()
-        self.logo_ascii.setObjectName("AsciiLogo")
-        self.logo_ascii.setReadOnly(True)
-        self.logo_ascii.setTextInteractionFlags(Qt.TextInteractionFlag.NoTextInteraction)
-        self.logo_ascii.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        logo_ascii = QtW.QPlainTextEdit()
+        logo_ascii.setObjectName("AsciiLogo")
+        logo_ascii.setReadOnly(True)
+        logo_ascii.setTextInteractionFlags(Qt.TextInteractionFlag.NoTextInteraction)
+        logo_ascii.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
         # TODO: Set height and width to be dynamic so it is easier to center, might not change anything
-        self.logo_ascii.setFixedHeight(96)
-        self.logo_ascii.setFixedWidth(375)
-        self.logo_ascii.viewport().setCursor(Qt.CursorShape.ArrowCursor)
-        self.logo_ascii.setPlainText(LOGO)
-        logo_layout.addWidget(self.logo_ascii)
+        logo_ascii.setFixedHeight(96)
+        logo_ascii.setFixedWidth(375)
+        logo_ascii.viewport().setCursor(Qt.CursorShape.ArrowCursor)
+        logo_ascii.setPlainText(LOGO)
+        logo_layout.addWidget(logo_ascii)
 
         # === USER SELECTION ===
 
@@ -138,31 +138,45 @@ class SteamyMainWindow(QtW.QMainWindow):
 
         # === TAB WIDGET ===
 
-        self.tab_master = QtW.QTabWidget()
-        self.tab_booru = QtW.QWidget()
-        self.tab_dev = QtW.QWidget()
-        self.tab_master.setFixedHeight(250)
+        tab_master = QtW.QTabWidget()
+        tab_booru = QtW.QWidget()
+        tab_dev = QtW.QWidget()
+        tab_master.setFixedHeight(250)
 
-        self.tab_master.addTab(self.tab_booru, "Booru")
-        self.tab_master.addTab(self.tab_dev, "Tools")
+        tab_master.addTab(tab_booru, "Booru")
+        tab_master.addTab(tab_dev, "Tools")
 
         # === BOORU TAB ===
-        self.tab_booru.layout = QtW.QVBoxLayout()
+        tab_booru.layout = QtW.QVBoxLayout()
 
-        self.tab_booru.setLayout(self.tab_booru.layout)
+        self.booru_dropdown = QtW.QComboBox()
+        self.booru_dropdown.addItems(self.config.supported_boorus)
+        tab_booru.layout.addWidget(self.booru_dropdown)
+
+        self.r34_api_key_edit = QtW.QLineEdit(self.config.r34_api_key)
+        tab_booru.layout.addWidget(self.r34_api_key_edit)
+
+        self.r34_user_id_edit = QtW.QLineEdit(str(self.config.r34_user_id))
+        tab_booru.layout.addWidget(self.r34_user_id_edit)
+
+        save_button = QtW.QPushButton("Save")
+        save_button.clicked.connect(self.on_save_click)
+        tab_booru.layout.addWidget(save_button)
+
+        tab_booru.setLayout(tab_booru.layout)
 
         # === DEV TAB ===
-        self.tab_dev.layout = QtW.QVBoxLayout()
+        tab_dev.layout = QtW.QVBoxLayout()
 
         self.dump_button = QtW.QPushButton("Dump Game Library")
         self.dump_button.clicked.connect(self.on_dump_click)
-        self.tab_dev.layout.addWidget(self.dump_button)
+        tab_dev.layout.addWidget(self.dump_button)
 
-        self.tab_dev.setLayout(self.tab_dev.layout)
+        tab_dev.setLayout(tab_dev.layout)
 
         # === TAB WIDGET END ===
 
-        bottom_layout.addWidget(self.tab_master)
+        bottom_layout.addWidget(tab_master)
 
         # wrap all of that in a container widget, apply the root layout, then set it
         root = QtW.QWidget()
@@ -171,7 +185,7 @@ class SteamyMainWindow(QtW.QMainWindow):
         root_layout.setContentsMargins(0, 0, 0, 0)
         root_layout.setSpacing(0)
         root_layout.setAlignment(Qt.AlignmentFlag.AlignTop)
-        root_layout.addWidget(self.title_bar)
+        root_layout.addWidget(title_bar)
         root_layout.addWidget(top_container)
         root_layout.addWidget(bottom_container)
         root.setLayout(root_layout)
@@ -193,6 +207,17 @@ class SteamyMainWindow(QtW.QMainWindow):
         self.pornify_thread.done.connect(lambda: self.set_buttons_enabled(True))
         self.pornify_thread.progress.connect(self.update_pornify_progress)
         self.pornify_thread.start()
+
+    def on_save_click(self) -> None:
+        user_id = self.r34_user_id_edit.text()
+        self.config.raw = {
+            "default_booru": self.booru_dropdown.currentText(),
+            "rule34": {
+                "api_key": self.r34_api_key_edit.text() or None,
+                "user_id": int(user_id) if user_id else None,
+            },
+        }
+        self.config.save()
 
     def on_dump_click(self) -> None:
         self.set_buttons_enabled(False)
