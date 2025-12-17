@@ -61,3 +61,13 @@ QPushButton#Resteam:disabled {
 QTabWidget {
   border: 2px solid #ffffff;
 }
+QWidget#Tab {
+  background-color: #292e37;
+}
+QGroupBox {
+  border: 1px solid #5b636a;
+  font-size: 9pt;
+}
+QLineEdit {
+  background-color: #1d2026
+}

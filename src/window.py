@@ -100,10 +100,15 @@ class SteamyMainWindow(QtW.QMainWindow):
 
         tab_master = QtW.QTabWidget()
         tab_booru = QtW.QWidget()
+        tab_api = QtW.QWidget()
         tab_dev = QtW.QWidget()
+        tab_booru.setObjectName("Tab")
+        tab_api.setObjectName("Tab")
+        tab_dev.setObjectName("Tab")
         tab_master.setFixedHeight(250)
 
         tab_master.addTab(tab_booru, "Booru")
+        tab_master.addTab(tab_api, "API")
         tab_master.addTab(tab_dev, "Tools")
 
         # === BOORU TAB ===
@@ -113,17 +118,39 @@ class SteamyMainWindow(QtW.QMainWindow):
         self.booru_dropdown.addItems(self.config.supported_boorus)
         tab_booru.layout.addWidget(self.booru_dropdown)
 
-        self.r34_api_key_edit = QtW.QLineEdit(self.config.r34_api_key)
-        tab_booru.layout.addWidget(self.r34_api_key_edit)
-
-        self.r34_user_id_edit = QtW.QLineEdit(str(self.config.r34_user_id or ""))
-        tab_booru.layout.addWidget(self.r34_user_id_edit)
-
-        save_button = QtW.QPushButton("Save")
-        save_button.clicked.connect(self.on_save_click)
-        tab_booru.layout.addWidget(save_button)
+        booru_save_button = QtW.QPushButton("Save")
+        booru_save_button.clicked.connect(self.on_save_click)
+        tab_booru.layout.addWidget(booru_save_button)
 
         tab_booru.setLayout(tab_booru.layout)
+
+        # === API TAB ===
+        tab_api.layout = QtW.QVBoxLayout()
+
+        # Rule34
+        self.api_r34 = QtW.QGroupBox("rule34")
+        r34_layout = QtW.QVBoxLayout(self.api_r34)
+
+        r34_key_layout = QtW.QHBoxLayout()
+        r34_key_layout.addWidget(QtW.QLabel(parent=self, text="API Key:"))
+        self.r34_api_key_edit = QtW.QLineEdit(self.config.r34_api_key)
+        r34_key_layout.addWidget(self.r34_api_key_edit)
+        r34_layout.addLayout(r34_key_layout)
+
+        r34_id_layout = QtW.QHBoxLayout()
+        r34_id_layout.addWidget(QtW.QLabel(parent=self, text="User ID:"))
+        self.r34_user_id_edit = QtW.QLineEdit(str(self.config.r34_user_id or ""))
+        r34_id_layout.addWidget(self.r34_user_id_edit)
+        r34_layout.addLayout(r34_id_layout)
+
+        self.api_r34.setLayout(r34_layout)
+        tab_api.layout.addWidget(self.api_r34)
+
+        api_save_button = QtW.QPushButton("Save")
+        api_save_button.clicked.connect(self.on_save_click)
+        tab_api.layout.addWidget(api_save_button)
+
+        tab_api.setLayout(tab_api.layout)
 
         # === DEV TAB ===
         tab_dev.layout = QtW.QVBoxLayout()
