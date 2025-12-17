@@ -2,6 +2,8 @@ import asyncio
 import logging
 import random
 import shutil
+import os
+import time
 from json.decoder import JSONDecodeError
 
 import aiohttp
@@ -165,6 +167,8 @@ class PornifyThread(QThread):
                         async with session.get(url) as image_res:
                             with open(self.grid.path / f"{game.id}{art.suffix}.png", "wb") as f:
                                 f.write(await image_res.read())
+                            #curr_time = time.time()
+                            #os.utime(self.grid.path / f"{game.id}{art.suffix}.png", (curr_time, curr_time))
                             break
                 except ClientError as e:
                     logging.warning(f"Image download failed with {type(e).__name__}: {e}, retrying...")
