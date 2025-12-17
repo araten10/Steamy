@@ -138,7 +138,7 @@ class PornifyThread(QThread):
     async def search_booru(self, game: Game) -> list:
         try:
             res = await self.booru.search(game)
-            return self.booru.filter_images(booru.resolve(res))
+            return self.booru.filter(booru.resolve(res))
         except (ClientError, JSONDecodeError) as e:
             logging.warning(f"Booru search failed with {type(e).__name__}: {e}, requeueing...")
             return None
