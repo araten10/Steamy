@@ -1,11 +1,11 @@
 import PyQt6.QtWidgets as QtW
 from PyQt6.QtCore import QSize, Qt
-from PyQt6.QtGui import QMouseEvent
 
 from config import Config
 from games import LibraryDumperThread, get_game_db
 from pornify import PornifyThread, resteam
 from steam import Steam
+from title import SteamyTitleBar
 
 LOGO = r"""      :::::::: ::::::::::: ::::::::::     :::       :::   :::  :::   :::
     :+:    :+:    :+:     :+:          :+: :+:    :+:+: :+:+: :+:   :+:
@@ -14,46 +14,6 @@ LOGO = r"""      :::::::: ::::::::::: ::::::::::     :::       :::   :::  :::   
         +#+    +#+     +#+        +#+     +#+ +#+       +#+   +#+
 #+#    #+#    #+#     #+#        #+#     #+# #+#       #+#   #+#
 ########     ###     ########## ###     ### ###       ###   ###             """
-
-
-class SteamyTitleBar(QtW.QWidget):
-    def __init__(self, parent: QtW.QWidget) -> None:
-        super().__init__(parent)
-        self.initial_pos = None
-        title_bar_layout = QtW.QHBoxLayout(self)
-        title_bar_layout.setContentsMargins(0, 0, 0, 0)
-        title_bar_layout.setSpacing(0)
-
-        self.title = QtW.QLabel("Steamy", self)
-        self.title.setObjectName("Title")
-        self.title.setContentsMargins(5, 5, 0, 0)
-
-        self.title.setAlignment(Qt.AlignmentFlag.AlignLeft)
-        title_bar_layout.addWidget(self.title)
-        # Min button
-        self.min_button = QtW.QToolButton(self)
-        min_icon = self.style().standardIcon(QtW.QStyle.StandardPixmap.SP_TitleBarMinButton)
-        self.min_button.setIcon(min_icon)
-        self.min_button.clicked.connect(self.window().showMinimized)
-
-        # Close button
-        self.close_button = QtW.QToolButton(self)
-        self.close_button.setObjectName("Close")
-        close_icon = self.style().standardIcon(QtW.QStyle.StandardPixmap.SP_TitleBarCloseButton)
-        self.close_button.setIcon(close_icon)
-        self.close_button.clicked.connect(self.window().close)
-
-        buttons = [self.min_button, self.close_button]
-        for button in buttons:
-            button.setFocusPolicy(Qt.FocusPolicy.NoFocus)
-            button.setFixedSize(QSize(30, 30))
-            title_bar_layout.addWidget(button)
-
-    def mousePressEvent(self, event: QMouseEvent) -> None:  # noqa: N802
-        if event.button() == Qt.MouseButton.LeftButton:
-            self.window().windowHandle().startSystemMove()
-        super().mousePressEvent(event)
-        event.accept()
 
 
 class SteamyMainWindow(QtW.QMainWindow):
