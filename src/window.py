@@ -105,7 +105,7 @@ class SteamyMainWindow(QtW.QMainWindow):
         tab_booru.setObjectName("Tab")
         tab_api.setObjectName("Tab")
         tab_dev.setObjectName("Tab")
-        tab_master.setFixedHeight(250)
+        tab_master.setFixedHeight(285)
 
         tab_master.addTab(tab_booru, "Booru")
         tab_master.addTab(tab_api, "API")
@@ -116,7 +116,11 @@ class SteamyMainWindow(QtW.QMainWindow):
 
         self.booru_dropdown = QtW.QComboBox()
         self.booru_dropdown.addItems(self.config.supported_boorus)
-        tab_booru.layout.addWidget(self.booru_dropdown)
+        booru_dropdown_layout = QtW.QVBoxLayout()
+        booru_dropdown_layout.addWidget(self.booru_dropdown)
+        self.booru_dropdown_gb = QtW.QGroupBox("Default Booru")
+        self.booru_dropdown_gb.setLayout(booru_dropdown_layout)
+        tab_booru.layout.addWidget(self.booru_dropdown_gb)
 
         booru_save_button = QtW.QPushButton("Save")
         booru_save_button.clicked.connect(self.on_save_click)

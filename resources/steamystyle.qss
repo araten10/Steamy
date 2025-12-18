@@ -66,6 +66,7 @@ QWidget#Tab {
 }
 QGroupBox {
   border: 1px solid #5b636a;
+  font-family: Consolas;
   font-size: 9pt;
 }
 QLineEdit {
