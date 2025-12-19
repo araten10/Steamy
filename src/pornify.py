@@ -31,8 +31,11 @@ class PornifyThread(QThread):
         self.booru = get_booru(config)
 
         self.search_queue: list[Game] = [self.game_db.get(game_id, Game(game_id)) for game_id in steam.game_ids]
-        self.download_queue: list[Game, list] = []
+        self.search_lock = asyncio.Lock()
         self.search_done = False
+
+        self.download_queue: list[Game, list] = []
+        self.download_lock = asyncio.Lock()
         self.download_start = asyncio.Event()
 
         self.should_run = True
@@ -85,25 +88,32 @@ class PornifyThread(QThread):
 
     async def handle_search(self) -> None:
         tasks = []
+        task_lock = asyncio.Lock()
 
-        def callback(task: asyncio.Task, game_id: str) -> None:
-            # TODO: Race conditions?
+        async def callback(task: asyncio.Task, game_id: str) -> None:
+            async with task_lock:
+                tasks.remove(task)
+
             posts = task.result()
             if posts is None:
-                self.search_queue.append(game_id)
+                async with self.search_lock:
+                    self.search_queue.append(game_id)
             elif len(posts) > 3:
-                tasks.remove(task)
-                self.download_queue.append((game_id, posts))
-                self.download_start.set()
+                async with self.download_lock:
+                    self.download_queue.append((game_id, posts))
+                    self.download_start.set()
             else:
                 logging.warning(f"Not enough results for query {game.danbooru}, got {len(posts)} but expected at least 3")
 
         while len(tasks) > 0 or len(self.search_queue) > 0:
             while len(self.search_queue) > 0:
-                game = self.search_queue.pop(0)
+                async with self.search_lock:
+                    game = self.search_queue.pop(0)
                 task = asyncio.create_task(self.search_booru(game))
-                task.add_done_callback(lambda t: callback(t, game))
-                tasks.append(task)
+                task.add_done_callback(lambda t: asyncio.create_task(callback(t, game)))
+
+                async with task_lock:
+                    tasks.append(task)
 
                 # Chance to be slightly slower than required to be on the safe side
                 await asyncio.sleep(random.uniform(self.booru.rate_limit, self.booru.rate_limit * 1.25))
@@ -115,19 +125,23 @@ class PornifyThread(QThread):
 
     async def handle_download(self) -> None:
         tasks = []
+        task_lock = asyncio.Lock()
 
-        def callback(task: asyncio.Task) -> None:
-            # TODO: Race conditions?
-            tasks.remove(task)
+        async def callback(task: asyncio.Task) -> None:
+            async with task_lock:
+                tasks.remove(task)
             self.progress.emit()
 
         await self.download_start.wait()
         while len(tasks) > 0 or len(self.download_queue) > 0 or not self.search_done:
             while len(tasks) < CONCURRENT_DOWNLOADS and len(self.download_queue) > 0:
-                game, posts = self.download_queue.pop(0)
+                async with self.download_lock:
+                    game, posts = self.download_queue.pop(0)
                 task = asyncio.create_task(self.download_images(game, posts))
-                task.add_done_callback(callback)
-                tasks.append(task)
+                task.add_done_callback(lambda t: asyncio.create_task(callback(t)))
+
+                async with task_lock:
+                    tasks.append(task)
 
             await asyncio.wait(tasks, return_when=asyncio.FIRST_COMPLETED)
 
