@@ -1,1 +1,33 @@
 # Steamy
+Steamy is a program that allows you to replace all display images in your Steam library with booru images. Alongside downloading generic images for every game, Steamy also supports specific hardcoded games which will download targetted images. The images can then be turned off and saved to a backup folder at the click of a button, or redownloaded if you didn't like the ones that were chosen.
+
+There is no adult content included in the Steamy installation, but the implication is that you'd be downloading 18+ images from boorus, so this program is intended for adults only. We even named the button to initiate the process "Pornify", so there's no mystery there.
+
+# Installation
+asdfg write installation here when its finalized
+
+Rule34 and E621 both require API keys to download images from their servers. If you want to use these boorus, you need to make an account on these sites and generate a key. [does e621? their sign up says they are "open to web crawlers"] Rule34 does not require an email to sign up, a
+
+# Customization
+By default Steamy should detect every game you own and overwrite its image, but if you want a game to have art with specific tags, you can add it in yourself. There are no plans for there to be a GUI editor for this, but it is fairly simple to do with only a few steps.
+
+Firstly, you can run **Dump Game Library** in the **API** tab, selecting what folder you want to save the resulting json file in. It will go through every one of your steam games and tie the game ID to the game's name. This can take over an hour if you have a good amount of games, but shouldn't take up too much processing power so you can safely leave it on in the background. The process is deliberately rate limited, this is so steam doesn't block your requests. 
+
+Once finished, you can then open up `resources/game_database.json` and add any games from your newly created `dumped_game_database.json` into there. You can use prior entries as an example for doing this, but this is a full list of potential parameters you can give an entry:
+```
+    "<id>": {
+    "name": <name>
+    "danbooru": <danbooru>
+    "rule34": <rule34>
+    "e621": <e621>
+    },
+```
+Example: [use a more descriptive example, probably one with different tags for one of the boorus?]
+```
+    "10": {
+      "name": "Counter-Strike",
+      "danbooru": "counter-strike"
+      "rule34": "counter-strike"
+      "e621": "counter-strike"
+    },
+```
