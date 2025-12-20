@@ -4,6 +4,8 @@ from pathlib import Path
 
 from voluptuous import ALLOW_EXTRA, Any, Schema
 
+from utils import load_json
+
 
 class Config:
     def __init__(self) -> None:
@@ -22,7 +24,6 @@ class Config:
             extra=ALLOW_EXTRA,
         )
 
-        # TODO: Write this as default
         self.raw = {
             "default_booru": "danbooru",
             "rule34": {
@@ -39,17 +40,28 @@ class Config:
         self.r34_user_id = self.raw["rule34"]["user_id"]
 
     def load_fresh(self) -> None:
-        if self.path.is_file():
-            with open(self.path, "r") as f:
-                self.raw = json.load(f)
-            self.schema(self.raw)  # TODO: Error handling
+        raw = load_json(self.path, self.schema)
+        if raw:
+            self.raw = raw
+        else:
+            logging.info(f"Writing {self.path} with default values.")
+            with open(self.path, "w") as f:
+                json.dump(self.raw, f, indent=2)
 
         self.load()
-        logging.info(f"Config loaded {self.raw}")  # TODO: This logs API keys!
+        logging.info(f"Config loaded {self.censor()}")
 
     def save(self) -> None:
         with open(self.path, "w") as f:
             json.dump(self.raw, f, indent=2)
 
         self.load()
-        logging.info(f"Config saved {self.raw}")  # TODO: This logs API keys!
+        logging.info(f"Config saved {self.censor()}")
+
+    def censor(self) -> dict:
+        censored = self.raw.copy()
+        if censored["rule34"]["api_key"]:
+            censored["rule34"]["api_key"] = "CENSORED"
+        if censored["rule34"]["user_id"]:
+            censored["rule34"]["user_id"] = "CENSORED"
+        return censored

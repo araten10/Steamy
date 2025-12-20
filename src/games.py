@@ -8,8 +8,10 @@ from time import sleep
 import PyQt6.QtWidgets as QtW
 import requests
 from PyQt6.QtCore import QThread, pyqtSignal
+from voluptuous import ALLOW_EXTRA, Number, Optional, Schema
 
 from steam import Steam
+from utils import load_json
 
 
 @dataclass
@@ -21,16 +23,24 @@ class Game:
 
 
 def get_game_db() -> dict[str, Game]:
-    game_db = {}
     path = Path(__file__).parent.parent / "resources" / "game_database.json"
 
-    if path.is_file():
-        with open(path, "r") as f:
-            game_db_json = json.load(f)  # TODO: Validation
+    schema = Schema(
+        {
+            "games": {
+                Number(scale=0): {
+                    "name": str,
+                    Optional("danbooru"): str,
+                    Optional("rule34"): str,
+                }
+            }
+        },
+        required=True,
+        extra=ALLOW_EXTRA,
+    )
 
-        for game_id, data in game_db_json["games"].items():
-            game_db[game_id] = Game(game_id, **data)
-
+    game_db_json = load_json(path, schema) or {"games": {}}
+    game_db = {game_id: Game(game_id, **data) for game_id, data in game_db_json["games"].items()}
     return game_db
 
 
