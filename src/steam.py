@@ -48,13 +48,17 @@ class Steam:
         self.usernames = []
         self.username_to_id = {}
         for user_id in self.user_ids:
-            localconfig = self.path / "userdata" / user_id / "config" / "localconfig.vdf"
-            vdf_str = vdf.dumps(vdf.load(open(localconfig, encoding="utf8")))
-            vdf_dict = vdf.loads(vdf_str)
+            try:
+                localconfig = self.path / "userdata" / user_id / "config" / "localconfig.vdf"
+                vdf_str = vdf.dumps(vdf.load(open(localconfig, encoding="utf8")))
+                vdf_dict = vdf.loads(vdf_str)
 
-            username = vdf_dict["UserLocalConfigStore"]["friends"]["PersonaName"]
-            self.usernames.append(username)
-            self.username_to_id[username] = user_id
+                username = vdf_dict["UserLocalConfigStore"]["friends"]["PersonaName"]
+                self.usernames.append(username)
+                self.username_to_id[username] = user_id
+            except FileNotFoundError as e:
+                logging.warning(f"Error opening USERID {user_id}: {e}. Skipping...")
+                continue
 
 
 class Grid:
