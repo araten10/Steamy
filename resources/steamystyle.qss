@@ -58,6 +58,14 @@ QPushButton#Resteam:disabled {
   background-color: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop: 0 #181b21, stop: 1 #22272f);
   color: #878c93;
 }
+QProgressBar {
+  background-color: #151619;
+  height: 4px;
+  border: 1px black;
+}
+QProgressBar::chunk {
+  background-color: #245ecf;
+}
 QTabWidget {
   border: 2px solid #ffffff;
 }
