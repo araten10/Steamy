@@ -2,6 +2,7 @@ import asyncio
 import logging
 import random
 import shutil
+import subprocess
 from json.decoder import JSONDecodeError
 
 import aiohttp
@@ -64,8 +65,10 @@ class PornifyThread(QThread):
             message.exec()
 
             if message.clickedButton() == restore:
+                subprocess.call("taskkill /im steam.exe")
                 self.grid.restore_backup(self.grid.porn_backup_path)
                 self.should_run = False
+                subprocess.call(f"{steam.path}/steam.exe")
             elif message.clickedButton() == download:
                 shutil.rmtree(self.grid.porn_backup_path)
             else:
@@ -79,12 +82,14 @@ class PornifyThread(QThread):
         logging.info("Pornify done")
 
     async def pornify(self) -> None:
+        subprocess.call("taskkill /im steam.exe")
         self.grid.path.mkdir(parents=True, exist_ok=True)
         self.grid.porn_flag.touch(exist_ok=True)
         await asyncio.gather(
             asyncio.create_task(self.handle_search()),
             asyncio.create_task(self.handle_download()),
         )
+        subprocess.call(f"{steam.path}/steam.exe")
 
     async def handle_search(self) -> None:
         tasks = []
@@ -188,10 +193,12 @@ class PornifyThread(QThread):
 def resteam(steam: Steam, username: str) -> None:
     grid = Grid(steam, username)
 
+    subprocess.call("taskkill /f /im steam.exe")
     if grid.porn_flag.is_file():
         proceed = grid.make_backup()
         if not proceed:
             return
         grid.restore_backup(grid.custom_backup_path)
+    subprocess.call(f"{steam.path}/steam.exe")
 
     logging.info("Resteam done")
