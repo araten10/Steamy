@@ -2,7 +2,7 @@ import json
 import logging
 from pathlib import Path
 
-from voluptuous import ALLOW_EXTRA, Any, Schema
+from voluptuous import ALLOW_EXTRA, All, Any, Range, Schema
 
 from utils import load_json
 
@@ -15,6 +15,7 @@ class Config:
         self.schema = Schema(
             {
                 "default_booru": Any(*self.supported_boorus),
+                "concurrent_downloads": All(int, Range(min=1)),
                 "rule34": {
                     "api_key": Any(str, None),
                     "user_id": Any(int, None),
@@ -26,6 +27,7 @@ class Config:
 
         self.raw = {
             "default_booru": "danbooru",
+            "concurrent_downloads": 10,
             "rule34": {
                 "api_key": None,
                 "user_id": None,
@@ -36,6 +38,7 @@ class Config:
 
     def load(self) -> None:
         self.default_booru = self.raw["default_booru"]
+        self.concurrent_downloads = self.raw["concurrent_downloads"]  # TODO: Set from GUI
         self.r34_api_key = self.raw["rule34"]["api_key"]
         self.r34_user_id = self.raw["rule34"]["user_id"]
 

@@ -16,7 +16,6 @@ from games import Game
 from steam import Art, Grid, Steam
 
 NO_RESULTS_ERROR = "no results, make sure you spelled everything right"
-CONCURRENT_DOWNLOADS = 10  # TODO: Make a setting
 
 
 class PornifyThread(QThread):
@@ -29,6 +28,7 @@ class PornifyThread(QThread):
         self.game_db = game_db
         self.grid = Grid(steam, username)
         self.booru = get_booru(config)
+        self.concurrent_downloads = config.concurrent_downloads
 
         self.search_queue: list[Game] = [self.game_db.get(game_id, Game(game_id)) for game_id in steam.game_ids]
         self.search_lock = asyncio.Lock()
@@ -134,7 +134,7 @@ class PornifyThread(QThread):
 
         await self.download_start.wait()
         while len(tasks) > 0 or len(self.download_queue) > 0 or not self.search_done:
-            while len(tasks) < CONCURRENT_DOWNLOADS and len(self.download_queue) > 0:
+            while len(tasks) < self.concurrent_downloads and len(self.download_queue) > 0:
                 async with self.download_lock:
                     game, posts = self.download_queue.pop(0)
                 task = asyncio.create_task(self.download_images(game, posts))
