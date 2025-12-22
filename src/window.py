@@ -136,12 +136,14 @@ class SteamyMainWindow(QtW.QMainWindow):
         r34_key_layout = QtW.QHBoxLayout()
         r34_key_layout.addWidget(QtW.QLabel(parent=self, text="API Key:"))
         self.r34_api_key_edit = QtW.QLineEdit(self.config.r34_api_key)
+        self.r34_api_key_edit.setStyleSheet("background-color: #1d2026")
         r34_key_layout.addWidget(self.r34_api_key_edit)
         r34_layout.addLayout(r34_key_layout)
 
         r34_id_layout = QtW.QHBoxLayout()
         r34_id_layout.addWidget(QtW.QLabel(parent=self, text="User ID:"))
         self.r34_user_id_edit = QtW.QLineEdit(str(self.config.r34_user_id or ""))
+        self.r34_user_id_edit.setStyleSheet("background-color: #1d2026")
         r34_id_layout.addWidget(self.r34_user_id_edit)
         r34_layout.addLayout(r34_id_layout)
 
@@ -155,12 +157,14 @@ class SteamyMainWindow(QtW.QMainWindow):
         e621_key_layout = QtW.QHBoxLayout()
         e621_key_layout.addWidget(QtW.QLabel(parent=self, text="API Key:"))
         self.e621_api_key_edit = QtW.QLineEdit(self.config.e621_api_key)
+        self.e621_api_key_edit.setStyleSheet("background-color: #1d2026")
         e621_key_layout.addWidget(self.e621_api_key_edit)
         e621_layout.addLayout(e621_key_layout)
 
         e621_id_layout = QtW.QHBoxLayout()
         e621_id_layout.addWidget(QtW.QLabel(parent=self, text="User ID:"))
         self.e621_user_id_edit = QtW.QLineEdit(str(self.config.e621_user_id or ""))
+        self.e621_user_id_edit.setStyleSheet("background-color: #1d2026")
         e621_id_layout.addWidget(self.e621_user_id_edit)
         e621_layout.addLayout(e621_id_layout)
 
