@@ -47,10 +47,32 @@ class SteamyRule34(booru.Rule34):
     def filter(self, posts: list) -> list:
         return list(filter(lambda post: post["file_url"].split(".")[-1] in ["png", "jpg", "jpeg"], posts))
 
+class SteamyE621(booru.E621):
+    def __init__(self, config: Config) -> None:
+        super().__init__()
+        self.specs = {"api_key": config.e621_api_key, "user_id": config.e621_user_id}
+
+        self.base_query = "order:random score:>500 -animated"
+        self.fallback_query = "-rating:safe"
+
+        self.file_url = "file_url"
+        self.sample_url = "sample_url"
+        self.width = "width"
+        self.height = "height"
+        self.rate_limit = 1
+
+    async def search(self, game: Game) -> str:
+        query = f"{game.e621 or self.fallback_query} {self.base_query}"
+        return await super().search(query=query)
+
+    def filter(self, posts: list) -> list:
+        return list(filter(lambda post: post["file_url"].split(".")[-1] in ["png", "jpg", "jpeg"], posts))
+
 
 def get_booru(config: Config) -> SteamyDanbooru | SteamyRule34:
     boorus = {
         "danbooru": SteamyDanbooru(),
         "rule34": SteamyRule34(config),  # TODO: Check if API key is available
+        "e621": SteamyE621(config), # TODO: Check if API key is available
     }
     return boorus[config.default_booru]
