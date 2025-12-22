@@ -25,13 +25,12 @@ class PornifyThread(QThread):
     def __init__(self, config: Config, steam: Steam, game_db: dict[str, Game], username: str) -> None:
         super().__init__()
 
-        self.steam = steam
         self.game_db = game_db
         self.grid = Grid(steam, username)
         self.booru = get_booru(config)
         self.concurrent_downloads = config.concurrent_downloads
 
-        self.search_queue: list[Game] = [self.game_db.get(game_id, Game(game_id)) for game_id in self.steam.game_ids]
+        self.search_queue: list[Game] = [self.game_db.get(game_id, Game(game_id)) for game_id in steam.game_ids[0:1]]
         self.search_lock = asyncio.Lock()
         self.search_done = False
 
@@ -67,7 +66,6 @@ class PornifyThread(QThread):
             if message.clickedButton() == restore:
                 self.grid.restore_backup(self.grid.porn_backup_path)
                 self.should_run = False
-                self.steam.restart()
             elif message.clickedButton() == download:
                 shutil.rmtree(self.grid.porn_backup_path)
             else:
@@ -87,7 +85,6 @@ class PornifyThread(QThread):
             asyncio.create_task(self.handle_search()),
             asyncio.create_task(self.handle_download()),
         )
-        self.steam.restart()
 
     async def handle_search(self) -> None:
         tasks = []
@@ -196,6 +193,5 @@ def resteam(steam: Steam, username: str) -> None:
         if not proceed:
             return
         grid.restore_backup(grid.custom_backup_path)
-        steam.restart()
 
     logging.info("Resteam done")

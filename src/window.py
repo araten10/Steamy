@@ -83,7 +83,7 @@ class SteamyMainWindow(QtW.QMainWindow):
 
         self.resteam_button = QtW.QPushButton("RESTEAM")
         self.resteam_button.setObjectName("Resteam")
-        self.resteam_button.clicked.connect(lambda: resteam(self.steam, self.user_dropdown.currentText()))
+        self.resteam_button.clicked.connect(self.on_resteam_click)
         button_layout.addWidget(self.resteam_button)
 
         # === PROGRESS BAR ===
@@ -224,10 +224,28 @@ class SteamyMainWindow(QtW.QMainWindow):
         self.set_buttons_enabled(False)
         self.pornify_progress.setValue(0)
 
+        def on_done() -> None:
+            self.set_buttons_enabled(True)
+            self.ask_restart("Pornify")
+
         self.pornify_thread = PornifyThread(self.config, self.steam, self.game_db, self.user_dropdown.currentText())
-        self.pornify_thread.done.connect(lambda: self.set_buttons_enabled(True))
+        self.pornify_thread.done.connect(on_done)
         self.pornify_thread.progress.connect(self.update_pornify_progress)
         self.pornify_thread.start()
+
+    def on_resteam_click(self) -> None:
+        resteam(self.steam, self.user_dropdown.currentText())
+        self.ask_restart("Resteam")
+
+    def ask_restart(self, task: str) -> None:
+        message = QtW.QMessageBox()
+        message.setIcon(QtW.QMessageBox.Icon.NoIcon)
+        message.setText(f"{task} Done")
+        message.setInformativeText("Restart Steam to refresh your library images?")
+
+        message.setStandardButtons(QtW.QMessageBox.StandardButton.Yes | QtW.QMessageBox.StandardButton.No)
+        if message.exec() == QtW.QMessageBox.StandardButton.Yes:
+            self.steam.restart()
 
     def on_save_click(self) -> None:
         user_id = self.r34_user_id_edit.text()
