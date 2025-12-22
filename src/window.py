@@ -1,3 +1,6 @@
+import os
+import platform
+
 import PyQt6.QtWidgets as QtW
 from PyQt6.QtCore import QSize, Qt
 
@@ -197,6 +200,10 @@ class SteamyMainWindow(QtW.QMainWindow):
         self.dump_button.clicked.connect(self.on_dump_click)
         tab_dev.layout.addWidget(self.dump_button)
 
+        self.folder_button = QtW.QPushButton("Open Steam Config Folder")
+        self.folder_button.clicked.connect(self.on_folder_click)
+        tab_dev.layout.addWidget(self.folder_button)
+
         tab_dev.setLayout(tab_dev.layout)
 
         # === TAB WIDGET END ===
@@ -268,3 +275,10 @@ class SteamyMainWindow(QtW.QMainWindow):
         self.dump_thread = LibraryDumperThread(self.steam, self.game_db)
         self.dump_thread.done.connect(lambda: self.set_buttons_enabled(True))
         self.dump_thread.start()
+
+    def on_folder_click(self) -> None:
+        match platform.system():
+            case "Linux":
+                os.system('xdg-open "%s"' % self.steam.path / "userdata")
+            case "Windows":
+                os.startfile(self.steam.path / "userdata")

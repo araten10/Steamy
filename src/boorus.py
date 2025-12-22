@@ -47,6 +47,7 @@ class SteamyRule34(booru.Rule34):
     def filter(self, posts: list) -> list:
         return list(filter(lambda post: post["file_url"].split(".")[-1] in ["png", "jpg", "jpeg"], posts))
 
+
 class SteamyE621(booru.E621):
     def __init__(self, config: Config) -> None:
         super().__init__()
@@ -73,6 +74,6 @@ def get_booru(config: Config) -> SteamyDanbooru | SteamyRule34:
     boorus = {
         "danbooru": SteamyDanbooru(),
         "rule34": SteamyRule34(config),  # TODO: Check if API key is available
-        "e621": SteamyE621(config), # TODO: Check if API key is available
+        "e621": SteamyE621(config),  # TODO: Check if API key is available
     }
     return boorus[config.default_booru]
