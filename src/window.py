@@ -100,15 +100,15 @@ class SteamyMainWindow(QtW.QMainWindow):
 
         tab_master = QtW.QTabWidget()
         tab_booru = QtW.QWidget()
-        tab_api = QtW.QWidget()
+        tab_steamy = QtW.QWidget()
         tab_dev = QtW.QWidget()
         tab_booru.setObjectName("Tab")
-        tab_api.setObjectName("Tab")
+        tab_steamy.setObjectName("Tab")
         tab_dev.setObjectName("Tab")
         tab_master.setFixedHeight(285)
 
         tab_master.addTab(tab_booru, "Booru")
-        tab_master.addTab(tab_api, "API")
+        tab_master.addTab(tab_steamy, "Steamy")
         tab_master.addTab(tab_dev, "Tools")
 
         # === BOORU TAB ===
@@ -122,17 +122,15 @@ class SteamyMainWindow(QtW.QMainWindow):
         self.booru_dropdown_gb.setLayout(booru_dropdown_layout)
         tab_booru.layout.addWidget(self.booru_dropdown_gb)
 
-        booru_save_button = QtW.QPushButton("Save")
-        booru_save_button.clicked.connect(self.on_save_click)
-        tab_booru.layout.addWidget(booru_save_button)
+        self.api_container = QtW.QWidget()
+        # Have to manually set the background colour on these ones for stylistic purposes
+        self.api_container.setStyleSheet("background-color: #292e37;")
+        api_layout = QtW.QHBoxLayout(self.api_container)
+        api_layout.setContentsMargins(0, 0, 0, 0)
 
-        tab_booru.setLayout(tab_booru.layout)
-
-        # === API TAB ===
-        tab_api.layout = QtW.QVBoxLayout()
-
-        # Rule34
+        # Rule34 API
         self.api_r34 = QtW.QGroupBox("rule34")
+        self.api_r34.setStyleSheet("background-color: #171d25;")
         r34_layout = QtW.QVBoxLayout(self.api_r34)
 
         r34_key_layout = QtW.QHBoxLayout()
@@ -148,13 +146,45 @@ class SteamyMainWindow(QtW.QMainWindow):
         r34_layout.addLayout(r34_id_layout)
 
         self.api_r34.setLayout(r34_layout)
-        tab_api.layout.addWidget(self.api_r34)
+
+        # E621 API
+        self.api_e621 = QtW.QGroupBox("e621")
+        self.api_e621.setStyleSheet("background-color: #171d25;")
+        e621_layout = QtW.QVBoxLayout(self.api_e621)
+
+        e621_key_layout = QtW.QHBoxLayout()
+        e621_key_layout.addWidget(QtW.QLabel(parent=self, text="API Key:"))
+        self.e621_api_key_edit = QtW.QLineEdit(self.config.e621_api_key)
+        e621_key_layout.addWidget(self.e621_api_key_edit)
+        e621_layout.addLayout(e621_key_layout)
+
+        e621_id_layout = QtW.QHBoxLayout()
+        e621_id_layout.addWidget(QtW.QLabel(parent=self, text="User ID:"))
+        self.e621_user_id_edit = QtW.QLineEdit(str(self.config.e621_user_id or ""))
+        e621_id_layout.addWidget(self.e621_user_id_edit)
+        e621_layout.addLayout(e621_id_layout)
+
+        self.api_e621.setLayout(e621_layout)
+
+        api_layout.addWidget(self.api_r34)
+        api_layout.addWidget(self.api_e621)
+        tab_booru.layout.addWidget(self.api_container)
+
+        # Save
+        booru_save_button = QtW.QPushButton("Save")
+        booru_save_button.clicked.connect(self.on_save_click)
+        tab_booru.layout.addWidget(booru_save_button)
+
+        tab_booru.setLayout(tab_booru.layout)
+
+        # === STEAMY TAB ===
+        tab_steamy.layout = QtW.QVBoxLayout()
 
         api_save_button = QtW.QPushButton("Save")
         api_save_button.clicked.connect(self.on_save_click)
-        tab_api.layout.addWidget(api_save_button)
+        tab_steamy.layout.addWidget(api_save_button)
 
-        tab_api.setLayout(tab_api.layout)
+        tab_steamy.setLayout(tab_steamy.layout)
 
         # === DEV TAB ===
         tab_dev.layout = QtW.QVBoxLayout()

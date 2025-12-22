@@ -11,12 +11,16 @@ class Config:
     def __init__(self) -> None:
         self.path = Path(__file__).parent.parent / "resources" / "config.json"
 
-        self.supported_boorus = ["danbooru", "rule34"]
+        self.supported_boorus = ["danbooru", "rule34", "e621"]
         self.schema = Schema(
             {
                 "default_booru": Any(*self.supported_boorus),
                 "concurrent_downloads": All(int, Range(min=1)),
                 "rule34": {
+                    "api_key": Any(str, None),
+                    "user_id": Any(int, None),
+                },
+                "e621": {
                     "api_key": Any(str, None),
                     "user_id": Any(int, None),
                 },
@@ -32,6 +36,10 @@ class Config:
                 "api_key": None,
                 "user_id": None,
             },
+            "e621": {
+                "api_key": None,
+                "user_id": None,
+            },
         }
 
         self.load_fresh()
@@ -41,6 +49,8 @@ class Config:
         self.concurrent_downloads = self.raw["concurrent_downloads"]  # TODO: Set from GUI
         self.r34_api_key = self.raw["rule34"]["api_key"]
         self.r34_user_id = self.raw["rule34"]["user_id"]
+        self.e621_api_key = self.raw["e621"]["api_key"]
+        self.e621_user_id = self.raw["e621"]["user_id"]
 
     def load_fresh(self) -> None:
         raw = load_json(self.path, self.schema)
@@ -67,4 +77,8 @@ class Config:
             censored["rule34"]["api_key"] = "CENSORED"
         if censored["rule34"]["user_id"]:
             censored["rule34"]["user_id"] = "CENSORED"
+        if censored["e621"]["api_key"]:
+            censored["e621"]["api_key"] = "CENSORED"
+        if censored["e621"]["user_id"]:
+            censored["e621"]["user_id"] = "CENSORED"
         return censored
