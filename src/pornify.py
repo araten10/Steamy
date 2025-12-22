@@ -2,7 +2,6 @@ import asyncio
 import logging
 import random
 import shutil
-import subprocess
 from json.decoder import JSONDecodeError
 
 import aiohttp
@@ -26,12 +25,13 @@ class PornifyThread(QThread):
     def __init__(self, config: Config, steam: Steam, game_db: dict[str, Game], username: str) -> None:
         super().__init__()
 
+        self.steam = steam
         self.game_db = game_db
         self.grid = Grid(steam, username)
         self.booru = get_booru(config)
         self.concurrent_downloads = config.concurrent_downloads
 
-        self.search_queue: list[Game] = [self.game_db.get(game_id, Game(game_id)) for game_id in steam.game_ids]
+        self.search_queue: list[Game] = [self.game_db.get(game_id, Game(game_id)) for game_id in self.steam.game_ids]
         self.search_lock = asyncio.Lock()
         self.search_done = False
 
@@ -65,10 +65,9 @@ class PornifyThread(QThread):
             message.exec()
 
             if message.clickedButton() == restore:
-                subprocess.call("taskkill /im steam.exe")
                 self.grid.restore_backup(self.grid.porn_backup_path)
                 self.should_run = False
-                subprocess.call(f"{steam.path}/steam.exe")
+                self.steam.restart()
             elif message.clickedButton() == download:
                 shutil.rmtree(self.grid.porn_backup_path)
             else:
@@ -82,14 +81,13 @@ class PornifyThread(QThread):
         logging.info("Pornify done")
 
     async def pornify(self) -> None:
-        subprocess.call("taskkill /im steam.exe")
         self.grid.path.mkdir(parents=True, exist_ok=True)
         self.grid.porn_flag.touch(exist_ok=True)
         await asyncio.gather(
             asyncio.create_task(self.handle_search()),
             asyncio.create_task(self.handle_download()),
         )
-        subprocess.call(f"{steam.path}/steam.exe")
+        self.steam.restart()
 
     async def handle_search(self) -> None:
         tasks = []
@@ -193,12 +191,11 @@ class PornifyThread(QThread):
 def resteam(steam: Steam, username: str) -> None:
     grid = Grid(steam, username)
 
-    subprocess.call("taskkill /f /im steam.exe")
     if grid.porn_flag.is_file():
         proceed = grid.make_backup()
         if not proceed:
             return
         grid.restore_backup(grid.custom_backup_path)
-    subprocess.call(f"{steam.path}/steam.exe")
+        steam.restart()
 
     logging.info("Resteam done")

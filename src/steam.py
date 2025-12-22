@@ -1,8 +1,10 @@
 import logging
 import platform
 import shutil
+import subprocess
 from dataclasses import dataclass
 from pathlib import Path
+from time import sleep
 
 import PyQt6.QtWidgets as QtW
 import vdf
@@ -55,6 +57,23 @@ class Steam:
             username = vdf_dict["UserLocalConfigStore"]["friends"]["PersonaName"]
             self.usernames.append(username)
             self.username_to_id[username] = user_id
+
+    def restart(self) -> None:
+        match platform.system():
+            case "Linux":
+                subprocess.run(["pkill", "steam"])
+
+                # Wait until no Steam processes are found
+                wait = True
+                while wait:
+                    sleep(0.5)
+                    result = subprocess.run(["pgrep", "steam"], capture_output=True)
+                    wait = result.returncode == 0
+
+                subprocess.Popen(["steam"], start_new_session=True)
+            case "Windows":
+                subprocess.run(["taskkill", "/im", "steam.exe"])
+                subprocess.Popen([f"{self.path}/steam.exe"], creationflags=subprocess.DETACHED_PROCESS)
 
 
 class Grid:
