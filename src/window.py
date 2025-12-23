@@ -1,5 +1,6 @@
 import os
 import platform
+from pathlib import Path
 
 import PyQt6.QtWidgets as QtW
 from PyQt6.QtCore import QSize, Qt
@@ -94,10 +95,10 @@ class SteamyMainWindow(QtW.QMainWindow):
         progress_layout = QtW.QHBoxLayout()
         top_layout.addLayout(progress_layout)
 
-        self.pornify_progress = QtW.QProgressBar()
-        self.pornify_progress.setGeometry(50, 100, 250, 30)
-        self.pornify_progress.setRange(0, len(self.steam.game_ids))
-        progress_layout.addWidget(self.pornify_progress)
+        self.progress = QtW.QProgressBar()
+        self.progress.setGeometry(50, 100, 250, 30)
+        self.progress.setRange(0, len(self.steam.game_ids))
+        progress_layout.addWidget(self.progress)
 
         # === TAB WIDGET ===
 
@@ -228,25 +229,8 @@ class SteamyMainWindow(QtW.QMainWindow):
         self.resteam_button.setEnabled(enabled)
         self.dump_button.setEnabled(enabled)
 
-    def update_pornify_progress(self) -> None:
-        self.pornify_progress.setValue(self.pornify_progress.value() + 1)
-
-    def on_pornify_click(self) -> None:
-        self.set_buttons_enabled(False)
-        self.pornify_progress.setValue(0)
-
-        def on_done() -> None:
-            self.set_buttons_enabled(True)
-            self.ask_restart("Pornify")
-
-        self.pornify_thread = PornifyThread(self.config, self.steam, self.game_db, self.user_dropdown.currentText())
-        self.pornify_thread.done.connect(on_done)
-        self.pornify_thread.progress.connect(self.update_pornify_progress)
-        self.pornify_thread.start()
-
-    def on_resteam_click(self) -> None:
-        resteam(self.steam, self.user_dropdown.currentText())
-        self.ask_restart("Resteam")
+    def update_progress(self) -> None:
+        self.progress.setValue(self.progress.value() + 1)
 
     def ask_restart(self, task: str) -> None:
         message = QtW.QMessageBox()
@@ -258,6 +242,48 @@ class SteamyMainWindow(QtW.QMainWindow):
         if message.exec() == QtW.QMessageBox.StandardButton.Yes:
             self.steam.restart()
 
+    def on_pornify_click(self) -> None:
+        self.set_buttons_enabled(False)
+        self.progress.setValue(0)
+
+        def on_done() -> None:
+            self.set_buttons_enabled(True)
+            self.ask_restart("Pornify")
+
+        self.pornify_thread = PornifyThread(self.config, self.steam, self.game_db, self.user_dropdown.currentText())
+        self.pornify_thread.done.connect(on_done)
+        self.pornify_thread.progress.connect(self.update_progress)
+        self.pornify_thread.start()
+
+    def on_resteam_click(self) -> None:
+        resteam(self.steam, self.user_dropdown.currentText())
+        self.ask_restart("Resteam")
+
+    def on_dump_click(self) -> None:
+        self.set_buttons_enabled(False)
+        self.progress.setValue(0)
+
+        def on_done(dump_path: Path) -> None:
+            self.set_buttons_enabled(True)
+            message = QtW.QMessageBox()
+            message.setIcon(QtW.QMessageBox.Icon.NoIcon)
+            message.setText("Game Library Dump Done")
+            message.setInformativeText(f"Game library dumped to {dump_path}.")
+            message.setStandardButtons(QtW.QMessageBox.StandardButton.Ok)
+            message.exec()
+
+        self.dump_thread = LibraryDumperThread(self.steam, self.game_db)
+        self.dump_thread.done.connect(on_done)
+        self.dump_thread.progress.connect(self.update_progress)
+        self.dump_thread.start()
+
+    def on_folder_click(self) -> None:
+        match platform.system():
+            case "Linux":
+                os.system('xdg-open "%s"' % self.steam.path / "userdata")
+            case "Windows":
+                os.startfile(self.steam.path / "userdata")
+
     def on_save_click(self) -> None:
         user_id = self.r34_user_id_edit.text()
         self.config.raw = {
@@ -268,17 +294,3 @@ class SteamyMainWindow(QtW.QMainWindow):
             },
         }
         self.config.save()
-
-    def on_dump_click(self) -> None:
-        self.set_buttons_enabled(False)
-
-        self.dump_thread = LibraryDumperThread(self.steam, self.game_db)
-        self.dump_thread.done.connect(lambda: self.set_buttons_enabled(True))
-        self.dump_thread.start()
-
-    def on_folder_click(self) -> None:
-        match platform.system():
-            case "Linux":
-                os.system('xdg-open "%s"' % self.steam.path / "userdata")
-            case "Windows":
-                os.startfile(self.steam.path / "userdata")

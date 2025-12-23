@@ -45,7 +45,8 @@ def get_game_db() -> dict[str, Game]:
 
 
 class LibraryDumperThread(QThread):
-    done = pyqtSignal()
+    progress = pyqtSignal()
+    done = pyqtSignal(Path)
 
     def __init__(self, steam: Steam, game_db: dict[str, Game]) -> None:
         super().__init__()
@@ -64,33 +65,34 @@ class LibraryDumperThread(QThread):
     def run(self) -> None:
         logging.info(f"There are {len(self.game_db)} games already in the database. These will be skipped if detected.")
 
-        checkpoint_progress = 0
         checkpoint = 10
+        for index, game_id in enumerate(self.steam.game_ids[0:2]):
+            self.find_name(game_id)
+            self.progress.emit()
 
-        for game_id in self.steam.game_ids:
-            if game_id in self.game_db:
-                logging.info(f'Game ID {game_id} already found in database as "{self.game_db[game_id].name}". Skipping...')
-                continue
+            if (index + 1) % checkpoint == 0:
+                self.write_dump()  # Write a checkpoint every so often in case something goes wrong
 
             sleep(random.uniform(1.5, 2))  # Don't take this out! This is a rate limiter so Steam doesn't block requests.
 
-            store_url = "https://store.steampowered.com/api/appdetails?appids=" + game_id
-            body = requests.get(store_url).json()[game_id]
-            if not body["success"]:
-                logging.info(f"Failed retrieving name for ID {game_id}. Most likely a program and not a game, or removed from the steam store. Skipping...")
-                continue
-
-            name = body["data"]["name"]
-            self.dump[game_id] = {"name": name}
-            logging.info(f"{name} added to dict. Total games: {len(self.dump)}")
-
-            checkpoint_progress += 1
-            if checkpoint_progress >= checkpoint:
-                checkpoint_progress = 0
-                self.write_dump()  # Write a checkpoint every so often in case something goes wrong
-
         self.write_dump()
-        self.done.emit()
+        self.done.emit(self.output_dir)
+        logging.info("Dump done")
+
+    def find_name(self, game_id: str) -> None:
+        if game_id in self.game_db:
+            logging.info(f'Game ID {game_id} already found in database as "{self.game_db[game_id].name}". Skipping...')
+            return
+
+        store_url = "https://store.steampowered.com/api/appdetails?appids=" + game_id
+        body = requests.get(store_url).json()[game_id]
+        if not body["success"]:
+            logging.info(f"Failed retrieving name for ID {game_id}. Most likely a program and not a game, or removed from the steam store. Skipping...")
+            return
+
+        name = body["data"]["name"]
+        self.dump[game_id] = {"name": name}
+        logging.info(f"{name} added to dump. Total games: {len(self.dump)}")
 
     def write_dump(self) -> None:
         with open(self.output_dir, "w", encoding="utf8") as f:

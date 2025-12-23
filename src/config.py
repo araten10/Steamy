@@ -66,7 +66,7 @@ class Config:
 
     def save(self) -> None:
         with open(self.path, "w") as f:
-            json.dump(self.raw, f, indent=2)
+            json.dump(self.raw, f, indent=2)  # TODO: Validate again?
 
         self.load()
         logging.info(f"Config saved {self.censor()}")
