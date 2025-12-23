@@ -280,7 +280,7 @@ class SteamyMainWindow(QtW.QMainWindow):
     def on_folder_click(self) -> None:
         match platform.system():
             case "Linux":
-                os.system('xdg-open "%s"' % self.steam.path / "userdata")
+                os.system('xdg-open "%s"' % (self.steam.path / "userdata"))
             case "Windows":
                 os.startfile(self.steam.path / "userdata")
 
