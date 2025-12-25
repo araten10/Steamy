@@ -73,12 +73,8 @@ class Config:
 
     def censor(self) -> dict:
         censored = self.raw.copy()
-        if censored["rule34"]["api_key"]:
-            censored["rule34"]["api_key"] = "CENSORED"
-        if censored["rule34"]["user_id"]:
-            censored["rule34"]["user_id"] = "CENSORED"
-        if censored["e621"]["api_key"]:
-            censored["e621"]["api_key"] = "CENSORED"
-        if censored["e621"]["user_id"]:
-            censored["e621"]["user_id"] = "CENSORED"
+        for site in ["rule34", "e621"]:
+            for key in ["api_key", "user_id"]:
+                if censored[site][key]:
+                    censored[site][key] = "CENSORED"
         return censored
