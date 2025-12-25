@@ -46,7 +46,7 @@ class Config:
 
     def load(self) -> None:
         self.default_booru = self.raw["default_booru"]
-        self.concurrent_downloads = self.raw["concurrent_downloads"]  # TODO: Set from GUI
+        self.concurrent_downloads = self.raw["concurrent_downloads"]
         self.r34_api_key = self.raw["rule34"]["api_key"]
         self.r34_user_id = self.raw["rule34"]["user_id"]
         self.e621_api_key = self.raw["e621"]["api_key"]
@@ -66,7 +66,7 @@ class Config:
 
     def save(self) -> None:
         with open(self.path, "w") as f:
-            json.dump(self.raw, f, indent=2)  # TODO: Validate again?
+            json.dump(self.raw, f, indent=2)
 
         self.load()
         logging.info(f"Config saved {self.censor()}")

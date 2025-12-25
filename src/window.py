@@ -29,8 +29,7 @@ class SteamyMainWindow(QtW.QMainWindow):
         self.game_db = get_game_db()
 
         self.setWindowTitle("Steamy")
-        # Total Height = 300 for top_layout, 300 for bottom layout, add title bar
-        self.setFixedSize(QSize(400, 630))
+        self.setFixedSize(QSize(400, 630))  # Total Height = 300 for top_layout, 300 for bottom layout, add title bar
         self.setWindowFlags(Qt.WindowType.FramelessWindowHint)
 
         title_bar = SteamyTitleBar(self)
@@ -39,8 +38,8 @@ class SteamyMainWindow(QtW.QMainWindow):
         # Contains the logo, dropdown, and buttons
         top_container = QtW.QWidget()
         top_container.setFixedSize(QSize(400, 300))
-        # top_container.setStyleSheet("background: red")
         top_layout = QtW.QVBoxLayout(top_container)
+
         # Contains the settings notebook and anything inside of it
         bottom_container = QtW.QWidget()
         bottom_container.setFixedSize(QSize(400, 300))
@@ -122,20 +121,20 @@ class SteamyMainWindow(QtW.QMainWindow):
         self.booru_dropdown.addItems(self.config.supported_boorus)
         booru_dropdown_layout = QtW.QVBoxLayout()
         booru_dropdown_layout.addWidget(self.booru_dropdown)
-        self.booru_dropdown_gb = QtW.QGroupBox("Default Booru")
-        self.booru_dropdown_gb.setLayout(booru_dropdown_layout)
-        tab_booru.layout.addWidget(self.booru_dropdown_gb)
+        booru_dropdown_gb = QtW.QGroupBox("Default Booru")
+        booru_dropdown_gb.setLayout(booru_dropdown_layout)
+        tab_booru.layout.addWidget(booru_dropdown_gb)
 
-        self.api_container = QtW.QWidget()
+        api_container = QtW.QWidget()
         # Have to manually set the background colour on these ones for stylistic purposes
-        self.api_container.setStyleSheet("background-color: #292e37;")
-        api_layout = QtW.QHBoxLayout(self.api_container)
+        api_container.setStyleSheet("background-color: #292e37;")
+        api_layout = QtW.QHBoxLayout(api_container)
         api_layout.setContentsMargins(0, 0, 0, 0)
 
         # Rule34 API
-        self.api_r34 = QtW.QGroupBox("rule34")
-        self.api_r34.setStyleSheet("background-color: #171d25;")
-        r34_layout = QtW.QVBoxLayout(self.api_r34)
+        api_r34 = QtW.QGroupBox("rule34")
+        api_r34.setStyleSheet("background-color: #171d25;")
+        r34_layout = QtW.QVBoxLayout(api_r34)
 
         r34_key_layout = QtW.QHBoxLayout()
         r34_key_layout.addWidget(QtW.QLabel(parent=self, text="API Key:"))
@@ -151,12 +150,12 @@ class SteamyMainWindow(QtW.QMainWindow):
         r34_id_layout.addWidget(self.r34_user_id_edit)
         r34_layout.addLayout(r34_id_layout)
 
-        self.api_r34.setLayout(r34_layout)
+        api_r34.setLayout(r34_layout)
 
         # E621 API
-        self.api_e621 = QtW.QGroupBox("e621")
-        self.api_e621.setStyleSheet("background-color: #171d25;")
-        e621_layout = QtW.QVBoxLayout(self.api_e621)
+        api_e621 = QtW.QGroupBox("e621")
+        api_e621.setStyleSheet("background-color: #171d25;")
+        e621_layout = QtW.QVBoxLayout(api_e621)
 
         e621_key_layout = QtW.QHBoxLayout()
         e621_key_layout.addWidget(QtW.QLabel(parent=self, text="API Key:"))
@@ -172,11 +171,11 @@ class SteamyMainWindow(QtW.QMainWindow):
         e621_id_layout.addWidget(self.e621_user_id_edit)
         e621_layout.addLayout(e621_id_layout)
 
-        self.api_e621.setLayout(e621_layout)
+        api_e621.setLayout(e621_layout)
 
-        api_layout.addWidget(self.api_r34)
-        api_layout.addWidget(self.api_e621)
-        tab_booru.layout.addWidget(self.api_container)
+        api_layout.addWidget(api_r34)
+        api_layout.addWidget(api_e621)
+        tab_booru.layout.addWidget(api_container)
 
         # Save
         booru_save_button = QtW.QPushButton("Save")
@@ -188,9 +187,9 @@ class SteamyMainWindow(QtW.QMainWindow):
         # === STEAMY TAB ===
         tab_steamy.layout = QtW.QVBoxLayout()
 
-        api_save_button = QtW.QPushButton("Save")
-        api_save_button.clicked.connect(self.on_save_click)
-        tab_steamy.layout.addWidget(api_save_button)
+        steamy_save_button = QtW.QPushButton("Save")
+        steamy_save_button.clicked.connect(self.on_save_click)
+        tab_steamy.layout.addWidget(steamy_save_button)
 
         tab_steamy.setLayout(tab_steamy.layout)
 
@@ -201,9 +200,9 @@ class SteamyMainWindow(QtW.QMainWindow):
         self.dump_button.clicked.connect(self.on_dump_click)
         tab_dev.layout.addWidget(self.dump_button)
 
-        self.folder_button = QtW.QPushButton("Open Steam Config Folder")
-        self.folder_button.clicked.connect(self.on_folder_click)
-        tab_dev.layout.addWidget(self.folder_button)
+        folder_button = QtW.QPushButton("Open Steam Config Folder")
+        folder_button.clicked.connect(self.on_folder_click)
+        tab_dev.layout.addWidget(folder_button)
 
         tab_dev.setLayout(tab_dev.layout)
 
@@ -285,12 +284,30 @@ class SteamyMainWindow(QtW.QMainWindow):
                 os.startfile(self.steam.path / "userdata")
 
     def on_save_click(self) -> None:
-        user_id = self.r34_user_id_edit.text()
+        def get_user_id(site: str, text: str) -> int | None:
+            if text:
+                if text.isdigit():
+                    return int(text)
+                else:
+                    message = QtW.QMessageBox()
+                    message.setIcon(QtW.QMessageBox.Icon.Warning)
+                    message.setText("Invalid User ID")
+                    message.setInformativeText(f"{site} user ID {text} is invalid, must be an integer.")
+                    message.setStandardButtons(QtW.QMessageBox.StandardButton.Ok)
+                    message.exec()
+
+            return None
+
         self.config.raw = {
             "default_booru": self.booru_dropdown.currentText(),
+            "concurrent_downloads": 10,  # TODO: Set from GUI
             "rule34": {
                 "api_key": self.r34_api_key_edit.text() or None,
-                "user_id": int(user_id) if user_id else None,
+                "user_id": get_user_id("Rule34", self.r34_user_id_edit.text()),
+            },
+            "e621": {
+                "api_key": self.e621_api_key_edit.text() or None,
+                "user_id": get_user_id("e621", self.e621_user_id_edit.text()),
             },
         }
         self.config.save()
