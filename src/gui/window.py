@@ -7,9 +7,9 @@ from PyQt6.QtCore import QSize, Qt
 
 from config import Config
 from games import LibraryDumperThread, get_game_db
+from gui.title import SteamyTitleBar
 from pornify import PornifyThread, resteam
 from steam import Steam
-from title import SteamyTitleBar
 
 LOGO = r"""      :::::::: ::::::::::: ::::::::::     :::       :::   :::  :::   :::
     :+:    :+:    :+:     :+:          :+: :+:    :+:+: :+:+: :+:   :+:

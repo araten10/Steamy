@@ -5,7 +5,7 @@ import PyQt6.QtWidgets as QtW
 from PyQt6.QtCore import Qt
 from PyQt6.QtGui import QFontDatabase
 
-from window import SteamyMainWindow
+from gui.window import SteamyMainWindow
 
 if __name__ == "__main__":
     logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)

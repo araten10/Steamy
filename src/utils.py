@@ -22,3 +22,7 @@ def load_json(path: Path, schema: Schema) -> dict | None:
         logging.warning(f"{path} format is invalid. Reason: {e}")
 
     return None
+
+
+def get_dir_names(parent: Path) -> list[str]:
+    return [path.name for path in parent.iterdir() if path.is_dir()]

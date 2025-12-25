@@ -9,9 +9,7 @@ from time import sleep
 import PyQt6.QtWidgets as QtW
 import vdf
 
-
-def get_dir_names(parent: Path) -> list[str]:
-    return [path.name for path in parent.iterdir() if path.is_dir()]
+from utils import get_dir_names
 
 
 @dataclass
