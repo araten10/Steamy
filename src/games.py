@@ -20,6 +20,7 @@ class Game:
     name: str = ""
     danbooru: str | None = None
     rule34: str | None = None
+    e621: str | None = None
 
 
 def get_game_db() -> dict[str, Game]:

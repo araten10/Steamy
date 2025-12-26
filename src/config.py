@@ -22,7 +22,7 @@ class Config:
                 },
                 "e621": {
                     "api_key": Any(str, None),
-                    "user_id": Any(int, None),
+                    "user_id": Any(str, None),
                 },
             },
             required=True,
