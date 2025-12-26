@@ -30,7 +30,7 @@ class PornifyThread(QThread):
         self.booru = asyncio.run(get_booru(config))
         self.concurrent_downloads = config.concurrent_downloads
 
-        self.search_queue: list[Game] = [self.game_db.get(game_id, Game(game_id)) for game_id in steam.game_ids[0:1]]
+        self.search_queue: list[Game] = [self.game_db.get(game_id, Game(game_id)) for game_id in steam.game_ids]
         self.search_lock = asyncio.Lock()
         self.search_done = False
 

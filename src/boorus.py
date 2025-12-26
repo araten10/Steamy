@@ -52,7 +52,7 @@ class SteamyRule34(booru.Rule34):
 class SteamyE621(booru.E621):
     def __init__(self, config: Config) -> None:
         super().__init__()
-        self.specs = {"api_key": config.e621_api_key, "user_id": config.e621_user_id}
+        self.specs = {"api_key": config.e621_api_key, "login": config.e621_user_id}
 
         self.base_query = "order:random score:>500 -animated"
         self.fallback_query = "-rating:safe"
