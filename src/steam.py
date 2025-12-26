@@ -37,8 +37,6 @@ class Steam:
                 self.path = Path("~/.local/share/Steam").expanduser()
             case "Windows":
                 self.path = Path("C:/Program Files (x86)/Steam")
-            case _:
-                pass
 
         self.game_ids = get_dir_names(self.path / "appcache" / "librarycache")
         self.game_ids.sort(key=int)

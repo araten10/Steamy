@@ -1,4 +1,5 @@
 import booru
+import PyQt6.QtWidgets as QtW
 
 from config import Config
 from games import Game
@@ -70,10 +71,28 @@ class SteamyE621(booru.E621):
         return list(filter(lambda post: post["file_url"].split(".")[-1] in ["png", "jpg", "jpeg"], posts))
 
 
-def get_booru(config: Config) -> SteamyDanbooru | SteamyRule34:
-    boorus = {
-        "danbooru": SteamyDanbooru(),
-        "rule34": SteamyRule34(config),  # TODO: Check if API key is available
-        "e621": SteamyE621(config),  # TODO: Check if API key is available
-    }
-    return boorus[config.default_booru]
+async def get_booru(config: Config) -> SteamyDanbooru | SteamyRule34 | SteamyE621 | None:
+    option = None
+    match config.default_booru:
+        case "rule34" if config.r34_api_key and config.r34_user_id:
+            option = SteamyRule34(config)
+        case "e621" if config.e621_api_key and config.e621_user_id:
+            option = SteamyE621(config)
+
+    test_error = False
+    if option:
+        try:
+            await option.search(Game(""))
+        except Exception:
+            test_error = True
+
+    if (config.default_booru != "danbooru" and not option) or test_error:
+        message = QtW.QMessageBox()
+        message.setIcon(QtW.QMessageBox.Icon.Warning)
+        message.setText(f"Can't Use {config.default_booru}")
+        message.setInformativeText("Make sure you have provided your API key and user ID and that they are correct.")
+        message.setStandardButtons(QtW.QMessageBox.StandardButton.Ok)
+        message.exec()
+        return
+
+    return option or SteamyDanbooru()

@@ -27,7 +27,7 @@ class PornifyThread(QThread):
 
         self.game_db = game_db
         self.grid = Grid(steam, username)
-        self.booru = get_booru(config)
+        self.booru = asyncio.run(get_booru(config))
         self.concurrent_downloads = config.concurrent_downloads
 
         self.search_queue: list[Game] = [self.game_db.get(game_id, Game(game_id)) for game_id in steam.game_ids[0:1]]
@@ -38,9 +38,9 @@ class PornifyThread(QThread):
         self.download_lock = asyncio.Lock()
         self.download_start = asyncio.Event()
 
-        self.should_run = True
+        self.should_run = bool(self.booru)
 
-        if self.grid.path.exists():
+        if self.should_run and self.grid.path.exists():
             if self.grid.porn_flag.is_file():
                 message = QtW.QMessageBox()
                 message.setIcon(QtW.QMessageBox.Icon.Question)
