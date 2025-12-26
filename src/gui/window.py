@@ -165,7 +165,7 @@ class SteamyMainWindow(QtW.QMainWindow):
         e621_layout.addLayout(e621_key_layout)
 
         e621_id_layout = QtW.QHBoxLayout()
-        e621_id_layout.addWidget(QtW.QLabel(parent=self, text="User ID:"))
+        e621_id_layout.addWidget(QtW.QLabel(parent=self, text="Username:"))
         self.e621_user_id_edit = QtW.QLineEdit(str(self.config.e621_user_id or ""))
         self.e621_user_id_edit.setStyleSheet("background-color: #1d2026")
         e621_id_layout.addWidget(self.e621_user_id_edit)
@@ -289,12 +289,15 @@ class SteamyMainWindow(QtW.QMainWindow):
                 if text.isdigit():
                     return int(text)
                 else:
-                    message = QtW.QMessageBox()
-                    message.setIcon(QtW.QMessageBox.Icon.Warning)
-                    message.setText("Invalid User ID")
-                    message.setInformativeText(f"{site} user ID {text} is invalid, must be an integer.")
-                    message.setStandardButtons(QtW.QMessageBox.StandardButton.Ok)
-                    message.exec()
+                    if site != "e621":
+                        message = QtW.QMessageBox()
+                        message.setIcon(QtW.QMessageBox.Icon.Warning)
+                        message.setText("Invalid User ID")
+                        message.setInformativeText(f"{site} user ID {text} is invalid, must be an integer.")
+                        message.setStandardButtons(QtW.QMessageBox.StandardButton.Ok)
+                        message.exec()
+                    else:
+                        return str(text)
 
             return None
 
