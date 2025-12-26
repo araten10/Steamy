@@ -119,6 +119,7 @@ class SteamyMainWindow(QtW.QMainWindow):
 
         self.booru_dropdown = QtW.QComboBox()
         self.booru_dropdown.addItems(self.config.supported_boorus)
+        self.booru_dropdown.setCurrentText(self.config.default_booru)
         booru_dropdown_layout = QtW.QVBoxLayout()
         booru_dropdown_layout.addWidget(self.booru_dropdown)
         booru_dropdown_gb = QtW.QGroupBox("Default Booru")
