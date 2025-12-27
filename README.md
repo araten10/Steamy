@@ -22,12 +22,12 @@ Once finished, you can then open up `resources/game_database.json` and add any g
     "e621": <e621>
     },
 ```
-Example: [use a more descriptive example, probably one with different tags for one of the boorus?]
+Example: 
 ```
-    "10": {
-      "name": "Counter-Strike",
-      "danbooru": "counter-strike"
-      "rule34": "counter-strike"
-      "e621": "counter-strike"
+    "1840": {
+      "name": "Source Filmmaker",
+      "danbooru": "source_filmmaker_(medium)",
+      "rule34": "source_filmmaker",
+      "e621": "source_filmmaker"
     },
 ```
