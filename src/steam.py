@@ -2,6 +2,7 @@ import logging
 import platform
 import shutil
 import subprocess
+import sys
 from dataclasses import dataclass
 from pathlib import Path
 from time import sleep
@@ -31,12 +32,37 @@ class Art:
 
 class Steam:
     def __init__(self) -> None:
-        # TODO: There can be other paths, maybe multiple?
+        self.path = None
         match platform.system():
             case "Linux":
-                self.path = Path("~/.local/share/Steam").expanduser()
+                self.linux_steam_args = ["steam"]
+                for path, flatpak in [
+                    (Path("~/.local/share/Steam").expanduser(), False),
+                    (Path("~/.steam/root").expanduser(), False),
+                    (Path("~/.var/app/com.valvesoftware.Steam/data/Steam").expanduser(), True),
+                ]:
+                    if path.is_dir():
+                        self.path = path
+                        if flatpak:
+                            self.linux_steam_args = ["flatpak", "run", "com.valvesoftware.Steam"]
+                        break
             case "Windows":
-                self.path = Path("C:/Program Files (x86)/Steam")
+                for path in [
+                    Path("C:/Program Files (x86)/Steam"),
+                    Path("C:/Program Files/Steam"),
+                ]:
+                    if path.is_dir():
+                        self.path = path
+                        break
+
+        if not self.path:
+            message = QtW.QMessageBox()
+            message.setIcon(QtW.QMessageBox.Icon.Critical)
+            message.setText("Steam Not Found")
+            message.setInformativeText("Could not find Steam installation location, unable to run.")
+            message.setStandardButtons(QtW.QMessageBox.StandardButton.Ok)
+            message.exec()
+            sys.exit()
 
         self.game_ids = get_dir_names(self.path / "appcache" / "librarycache")
         self.game_ids.sort(key=int)
@@ -70,7 +96,7 @@ class Steam:
                     result = subprocess.run(["pgrep", "steam"], capture_output=True)
                     wait = result.returncode == 0
 
-                subprocess.Popen(["steam"], start_new_session=True)
+                subprocess.Popen(self.linux_steam_args, start_new_session=True)
             case "Windows":
                 subprocess.run(["taskkill", "/im", "steam.exe"])
                 subprocess.Popen([f"{self.path}/steam.exe"], creationflags=subprocess.DETACHED_PROCESS)

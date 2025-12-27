@@ -169,7 +169,6 @@ class PornifyThread(QThread):
             Art("Background", "_hero", 3840, 1240, sample=False),
             Art("Wide Cover", "", 920, 430, sample=True),
         ]:
-            # TODO: What if no post is a good enough match?
             scores = [(post, art.score(get_nested(post, self.booru.width), get_nested(post, self.booru.height))) for post in posts]
             post, _ = min(scores, key=lambda scored: scored[1])
             posts.remove(post)  # No duplicates
