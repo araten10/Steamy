@@ -196,6 +196,72 @@
       "rule34": "lara_croft",
       "e621": "lara_croft"
     },
+    "8800": {
+      "name": "Civilization IV: Beyond the Sword",
+      "danbooru": "samurai",
+      "rule34": "samurai",
+      "e621": "samurai"
+    },
+    "8850": {
+      "name": "BioShock® 2",
+      "danbooru": "bioshock",
+      "rule34": "bioshock",
+      "e621": "bioshock"
+    },
+    "8870": {
+      "name": "BioShock Infinite",
+      "danbooru": "bioshock",
+      "rule34": "bioshock",
+      "e621": "bioshock"
+    },
+    "8930": {
+      "name": "Sid Meier's Civilization® V",
+      "danbooru": "viking",
+      "rule34": "viking",
+      "e621": "viking"
+    },
+    "12100": {
+      "name": "Grand Theft Auto III",
+      "danbooru": "stripper",
+      "rule34": "stripper",
+      "e621": "stripper"
+    },
+    "12110": {
+      "name": "Grand Theft Auto: Vice City",
+      "danbooru": "stripper",
+      "rule34": "stripper",
+      "e621": "stripper"
+    },
+    "12120": {
+      "name": "Grand Theft Auto: San Andreas",
+      "danbooru": "stripper",
+      "rule34": "stripper",
+      "e621": "stripper"
+    },
+    "12210": {
+      "name": "Grand Theft Auto IV: The Complete Edition",
+      "danbooru": "stripper",
+      "rule34": "stripper",
+      "e621": "stripper"
+    },
+    "16810": {
+      "name": "Sid Meier's Civilization IV: Colonization",
+      "danbooru": "samurai",
+      "rule34": "samurai",
+      "e621": "samurai"
+    },
+    "17410": {
+      "name": "Mirror's Edge™",
+      "danbooru": "mirror's_edge",
+      "rule34": "mirror's_edge",
+      "e621": "mirror's_edge"
+    },
+    "35130": {
+      "name": "Lara Croft and the Guardian of Light",
+      "danbooru": "lara_croft",
+      "rule34": "lara_croft",
+      "e621": "lara_croft"
+    },
     "203160": {
       "name": "Tomb Raider Game of the Year",
       "danbooru": "lara_croft",
@@ -238,6 +304,24 @@
       "rule34": "lara_croft",
       "e621": "lara_croft"
     },
+    "1546970": {
+      "name": "Grand Theft Auto III - The Definitive Edition",
+      "danbooru": "stripper",
+      "rule34": "stripper",
+      "e621": "stripper"
+    },
+    "1546990": {
+      "name": "Grand Theft Auto: Vice City - The Definitive Edition",
+      "danbooru": "stripper",
+      "rule34": "stripper",
+      "e621": "stripper"
+    },
+    "1547000": {
+      "name": "Grand Theft Auto: San Andreas - The Definitive Edition",
+      "danbooru": "stripper",
+      "rule34": "stripper",
+      "e621": "stripper"
+    },
     "2478970": {
       "name": "Tomb Raider I-III Remastered Starring Lara Croft",
       "danbooru": "lara_croft",
@@ -249,6 +333,12 @@
       "danbooru": "lara_croft",
       "rule34": "lara_croft",
       "e621": "lara_croft"
+    },
+    "3240220": {
+      "name": "Grand Theft Auto V Enhanced",
+      "danbooru": "stripper",
+      "rule34": "stripper",
+      "e621": "stripper"
     },
   }
 }
