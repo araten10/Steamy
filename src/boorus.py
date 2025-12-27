@@ -12,10 +12,10 @@ class SteamyDanbooru(booru.Danbooru):
         self.base_query = "order:random"
         self.fallback_query = "age:<1month"
 
-        self.file_url = "file_url"
-        self.sample_url = "large_file_url"
-        self.width = "image_width"
-        self.height = "image_height"
+        self.file_url = ["file_url"]
+        self.sample_url = ["large_file_url"]
+        self.width = ["image_width"]
+        self.height = ["image_height"]
         self.rate_limit = 0.1
 
     async def search(self, game: Game) -> str:
@@ -35,10 +35,10 @@ class SteamyRule34(booru.Rule34):
         self.base_query = "sort:random score:>500 -video -animated"
         self.fallback_query = "-rating:safe"
 
-        self.file_url = "file_url"
-        self.sample_url = "sample_url"
-        self.width = "width"
-        self.height = "height"
+        self.file_url = ["file_url"]
+        self.sample_url = ["sample_url"]
+        self.width = ["width"]
+        self.height = ["height"]
         self.rate_limit = 1
 
     async def search(self, game: Game) -> str:
@@ -57,10 +57,10 @@ class SteamyE621(booru.E621):
         self.base_query = "order:random score:>500 -animated"
         self.fallback_query = "-rating:safe"
 
-        self.file_url = "file_url"
-        self.sample_url = "sample_url"
-        self.width = "width"
-        self.height = "height"
+        self.file_url = ["file", "url"]
+        self.sample_url = ["sample", "url"]
+        self.width = ["file", "width"]
+        self.height = ["file", "height"]
         self.rate_limit = 1
 
     async def search(self, game: Game) -> str:
@@ -68,7 +68,7 @@ class SteamyE621(booru.E621):
         return await super().search(query=query)
 
     def filter(self, posts: list) -> list:
-        return list(filter(lambda post: post["file"]["url"].split(".")[-1] in ["png", "jpg", "jpeg"], posts))
+        return list(filter(lambda post: post["file"]["ext"] in ["png", "jpg", "jpeg"], posts))
 
 
 async def get_booru(config: Config) -> SteamyDanbooru | SteamyRule34 | SteamyE621 | None:

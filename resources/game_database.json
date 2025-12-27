@@ -381,6 +381,6 @@
       "danbooru": "stripper",
       "rule34": "stripper",
       "e621": "stripper"
-    },
+    }
   }
 }

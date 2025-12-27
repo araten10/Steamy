@@ -14,6 +14,7 @@ from boorus import get_booru
 from config import Config
 from games import Game
 from steam import Art, Grid, Steam
+from utils import get_nested
 
 NO_RESULTS_ERROR = "no results, make sure you spelled everything right"
 
@@ -90,17 +91,17 @@ class PornifyThread(QThread):
         tasks = []
         task_lock = asyncio.Lock()
 
-        async def callback(task: asyncio.Task, game_id: str) -> None:
+        async def callback(task: asyncio.Task, game: Game) -> None:
             async with task_lock:
                 tasks.remove(task)
 
             posts = task.result()
             if posts is None:
                 async with self.search_lock:
-                    self.search_queue.append(game_id)
+                    self.search_queue.append(game)
             elif len(posts) > 3:
                 async with self.download_lock:
-                    self.download_queue.append((game_id, posts))
+                    self.download_queue.append((game, posts))
                     self.download_start.set()
             else:
                 logging.warning(f"Not enough results for query {game.danbooru}, got {len(posts)} but expected at least 3")
@@ -147,7 +148,8 @@ class PornifyThread(QThread):
 
         logging.info("Image downloads done")
 
-    async def search_booru(self, game: Game) -> list:
+    async def search_booru(self, game: Game) -> list | None:
+        logging.debug(f"Searching {game}")
         try:
             res = await self.booru.search(game)
             return self.booru.filter(booru.resolve(res))
@@ -161,18 +163,19 @@ class PornifyThread(QThread):
                 raise e  # Unexpected error
 
     async def download_images(self, game: Game, posts: list) -> None:
+        logging.debug(f"Downloading {game}")
         for art in [
             Art("Cover", "p", 600, 900, sample=True),
             Art("Background", "_hero", 3840, 1240, sample=False),
             Art("Wide Cover", "", 920, 430, sample=True),
         ]:
             # TODO: What if no post is a good enough match?
-            scores = [(post, art.score(post[self.booru.width], post[self.booru.height])) for post in posts]
+            scores = [(post, art.score(get_nested(post, self.booru.width), get_nested(post, self.booru.height))) for post in posts]
             post, _ = min(scores, key=lambda scored: scored[1])
             posts.remove(post)  # No duplicates
 
             # Samples are always 850 wide
-            url = post[self.booru.sample_url] if art.sample else post[self.booru.file_url]
+            url = get_nested(post, self.booru.sample_url if art.sample else self.booru.file_url)
             while True:
                 try:
                     async with aiohttp.ClientSession() as session:
