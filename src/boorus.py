@@ -52,7 +52,7 @@ class SteamyRule34(booru.Rule34):
 class SteamyE621(booru.E621):
     def __init__(self, config: Config) -> None:
         super().__init__()
-        self.specs = {"api_key": config.e621_api_key, "login": config.e621_user_id}
+        self.specs = {"api_key": config.e621_api_key, "login": config.e621_username}
 
         self.base_query = "order:random score:>500 -animated"
         self.fallback_query = "-rating:safe"
@@ -76,7 +76,7 @@ async def get_booru(config: Config) -> SteamyDanbooru | SteamyRule34 | SteamyE62
     match config.default_booru:
         case "rule34" if config.r34_api_key and config.r34_user_id:
             option = SteamyRule34(config)
-        case "e621" if config.e621_api_key and config.e621_user_id:
+        case "e621" if config.e621_api_key and config.e621_username:
             option = SteamyE621(config)
 
     test_error = False
@@ -90,7 +90,7 @@ async def get_booru(config: Config) -> SteamyDanbooru | SteamyRule34 | SteamyE62
         message = QtW.QMessageBox()
         message.setIcon(QtW.QMessageBox.Icon.Warning)
         message.setText(f"Can't Use {config.default_booru}")
-        message.setInformativeText("Make sure you have provided your API key and user ID and that they are correct.")
+        message.setInformativeText("Make sure you have provided your API key and user ID or username and that they are correct.")
         message.setStandardButtons(QtW.QMessageBox.StandardButton.Ok)
         message.exec()
         return

@@ -165,12 +165,12 @@ class SteamyMainWindow(QtW.QMainWindow):
         e621_key_layout.addWidget(self.e621_api_key_edit)
         e621_layout.addLayout(e621_key_layout)
 
-        e621_id_layout = QtW.QHBoxLayout()
-        e621_id_layout.addWidget(QtW.QLabel(parent=self, text="Username:"))
-        self.e621_user_id_edit = QtW.QLineEdit(str(self.config.e621_user_id or ""))
-        self.e621_user_id_edit.setStyleSheet("background-color: #1d2026")
-        e621_id_layout.addWidget(self.e621_user_id_edit)
-        e621_layout.addLayout(e621_id_layout)
+        e621_username_layout = QtW.QHBoxLayout()
+        e621_username_layout.addWidget(QtW.QLabel(parent=self, text="Username:"))
+        self.e621_username_edit = QtW.QLineEdit(str(self.config.e621_username or ""))
+        self.e621_username_edit.setStyleSheet("background-color: #1d2026")
+        e621_username_layout.addWidget(self.e621_username_edit)
+        e621_layout.addLayout(e621_username_layout)
 
         api_e621.setLayout(e621_layout)
 
@@ -290,15 +290,12 @@ class SteamyMainWindow(QtW.QMainWindow):
                 if text.isdigit():
                     return int(text)
                 else:
-                    if site != "e621":
-                        message = QtW.QMessageBox()
-                        message.setIcon(QtW.QMessageBox.Icon.Warning)
-                        message.setText("Invalid User ID")
-                        message.setInformativeText(f"{site} user ID {text} is invalid, must be an integer.")
-                        message.setStandardButtons(QtW.QMessageBox.StandardButton.Ok)
-                        message.exec()
-                    else:
-                        return str(text)
+                    message = QtW.QMessageBox()
+                    message.setIcon(QtW.QMessageBox.Icon.Warning)
+                    message.setText("Invalid User ID")
+                    message.setInformativeText(f"{site} user ID {text} is invalid, must be an integer.")
+                    message.setStandardButtons(QtW.QMessageBox.StandardButton.Ok)
+                    message.exec()
 
             return None
 
@@ -311,7 +308,7 @@ class SteamyMainWindow(QtW.QMainWindow):
             },
             "e621": {
                 "api_key": self.e621_api_key_edit.text() or None,
-                "user_id": get_user_id("e621", self.e621_user_id_edit.text()),
+                "username": self.e621_username_edit.text() or None,
             },
         }
         self.config.save()

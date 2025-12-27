@@ -22,7 +22,7 @@ class Config:
                 },
                 "e621": {
                     "api_key": Any(str, None),
-                    "user_id": Any(str, None),
+                    "username": Any(str, None),
                 },
             },
             required=True,
@@ -38,7 +38,7 @@ class Config:
             },
             "e621": {
                 "api_key": None,
-                "user_id": None,
+                "username": None,
             },
         }
 
@@ -50,7 +50,7 @@ class Config:
         self.r34_api_key = self.raw["rule34"]["api_key"]
         self.r34_user_id = self.raw["rule34"]["user_id"]
         self.e621_api_key = self.raw["e621"]["api_key"]
-        self.e621_user_id = self.raw["e621"]["user_id"]
+        self.e621_username = self.raw["e621"]["username"]
 
     def load_fresh(self) -> None:
         raw = load_json(self.path, self.schema)
@@ -74,7 +74,7 @@ class Config:
     def censor(self) -> dict:
         censored = self.raw.copy()
         for site in ["rule34", "e621"]:
-            for key in ["api_key", "user_id"]:
+            for key in self.raw[site].keys():
                 if censored[site][key]:
                     censored[site][key] = "CENSORED"
         return censored
