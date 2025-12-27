@@ -2,75 +2,111 @@
   "games": {
     "10": {
       "name": "Counter-Strike",
-      "danbooru": "counter-strike"
+      "danbooru": "counter-strike",
+      "rule34": "counter-strike",
+      "e621": "counter-strike"
     },
     "50": {
       "name": "Half-Life: Opposing Force",
-      "danbooru": "half-life_1"
+      "danbooru": "half-life_1",
+      "rule34": "half-life_1",
+      "e621": "half-life_1"
     },
     "70": {
       "name": "Half-Life",
-      "danbooru": "half-life_1"
+      "danbooru": "half-life_1",
+      "rule34": "half-life_1",
+      "e621": "half-life_1"
     },
     "80": {
       "name": "Counter-Strike: Condition Zero",
-      "danbooru": "counter-strike"
+      "danbooru": "counter-strike",
+      "rule34": "counter-strike",
+      "e621": "counter-strike"
     },
     "100": {
       "name": "Counter-Strike: Condition Zero",
-      "danbooru": "counter-strike"
+      "danbooru": "counter-strike",
+      "rule34": "counter-strike",
+      "e621": "counter-strike"
     },
     "130": {
       "name": "Half-Life: Blue Shift",
-      "danbooru": "half-life_1"
+      "danbooru": "half-life_1",
+      "rule34": "half-life_1",
+      "e621": "half-life_1"
     },
     "219": {
       "name": "Half-Life 2: Demo",
-      "danbooru": "half-life_2"
+      "danbooru": "half-life_2",
+      "rule34": "half-life_2",
+      "e621": "half-life_2"
     },
     "220": {
       "name": "Half-Life 2",
-      "danbooru": "half-life_2"
+      "danbooru": "half-life_2",
+      "rule34": "half-life_2",
+      "e621": "half-life_2"
     },
     "240": {
       "name": "Counter-Strike: Source",
-      "danbooru": "counter-strike"
+      "danbooru": "counter-strike",
+      "rule34": "counter-strike",
+      "e621": "counter-strike"
     },
     "280": {
       "name": "Half-Life: Source",
-      "danbooru": "half-life_1"
+      "danbooru": "half-life_1",
+      "rule34": "half-life_1",
+      "e621": "half-life_1"
     },
     "320": {
       "name": "Half-Life 2: Deathmatch",
-      "danbooru": "half-life_2"
+      "danbooru": "half-life_2",
+      "rule34": "half-life_2",
+      "e621": "half-life_2"
     },
     "340": {
       "name": "Half-Life 2: Lost Coast",
-      "danbooru": "half-life_2"
+      "danbooru": "half-life_2",
+      "rule34": "half-life_2",
+      "e621": "half-life_2"
     },
     "360": {
       "name": "Half-Life Deathmatch: Source",
-      "danbooru": "half-life_1"
+      "danbooru": "half-life_1",
+      "rule34": "half-life_1",
+      "e621": "half-life_1"
     },
     "380": {
       "name": "Half-Life 2: Episode One",
-      "danbooru": "half-life_2"
+      "danbooru": "half-life_2",
+      "rule34": "half-life_2",
+      "e621": "half-life_2"
     },
     "400": {
       "name": "Portal",
-      "danbooru": "portal_1"
+      "danbooru": "portal_1",
+      "rule34": "portal_1",
+      "e621": "portal_1"
     },
     "410": {
       "name": "Portal: First Slice",
-      "danbooru": "portal_1"
+      "danbooru": "portal_1",
+      "rule34": "portal_1",
+      "e621": "portal_1"
     },
     "420": {
       "name": "Half-Life 2: Episode Two",
-      "danbooru": "half-life_2"
+      "danbooru": "half-life_2",
+      "rule34": "half-life_2",
+      "e621": "half-life_2"
     },
     "440": {
       "name": "Team Fortress 2",
-      "danbooru": "team_fortress_2"
+      "danbooru": "team_fortress_2",
+      "rule34": "team_fortress_2",
+      "e621": "team_fortress_2"
     },
     "500": {
       "name": "Left 4 Dead",
@@ -82,15 +118,21 @@
     },
     "570": {
       "name": "Dota 2",
-      "danbooru": "dota_2"
+      "danbooru": "dota_2",
+      "rule34": "dota_2",
+      "e621": "dota_2"
     },
     "620": {
       "name": "Portal 2",
-      "danbooru": "portal_2"
+      "danbooru": "portal_2",
+      "rule34": "portal_2",
+      "e621": "portal_2"
     },
     "730": {
       "name": "Counter-Strike 2",
-      "danbooru": "counter-strike_2"
+      "danbooru": "counter-strike_2",
+      "rule34": "counter-strike",
+      "e621": "counter-strike"
     },
     "1250": {
       "name": "Killing Floor",
