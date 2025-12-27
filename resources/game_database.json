@@ -91,6 +91,164 @@
     "730": {
       "name": "Counter-Strike 2",
       "danbooru": "counter-strike_2"
-    }
+    },
+    "1250": {
+      "name": "Killing Floor",
+      "danbooru": "killing_floor",
+      "rule34": "killing_floor",
+      "e621": "killing_floor"
+    },
+    "1840": {
+      "name": "Source Filmmaker",
+      "danbooru": "source_filmmaker_(medium)",
+      "rule34": "source_filmmaker",
+      "e621": "source_filmmaker"
+    },
+    "3320": {
+      "name": "Insaniquarium Deluxe",
+      "danbooru": "furry shark",
+      "rule34": "anthro shark",
+      "e621": "anthro shark"
+    },
+    "3330": {
+      "name": "Zuma Deluxe",
+      "danbooru": "aztec",
+      "rule34": "aztec",
+      "e621": "aztec"
+    },
+    "3480": {
+      "name": "Peggle Deluxe",
+      "danbooru": "unicorn -my_little_pony",
+      "rule34": "unicorn -my_little_pony",
+      "e621": "peggle"
+    },
+    "3483": {
+      "name": "Peggle Extreme",
+      "danbooru": "unicorn -my_little_pony",
+      "rule34": "unicorn -my_little_pony",
+      "e621": "peggle"
+    },
+    "3540": {
+      "name": "Peggle™ Nights",
+      "danbooru": "unicorn -my_little_pony",
+      "rule34": "unicorn -my_little_pony",
+      "e621": "peggle"
+    },
+    "3590": {
+      "name": "Plants vs. Zombies GOTY Edition",
+      "rule34": "anthro sunflower"
+    },
+    "3620": {
+      "name": "Zuma's Revenge!",
+      "danbooru": "aztec",
+      "rule34": "aztec",
+      "e621": "aztec"
+    },
+    "3900": {
+      "name": "Sid Meier's Civilization® IV",
+      "danbooru": "samurai",
+      "rule34": "samurai",
+      "e621": "samurai"
+    },
+    "3910": {
+      "name": "Sid Meier's Civilization® III Complete",
+      "danbooru": "musket military_uniform",
+      "e621": "musket military_uniform"
+    },
+    "3990": {
+      "name": "Civilization IV®: Warlords",
+      "danbooru": "samurai",
+      "rule34": "samurai",
+      "e621": "samurai"
+    },
+    "4000": {
+      "name": "Garry's Mod",
+      "rule34": "garrys_mod",
+      "e621": "garrys_mod"
+    },
+    "6060": {
+      "name": "STAR WARS™ Battlefront II (Classic, 2005)",
+      "danbooru": "star_wars",
+      "rule34": "star_wars",
+      "e621": "star_wars"
+    },
+    "7000": {
+      "name": "Tomb Raider: Legend",
+      "danbooru": "lara_croft",
+      "rule34": "lara_croft",
+      "e621": "lara_croft"
+    },
+    "7670": {
+      "name": "BioShock™",
+      "danbooru": "bioshock",
+      "rule34": "bioshock",
+      "e621": "bioshock"
+    },
+    "8000": {
+      "name": "Tomb Raider: Anniversary",
+      "danbooru": "lara_croft",
+      "rule34": "lara_croft",
+      "e621": "lara_croft"
+    },
+    "8140": {
+      "name": "Tomb Raider: Underworld",
+      "danbooru": "lara_croft",
+      "rule34": "lara_croft",
+      "e621": "lara_croft"
+    },
+    "203160": {
+      "name": "Tomb Raider Game of the Year",
+      "danbooru": "lara_croft",
+      "rule34": "lara_croft",
+      "e621": "lara_croft"
+    },
+    "224960": {
+      "name": "Tomb Raider I (1996)",
+      "danbooru": "lara_croft",
+      "rule34": "lara_croft",
+      "e621": "lara_croft"
+    },
+    "225300": {
+      "name": "Tomb Raider II (1997)",
+      "danbooru": "lara_croft",
+      "rule34": "lara_croft",
+      "e621": "lara_croft"
+    },
+    "225320": {
+      "name": "Tomb Raider III (1998)",
+      "danbooru": "lara_croft",
+      "rule34": "lara_croft",
+      "e621": "lara_croft"
+    },
+    "224980": {
+      "name": "Tomb Raider IV: The Last Revelation (1999)",
+      "danbooru": "lara_croft",
+      "rule34": "lara_croft",
+      "e621": "lara_croft"
+    },
+    "225000": {
+      "name": "Tomb Raider V: Chronicles (2000)",
+      "danbooru": "lara_croft",
+      "rule34": "lara_croft",
+      "e621": "lara_croft"
+    },
+    "225020": {
+      "name": "Tomb Raider VI: The Angel of Darkness (2003)",
+      "danbooru": "lara_croft",
+      "rule34": "lara_croft",
+      "e621": "lara_croft"
+    },
+    "2478970": {
+      "name": "Tomb Raider I-III Remastered Starring Lara Croft",
+      "danbooru": "lara_croft",
+      "rule34": "lara_croft",
+      "e621": "lara_croft"
+    },
+    "2525380": {
+      "name": "Tomb Raider IV-VI Remastered",
+      "danbooru": "lara_croft",
+      "rule34": "lara_croft",
+      "e621": "lara_croft"
+    },
   }
 }

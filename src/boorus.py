@@ -68,7 +68,7 @@ class SteamyE621(booru.E621):
         return await super().search(query=query)
 
     def filter(self, posts: list) -> list:
-        return list(filter(lambda post: post["file_url"].split(".")[-1] in ["png", "jpg", "jpeg"], posts))
+        return list(filter(lambda post: post["file"]["url"].split(".")[-1] in ["png", "jpg", "jpeg"], posts))
 
 
 async def get_booru(config: Config) -> SteamyDanbooru | SteamyRule34 | SteamyE621 | None:
