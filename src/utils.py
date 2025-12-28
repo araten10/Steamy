@@ -3,6 +3,7 @@ import logging
 from json.decoder import JSONDecodeError
 from pathlib import Path
 
+import PyQt6.QtWidgets as QtW
 from voluptuous import Schema
 from voluptuous.error import Invalid
 
@@ -22,6 +23,15 @@ def load_json(path: Path, schema: Schema) -> dict | None:
         logging.warning(f"{path} format is invalid. Reason: {e}")
 
     return None
+
+
+def info_message(icon: QtW.QMessageBox.Icon, text: str, informative_text: str) -> None:
+    message = QtW.QMessageBox()
+    message.setIcon(icon)
+    message.setText(text)
+    message.setInformativeText(informative_text)
+    message.setStandardButtons(QtW.QMessageBox.StandardButton.Ok)
+    message.exec()
 
 
 def get_dir_names(parent: Path) -> list[str]:

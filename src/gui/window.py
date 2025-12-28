@@ -10,6 +10,7 @@ from games import LibraryDumperThread, get_game_db
 from gui.title import SteamyTitleBar
 from pornify import PornifyThread, resteam
 from steam import Steam
+from utils import info_message
 
 LOGO = r"""      :::::::: ::::::::::: ::::::::::     :::       :::   :::  :::   :::
     :+:    :+:    :+:     :+:          :+: :+:    :+:+: :+:+: :+:   :+:
@@ -265,12 +266,7 @@ class SteamyMainWindow(QtW.QMainWindow):
 
         def on_done(dump_path: Path) -> None:
             self.set_buttons_enabled(True)
-            message = QtW.QMessageBox()
-            message.setIcon(QtW.QMessageBox.Icon.NoIcon)
-            message.setText("Game Library Dump Done")
-            message.setInformativeText(f"Game library dumped to {dump_path}.")
-            message.setStandardButtons(QtW.QMessageBox.StandardButton.Ok)
-            message.exec()
+            info_message(QtW.QMessageBox.Icon.NoIcon, "Game Library Dump Done", f"Game library dumped to {dump_path}.")
 
         self.dump_thread = LibraryDumperThread(self.steam, self.game_db)
         self.dump_thread.done.connect(on_done)
@@ -290,12 +286,7 @@ class SteamyMainWindow(QtW.QMainWindow):
                 if text.isdigit():
                     return int(text)
                 else:
-                    message = QtW.QMessageBox()
-                    message.setIcon(QtW.QMessageBox.Icon.Warning)
-                    message.setText("Invalid User ID")
-                    message.setInformativeText(f"{site} user ID {text} is invalid, must be an integer.")
-                    message.setStandardButtons(QtW.QMessageBox.StandardButton.Ok)
-                    message.exec()
+                    info_message(QtW.QMessageBox.Icon.Warning, "Invalid User ID", f"{site} user ID {text} is invalid, must be an integer.")
 
             return None
 

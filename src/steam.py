@@ -10,7 +10,7 @@ from time import sleep
 import PyQt6.QtWidgets as QtW
 import vdf
 
-from utils import get_dir_names
+from utils import get_dir_names, info_message
 
 
 @dataclass
@@ -56,12 +56,7 @@ class Steam:
                         break
 
         if not self.path:
-            message = QtW.QMessageBox()
-            message.setIcon(QtW.QMessageBox.Icon.Critical)
-            message.setText("Steam Not Found")
-            message.setInformativeText("Could not find Steam installation location, unable to run.")
-            message.setStandardButtons(QtW.QMessageBox.StandardButton.Ok)
-            message.exec()
+            info_message(QtW.QMessageBox.Icon.Critical, "Steam Not Found", "Could not find Steam installation location, unable to run.")
             sys.exit()
 
         self.game_ids = get_dir_names(self.path / "appcache" / "librarycache")

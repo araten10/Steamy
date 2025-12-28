@@ -3,6 +3,7 @@ import PyQt6.QtWidgets as QtW
 
 from config import Config
 from games import Game
+from utils import info_message
 
 
 class SteamyDanbooru(booru.Danbooru):
@@ -87,12 +88,11 @@ async def get_booru(config: Config) -> SteamyDanbooru | SteamyRule34 | SteamyE62
             test_error = True
 
     if (config.default_booru != "danbooru" and not option) or test_error:
-        message = QtW.QMessageBox()
-        message.setIcon(QtW.QMessageBox.Icon.Warning)
-        message.setText(f"Can't Use {config.default_booru}")
-        message.setInformativeText("Make sure you have provided your API key and user ID or username and that they are correct.")
-        message.setStandardButtons(QtW.QMessageBox.StandardButton.Ok)
-        message.exec()
+        info_message(
+            QtW.QMessageBox.Icon.Warning,
+            f"Can't Use {config.default_booru}",
+            "Make sure you have provided your API key and user ID or username and that they are correct.",
+        )
         return
 
     return option or SteamyDanbooru()
