@@ -168,7 +168,7 @@ class SteamyMainWindow(QtW.QMainWindow):
 
         e621_username_layout = QtW.QHBoxLayout()
         e621_username_layout.addWidget(QtW.QLabel(parent=self, text="Username:"))
-        self.e621_username_edit = QtW.QLineEdit(str(self.config.e621_username or ""))
+        self.e621_username_edit = QtW.QLineEdit(self.config.e621_username)
         self.e621_username_edit.setStyleSheet("background-color: #1d2026")
         e621_username_layout.addWidget(self.e621_username_edit)
         e621_layout.addLayout(e621_username_layout)
@@ -188,6 +188,12 @@ class SteamyMainWindow(QtW.QMainWindow):
 
         # === STEAMY TAB ===
         tab_steamy.layout = QtW.QVBoxLayout()
+
+        self.concurrent_downloads_spin_box = QtW.QSpinBox()
+        self.concurrent_downloads_spin_box.setMinimum(1)
+        self.concurrent_downloads_spin_box.setMaximum(128)
+        self.concurrent_downloads_spin_box.setValue(self.config.concurrent_downloads)
+        tab_steamy.layout.addWidget(self.concurrent_downloads_spin_box)
 
         steamy_save_button = QtW.QPushButton("Save")
         steamy_save_button.clicked.connect(self.on_save_click)
@@ -292,7 +298,7 @@ class SteamyMainWindow(QtW.QMainWindow):
 
         self.config.raw = {
             "default_booru": self.booru_dropdown.currentText(),
-            "concurrent_downloads": 10,  # TODO: Set from GUI
+            "concurrent_downloads": self.concurrent_downloads_spin_box.value(),
             "rule34": {
                 "api_key": self.r34_api_key_edit.text() or None,
                 "user_id": get_user_id("Rule34", self.r34_user_id_edit.text()),
