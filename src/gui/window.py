@@ -4,7 +4,6 @@ from pathlib import Path
 
 import PyQt6.QtWidgets as QtW
 from PyQt6.QtCore import QSize, Qt
-from PyQt6.QtGui import QIcon
 
 from config import Config
 from games import LibraryDumperThread, get_game_db, search_games
@@ -33,7 +32,6 @@ class SteamyMainWindow(QtW.QMainWindow):
         self.setWindowTitle("Steamy")
         self.setFixedSize(QSize(400, 630))  # Total Height = 300 for top_layout, 300 for bottom layout, add title bar
         self.setWindowFlags(Qt.WindowType.FramelessWindowHint)
-        self.setWindowIcon(QIcon('resources/steamyicon.ico'))
 
         title_bar = SteamyTitleBar(self)
         title_bar.setFixedSize(400, 30)
