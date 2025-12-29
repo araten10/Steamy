@@ -3,7 +3,7 @@ import sys
 
 import PyQt6.QtWidgets as QtW
 from PyQt6.QtCore import Qt
-from PyQt6.QtGui import QFontDatabase
+from PyQt6.QtGui import QFontDatabase, QIcon
 
 from gui.window import SteamyMainWindow
 
@@ -12,6 +12,7 @@ if __name__ == "__main__":
 
     # holds all events that happen while interfacing with qt program
     app = QtW.QApplication(sys.argv)
+    app.setWindowIcon(QIcon("resources/steamylogo.ico"))
     QFontDatabase.addApplicationFont("resources/MonaSans-Regular.ttf")
     QFontDatabase.addApplicationFont("resources/Consolas-Regular.ttf")
     with open("resources/steamystyle.qss", "r") as f:
