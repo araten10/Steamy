@@ -63,10 +63,11 @@ def search_games(search_term: str, cc: str) -> None:
     search_dict = {}
     for game in results:
         search_dict[game["id"]] = {"name": game["name"]}
-    print(search_dict)
+
     with open(output_path, "w", encoding="utf8") as f:
         json.dump(search_dict, f, indent=2, ensure_ascii=False)
-        print(f"Search results saved to {output_path}.")
+        logging.info(f"Search results saved to {output_path}.")
+
 
 class LibraryDumperThread(QThread):
     progress = pyqtSignal()
