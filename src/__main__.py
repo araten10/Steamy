@@ -1,5 +1,6 @@
 import logging
 import sys
+import ctypes
 
 import PyQt6.QtWidgets as QtW
 from PyQt6.QtCore import Qt
@@ -12,6 +13,11 @@ if __name__ == "__main__":
 
     # holds all events that happen while interfacing with qt program
     app = QtW.QApplication(sys.argv)
+
+    # workaround for windows taskbar icons
+    myappid = 'mycompany.myproduct.subproduct.version'
+    ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(myappid)
+
     app.setWindowIcon(QIcon("resources/steamylogo.ico"))
     QFontDatabase.addApplicationFont("resources/MonaSans-Regular.ttf")
     QFontDatabase.addApplicationFont("resources/Consolas-Regular.ttf")
