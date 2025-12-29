@@ -304,6 +304,12 @@
       "rule34": "lara_croft",
       "e621": "lara_croft"
     },
+    "105600": {
+      "name": "Terraria",
+      "danbooru": "terraria",
+      "rule34": "terraria",
+      "e621": "terraria"
+    },
     "203160": {
       "name": "Tomb Raider Game of the Year",
       "danbooru": "lara_croft",
@@ -346,6 +352,64 @@
       "rule34": "lara_croft",
       "e621": "lara_croft"
     },
+    "245170": {
+      "name": "Skullgirls 2nd Encore",
+      "danbooru": "skullgirls",
+      "rule34": "skullgirls",
+      "e621": "skullgirls"
+    },
+    "339800": {
+      "name": "HuniePop",
+      "ignore": true
+    },
+    "367520": {
+      "name": "Hollow Knight",
+      "danbooru": "hollow_knight",
+      "rule34": "hollow_knight",
+      "e621": "hollow_knight"
+    },
+    "391540": {
+      "name": "Undertale",
+      "danbooru": "undertale",
+      "rule34": "undertale",
+      "e621": "undertale"
+    },
+    "409710": {
+      "name": "BioShock™ Remastered",
+      "danbooru": "bioshock",
+      "rule34": "bioshock",
+      "e621": "bioshock"
+    },
+    "409720": {
+      "name": "BioShock™ 2 Remastered",
+      "danbooru": "bioshock",
+      "rule34": "bioshock",
+      "e621": "bioshock"
+    },
+    "413150": {
+      "name": "Stardew Valley",
+      "danbooru": "stardew_valley",
+      "rule34": "stardew_valley",
+      "e621": "stardew_valley"
+    },
+    "447530": {
+      "name": "VA-11 Hall-A: Cyberpunk Bartender Action",
+      "danbooru": "va-11_hall-a",
+      "rule34": "va-11_hall-a",
+      "e621": "va-11_hall-a"
+    },
+    "1281930": {
+      "name": "tModLoader",
+      "danbooru": "calamity_(terraria_mod)",
+      "rule34": "calamity_mod",
+      "e621": "calamity_mod"
+    },
+    "1289310": {
+      "name": "Helltaker",
+      "danbooru": "helltaker",
+      "rule34": "helltaker",
+      "e621": "helltaker"
+    },
     "1546970": {
       "name": "Grand Theft Auto III - The Definitive Edition",
       "danbooru": "stripper",
@@ -364,6 +428,18 @@
       "rule34": "stripper",
       "e621": "stripper"
     },
+    "1748620": {
+      "name": "FlipWitch - Forbidden Sex Hex",
+      "ignore": true
+    },
+    "1827650": {
+      "name": "Star Knightess Aura",
+      "ignore": true
+    },
+    "2178330": {
+      "name": "Glory & Miserable Survivors DX",
+      "ignore": true
+    },
     "2478970": {
       "name": "Tomb Raider I-III Remastered Starring Lara Croft",
       "danbooru": "lara_croft",
@@ -381,6 +457,70 @@
       "danbooru": "stripper",
       "rule34": "stripper",
       "e621": "stripper"
+    },
+    "2768430": {
+      "name": "ATLYSS",
+      "danbooru": "atlyss",
+      "rule34": "atlyss",
+      "e621": "atlyss"
+    },
+    "3224770": {
+      "name": "Umamusume: Pretty Derby",
+      "danbooru": "umamusume",
+      "rule34": "umamusume",
+      "e621": "uma_musume_pretty_derby"
+    },
+    "3274300": {
+      "name": "Awaria",
+      "danbooru": "awaria",
+      "rule34": "awaria"
+    },
+    "1422450": {
+      "name": "Deadlock",
+      "danbooru": "deadlock_(game)",
+      "rule34": "deadlock",
+      "e621": "deadlock"
+    },
+    "1150690": {
+      "name": "OMORI",
+      "danbooru": "omori",
+      "rule34": "omori",
+      "e621": "omori_(game)"
+    },
+    "1533420": {
+      "name": "Neon White",
+      "danbooru": "neon_white",
+      "rule34": "neon_white",
+      "e621": "neon_white"
+    },
+    "2121980": {
+      "name": "Void Stranger",
+      "danbooru": "void_stranger",
+      "rule34": "void_stranger"
+    },
+    "2134320": {
+      "name": "ENA: Dream BBQ",
+      "danbooru": "ena:_dream_bbq",
+      "rule34": "dream_bbq",
+      "e621": "ena_dream_bbq"
+    },
+    "2378900": {
+      "name": "The Coffin of Andy and Leyley",
+      "danbooru": "the_coffin_of_andy_and_leyley",
+      "rule34": "the_coffin_of_andy_and_leyley",
+      "e621": "the_coffin_of_andy_and_leyley"
+    },
+    "2379780": {
+      "name": "Balatro",
+      "danbooru": "balatro",
+      "rule34": "balatro",
+      "e621": "balatro"
+    },
+    "362870": {
+      "name": "RPG Maker 2003"
+    },
+    "650700": {
+      "name": "Yume Nikki"
     }
   }
 }

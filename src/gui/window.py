@@ -6,7 +6,7 @@ import PyQt6.QtWidgets as QtW
 from PyQt6.QtCore import QSize, Qt
 
 from config import Config
-from games import LibraryDumperThread, get_game_db
+from games import LibraryDumperThread, get_game_db, search_games
 from gui.title import SteamyTitleBar
 from pornify import PornifyThread, resteam
 from steam import Steam
@@ -211,6 +211,45 @@ class SteamyMainWindow(QtW.QMainWindow):
         folder_button = QtW.QPushButton("Open Steam Config Folder")
         folder_button.clicked.connect(self.on_folder_click)
         tab_dev.layout.addWidget(folder_button)
+
+        search_groupbox = QtW.QGroupBox("Steam Store Search")
+        search_groupbox.setStyleSheet("background-color: #171d25;")
+        search_groupbox.setFixedHeight(100)
+        search_layout = QtW.QVBoxLayout(search_groupbox)
+
+        self.search_text = ""
+        self.cc_text = "US"
+
+        def search_update() -> None:
+            self.search_text = self.search_query.text()
+
+        def cc_update() -> None:
+            self.cc_text = self.country_code.text()
+
+        search_params_layout = QtW.QHBoxLayout()
+        search_params_layout.addWidget(QtW.QLabel(parent=self, text="Search:"))
+        self.search_query = QtW.QLineEdit()
+        self.search_query.setStyleSheet("background-color: #1d2026")
+        self.search_query.editingFinished.connect(search_update)
+        search_params_layout.addWidget(self.search_query)
+
+        search_params_layout.addWidget(QtW.QLabel(parent=self, text="CC:"))
+        self.country_code = QtW.QLineEdit(self.cc_text)
+        self.country_code.setText("US")
+        self.country_code.setStyleSheet("background-color: #1d2026")
+        self.country_code.setFixedWidth(35)
+        self.country_code.editingFinished.connect(cc_update)
+        search_params_layout.addWidget(self.country_code)
+        search_layout.addLayout(search_params_layout)
+
+        self.search_button = QtW.QPushButton("Search Steam and Save Results")
+        self.search_button.clicked.connect(lambda: search_games(self.search_text, self.cc_text))
+        self.search_button.setStyleSheet("background-color: #25272c")
+        search_layout.addWidget(self.search_button)
+
+        search_groupbox.setLayout(search_layout)
+
+        tab_dev.layout.addWidget(search_groupbox)
 
         tab_dev.setLayout(tab_dev.layout)
 

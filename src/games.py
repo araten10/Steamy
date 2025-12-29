@@ -21,6 +21,7 @@ class Game:
     danbooru: str | None = None
     rule34: str | None = None
     e621: str | None = None
+    ignore: bool | None = None
 
 
 def get_game_db() -> dict[str, Game]:
@@ -45,6 +46,20 @@ def get_game_db() -> dict[str, Game]:
     game_db_json = load_json(path, schema) or {"games": {}}
     game_db = {game_id: Game(game_id, **data) for game_id, data in game_db_json["games"].items()}
     return game_db
+
+
+# def sort_game_db() -> None:
+# path = Path(__file__).parent.parent / "resources" / "game_database.json"
+
+# with open(path, "w", encoding="utf8") as f:
+# json.dump(self.dump, f, indent=2, ensure_ascii=False)
+
+
+def search_games(search_term: str, cc: str) -> None:
+    # Search params: ?term=: search term, &l=english: language, &cc=: country code
+    search_url = "https://store.steampowered.com/api/storesearch/?term=" + search_term + "&l=english&cc=" + cc
+    results = requests.get(search_url).json()["items"]
+    print(results)
 
 
 class LibraryDumperThread(QThread):
