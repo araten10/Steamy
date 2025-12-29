@@ -59,7 +59,15 @@ def search_games(search_term: str, cc: str) -> None:
     # Search params: ?term=: search term, &l=english: language, &cc=: country code
     search_url = "https://store.steampowered.com/api/storesearch/?term=" + search_term + "&l=english&cc=" + cc
     results = requests.get(search_url).json()["items"]
-    print(results)
+    output_path = Path(__file__).parent.parent / "resources" / "search_results.json"
+    search_dict = {}
+    for game in results:
+        search_dict[game["id"]] = {"name": game["name"]}
+    print(search_dict)
+    with open(output_path, "w", encoding="utf8") as f:
+        json.dump(search_dict, f, indent=2, ensure_ascii=False)
+        print(f"Search results saved to {output_path}.")
+
 
 
 class LibraryDumperThread(QThread):
