@@ -33,6 +33,8 @@ def get_game_db() -> dict[str, Game]:
                     "name": str,
                     Optional("danbooru"): str,
                     Optional("rule34"): str,
+                    Optional("e621"): str,
+                    Optional("ignore"): bool,
                 }
             }
         },
