@@ -111,15 +111,16 @@ class PornifyThread(QThread):
                 async with self.search_lock:
                     game = self.search_queue.pop(0)
                 task = asyncio.create_task(self.search_booru(game))
-                task.add_done_callback(lambda t: asyncio.create_task(callback(t, game)))
 
                 async with task_lock:
                     tasks.append(task)
+                task.add_done_callback(lambda t: asyncio.create_task(callback(t, game)))
 
                 # Chance to be slightly slower than required to be on the safe side
                 await asyncio.sleep(random.uniform(self.booru.rate_limit, self.booru.rate_limit * 1.25))
 
-            await asyncio.wait(tasks, return_when=asyncio.FIRST_COMPLETED)
+            if tasks:
+                await asyncio.wait(tasks, return_when=asyncio.FIRST_COMPLETED)
 
         self.search_done = True
         logging.info("Booru searches done")
@@ -139,17 +140,21 @@ class PornifyThread(QThread):
                 async with self.download_lock:
                     game, posts = self.download_queue.pop(0)
                 task = asyncio.create_task(self.download_images(game, posts))
-                task.add_done_callback(lambda t: asyncio.create_task(callback(t)))
 
                 async with task_lock:
                     tasks.append(task)
+                task.add_done_callback(lambda t: asyncio.create_task(callback(t)))
 
-            await asyncio.wait(tasks, return_when=asyncio.FIRST_COMPLETED)
+            if tasks:
+                await asyncio.wait(tasks, return_when=asyncio.FIRST_COMPLETED)
+            else:
+                await asyncio.sleep(self.booru.rate_limit)  # No download tasks ready, wait for more booru results
 
         logging.info("Image downloads done")
 
     async def search_booru(self, game: Game) -> list | None:
         logging.debug(f"Searching {game}")
+
         try:
             res = await self.booru.search(game)
             return self.booru.filter(booru.resolve(res))
@@ -164,6 +169,8 @@ class PornifyThread(QThread):
 
     async def download_images(self, game: Game, posts: list) -> None:
         logging.debug(f"Downloading {game}")
+
+        # Samples should always be 850 wide
         for art in [
             Art("Cover", "p", 600, 900, sample=True),
             Art("Background", "_hero", 3840, 1240, sample=False),
@@ -173,8 +180,14 @@ class PornifyThread(QThread):
             post, _ = min(scores, key=lambda scored: scored[1])
             posts.remove(post)  # No duplicates
 
-            # Samples are always 850 wide
-            url = get_nested(post, self.booru.sample_url if art.sample else self.booru.file_url)
+            url = None
+            if art.sample:
+                url = get_nested(post, self.booru.sample_url)
+
+            # Sample URL can be null on e621
+            if not url:
+                url = get_nested(post, self.booru.file_url)
+
             while True:
                 try:
                     async with aiohttp.ClientSession() as session:
