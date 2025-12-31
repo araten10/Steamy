@@ -10,6 +10,7 @@ import requests
 from PyQt6.QtCore import QSize, QThread, pyqtSignal
 from voluptuous import ALLOW_EXTRA, Number, Optional, Schema
 
+import resources
 from steam import Steam
 from utils import load_json
 
@@ -25,8 +26,6 @@ class Game:
 
 
 def get_game_db() -> dict[str, Game]:
-    path = Path(__file__).parent.parent / "resources" / "game_database.json"
-
     schema = Schema(
         {
             "games": {
@@ -43,7 +42,7 @@ def get_game_db() -> dict[str, Game]:
         extra=ALLOW_EXTRA,
     )
 
-    game_db_json = load_json(path, schema) or {"games": {}}
+    game_db_json = load_json(resources.GAME_DATABASE, schema) or {"games": {}}
     game_db = {game_id: Game(game_id, **data) for game_id, data in game_db_json["games"].items()}
     return game_db
 

@@ -4,13 +4,12 @@ from pathlib import Path
 
 from voluptuous import ALLOW_EXTRA, All, Any, Range, Schema
 
+import resources
 from utils import load_json
 
 
 class Config:
     def __init__(self) -> None:
-        self.path = Path(__file__).parent.parent / "resources" / "config.json"
-
         self.supported_boorus = ["danbooru", "rule34", "e621"]
         self.schema = Schema(
             {
@@ -79,19 +78,19 @@ class Config:
         self.e621_username = self.raw["e621"]["username"]
 
     def load_fresh(self) -> None:
-        raw = load_json(self.path, self.schema)
+        raw = load_json(resources.CONFIG, self.schema)
         if raw:
             self.raw = raw
         else:
-            logging.info(f"Writing {self.path} with default values.")
-            with open(self.path, "w") as f:
+            logging.info(f"Writing {resources.CONFIG} with default values.")
+            with open(resources.CONFIG, "w") as f:
                 json.dump(self.raw, f, indent=2)
 
         self.load()
         logging.info(f"Config loaded {self.censor()}")
 
     def save(self) -> None:
-        with open(self.path, "w") as f:
+        with open(resources.CONFIG, "w") as f:
             json.dump(self.raw, f, indent=2)
 
         self.load()

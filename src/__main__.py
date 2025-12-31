@@ -7,6 +7,7 @@ import PyQt6.QtWidgets as QtW
 from PyQt6.QtCore import Qt
 from PyQt6.QtGui import QFontDatabase, QIcon
 
+import resources
 from gui.window import SteamyMainWindow
 
 if __name__ == "__main__":
@@ -20,11 +21,17 @@ if __name__ == "__main__":
         myappid = "mycompany.myproduct.subproduct.version"
         ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(myappid)
 
-    app.setWindowIcon(QIcon("resources/steamylogo.ico"))
-    QFontDatabase.addApplicationFont("resources/MonaSans-Regular.ttf")
-    QFontDatabase.addApplicationFont("resources/Consolas-Regular.ttf")
-    with open("resources/qss/style.qss", "r") as f1, open("resources/qss/buttons.qss", "r") as f2:
-        app.setStyleSheet(f1.read() + f2.read())
+    app.setWindowIcon(QIcon(str(resources.ICON)))
+
+    for font in resources.FONTS:
+        QFontDatabase.addApplicationFont(str(font))
+
+    full_style = ""
+    for style in resources.STYLES:
+        with open(style, "r") as f:
+            full_style += f.read()
+    app.setStyleSheet(full_style)
+
     window = SteamyMainWindow()
     window.setAttribute(Qt.WidgetAttribute.WA_TranslucentBackground)
 
