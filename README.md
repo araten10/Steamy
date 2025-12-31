@@ -8,9 +8,9 @@ asdfg write installation here when its finalized
 
 Rule34 and E621 both require API keys to download images from their servers. We highly recommend this as Danbooru can only support a maximum of two tags from scrapers. If you want to use these boorus, you need to make an account on these sites and generate a key. Rule34 does not require an email to sign up, but E621 does. For those who prefer the imageset of Danbooru but want more tags, we may add Gelbooru support in the future!
 
-To get your Rule34 API Key, go to (https://rule34.xxx/index.php?page=account&s=options). Under "API Access Credentials", click "Generate New Key". The key comes in the format `&api_key=<api_key>&user_id=<user_id>`, so you will have to take out the api key and user id (*not* your username!) from this and put it into Steamy. Make sure you don't copy `&api_key=` and `&user_id=` while doing this.
+To get your Rule34 API Key, go to https://rule34.xxx/index.php?page=account&s=options. Under "API Access Credentials", click "Generate New Key". The key comes in the format `&api_key=<api_key>&user_id=<user_id>`, so you will have to take out the api key and user id (*not* your username!) from this and put it into Steamy. Make sure you don't copy `&api_key=` and `&user_id=` while doing this.
 
-To get your E621 API Key, go to (https://e621.net/users/settings), then click "View" under "API Key". You may have to generate a new key, but it should be smooth sailing from here.
+To get your E621 API Key, go to https://e621.net/users/settings, then click "View" under "API Key". You may have to generate a new key, but it should be smooth sailing from here.
 
 # Customization
 By default Steamy should detect every game you own and overwrite its image, but if you want a game to have art with specific tags, you can add it in yourself. There are no plans for there to be a GUI editor for this, but it is fairly simple to do with only a few steps.
