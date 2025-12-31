@@ -129,26 +129,22 @@ class SteamyMainWindow(QtW.QMainWindow):
 
         api_container = QtW.QWidget()
         # Have to manually set the background colour on these ones for stylistic purposes
-        api_container.setStyleSheet("background-color: #292e37;")
         api_layout = QtW.QHBoxLayout(api_container)
         api_layout.setContentsMargins(0, 0, 0, 0)
 
         # Rule34 API
         api_r34 = QtW.QGroupBox("rule34")
-        api_r34.setStyleSheet("background-color: #171d25;")
         r34_layout = QtW.QVBoxLayout(api_r34)
 
         r34_key_layout = QtW.QHBoxLayout()
         r34_key_layout.addWidget(QtW.QLabel(parent=self, text="API Key:"))
         self.r34_api_key_edit = QtW.QLineEdit(self.config.r34_api_key)
-        self.r34_api_key_edit.setStyleSheet("background-color: #1d2026")
         r34_key_layout.addWidget(self.r34_api_key_edit)
         r34_layout.addLayout(r34_key_layout)
 
         r34_id_layout = QtW.QHBoxLayout()
         r34_id_layout.addWidget(QtW.QLabel(parent=self, text="User ID:"))
         self.r34_user_id_edit = QtW.QLineEdit(str(self.config.r34_user_id or ""))
-        self.r34_user_id_edit.setStyleSheet("background-color: #1d2026")
         r34_id_layout.addWidget(self.r34_user_id_edit)
         r34_layout.addLayout(r34_id_layout)
 
@@ -156,20 +152,17 @@ class SteamyMainWindow(QtW.QMainWindow):
 
         # E621 API
         api_e621 = QtW.QGroupBox("e621")
-        api_e621.setStyleSheet("background-color: #171d25;")
         e621_layout = QtW.QVBoxLayout(api_e621)
 
         e621_key_layout = QtW.QHBoxLayout()
         e621_key_layout.addWidget(QtW.QLabel(parent=self, text="API Key:"))
         self.e621_api_key_edit = QtW.QLineEdit(self.config.e621_api_key)
-        self.e621_api_key_edit.setStyleSheet("background-color: #1d2026")
         e621_key_layout.addWidget(self.e621_api_key_edit)
         e621_layout.addLayout(e621_key_layout)
 
         e621_username_layout = QtW.QHBoxLayout()
         e621_username_layout.addWidget(QtW.QLabel(parent=self, text="Username:"))
         self.e621_username_edit = QtW.QLineEdit(self.config.e621_username)
-        self.e621_username_edit.setStyleSheet("background-color: #1d2026")
         e621_username_layout.addWidget(self.e621_username_edit)
         e621_layout.addLayout(e621_username_layout)
 
@@ -213,27 +206,23 @@ class SteamyMainWindow(QtW.QMainWindow):
         tab_dev.layout.addWidget(folder_button)
 
         search_groupbox = QtW.QGroupBox("Steam Store Search")
-        search_groupbox.setStyleSheet("background-color: #171d25;")
         search_groupbox.setFixedHeight(100)
         search_layout = QtW.QVBoxLayout(search_groupbox)
 
         search_params_layout = QtW.QHBoxLayout()
         search_params_layout.addWidget(QtW.QLabel(parent=self, text="Search:"))
         self.search_query = QtW.QLineEdit()
-        self.search_query.setStyleSheet("background-color: #1d2026")
         search_params_layout.addWidget(self.search_query)
 
         search_params_layout.addWidget(QtW.QLabel(parent=self, text="CC:"))
         self.country_code = QtW.QLineEdit("US")
         self.country_code.setText("US")
-        self.country_code.setStyleSheet("background-color: #1d2026")
         self.country_code.setFixedWidth(35)
         search_params_layout.addWidget(self.country_code)
         search_layout.addLayout(search_params_layout)
 
         self.search_button = QtW.QPushButton("Search Steam and Save Results")
         self.search_button.clicked.connect(lambda: search_games(self.search_query.text(), self.country_code.text()))
-        self.search_button.setStyleSheet("background-color: #25272c")
         search_layout.addWidget(self.search_button)
 
         search_groupbox.setLayout(search_layout)
