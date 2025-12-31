@@ -203,7 +203,7 @@ class SteamyMainWindow(QtW.QMainWindow):
         search_params_layout.addWidget(self.country_code)
         search_layout.addLayout(search_params_layout)
 
-        self.search_button = QtW.QPushButton("Search Steam and Save Results")
+        self.search_button = QtW.QPushButton("Search Steam")
         self.search_button.clicked.connect(lambda: search_games(self.search_query.text(), self.country_code.text()))
         search_layout.addWidget(self.search_button)
 
