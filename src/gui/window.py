@@ -104,15 +104,12 @@ class SteamyMainWindow(QtW.QMainWindow):
 
         tab_master = QtW.QTabWidget()
         tab_booru = QtW.QWidget()
-        tab_steamy = QtW.QWidget()
         tab_dev = QtW.QWidget()
         tab_booru.setObjectName("Tab")
-        tab_steamy.setObjectName("Tab")
         tab_dev.setObjectName("Tab")
         tab_master.setFixedHeight(285)
 
         tab_master.addTab(tab_booru, "Booru")
-        tab_master.addTab(tab_steamy, "Steamy")
         tab_master.addTab(tab_dev, "Tools")
 
         # === BOORU TAB ===
@@ -178,21 +175,6 @@ class SteamyMainWindow(QtW.QMainWindow):
         tab_booru.layout.addWidget(booru_save_button)
 
         tab_booru.setLayout(tab_booru.layout)
-
-        # === STEAMY TAB ===
-        tab_steamy.layout = QtW.QVBoxLayout()
-
-        self.concurrent_downloads_spin_box = QtW.QSpinBox()
-        self.concurrent_downloads_spin_box.setMinimum(1)
-        self.concurrent_downloads_spin_box.setMaximum(128)
-        self.concurrent_downloads_spin_box.setValue(self.config.concurrent_downloads)
-        tab_steamy.layout.addWidget(self.concurrent_downloads_spin_box)
-
-        steamy_save_button = QtW.QPushButton("Save")
-        steamy_save_button.clicked.connect(self.on_save_click)
-        tab_steamy.layout.addWidget(steamy_save_button)
-
-        tab_steamy.setLayout(tab_steamy.layout)
 
         # === DEV TAB ===
         tab_dev.layout = QtW.QVBoxLayout()
@@ -315,7 +297,7 @@ class SteamyMainWindow(QtW.QMainWindow):
 
         self.config.raw = {
             "default_booru": self.booru_dropdown.currentText(),
-            "concurrent_downloads": self.concurrent_downloads_spin_box.value(),
+            "concurrent_downloads": self.config.concurrent_downloads,
             "danbooru": {
                 "base_query": self.config.dan_base_query,
                 "fallback_query": self.config.dan_fallback_query,
