@@ -104,7 +104,7 @@ class PornifyThread(QThread):
                     self.download_queue.append((game, posts))
                     self.download_start.set()
             else:
-                logging.warning(f"Not enough results for query {game.danbooru}, got {len(posts)} but expected at least 3")
+                logging.warning(f'Not enough results for query "{self.booru.get_query(game)}", got {len(posts)} but expected at least 3')
 
         while len(tasks) > 0 or len(self.search_queue) > 0:
             while len(self.search_queue) > 0:

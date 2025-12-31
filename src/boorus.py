@@ -19,9 +19,11 @@ class SteamyDanbooru(booru.Danbooru):
         self.height = ["image_height"]
         self.rate_limit = 0.1
 
+    def get_query(self, game: Game) -> str:
+        return f"{game.danbooru or self.fallback_query} {self.base_query}"
+
     async def search(self, game: Game) -> str:
-        query = f"{game.danbooru or self.fallback_query} {self.base_query}"
-        return await super().search(query=query)
+        return await super().search(query=self.get_query(game))
 
     def filter(self, posts: list) -> list:
         # Filter out non-images and removed posts
@@ -42,9 +44,11 @@ class SteamyRule34(booru.Rule34):
         self.height = ["height"]
         self.rate_limit = 1
 
+    def get_query(self, game: Game) -> str:
+        return f"{game.rule34 or self.fallback_query} {self.base_query}"
+
     async def search(self, game: Game) -> str:
-        query = f"{game.rule34 or self.fallback_query} {self.base_query}"
-        return await super().search(query=query)
+        return await super().search(query=self.get_query(game))
 
     def filter(self, posts: list) -> list:
         return list(filter(lambda post: post["file_url"].split(".")[-1] in ["png", "jpg", "jpeg"], posts))
@@ -64,9 +68,11 @@ class SteamyE621(booru.E621):
         self.height = ["file", "height"]
         self.rate_limit = 1
 
+    def get_query(self, game: Game) -> str:
+        return f"{game.e621 or self.fallback_query} {self.base_query}"
+
     async def search(self, game: Game) -> str:
-        query = f"{game.e621 or self.fallback_query} {self.base_query}"
-        return await super().search(query=query)
+        return await super().search(query=self.get_query(game))
 
     def filter(self, posts: list) -> list:
         return list(filter(lambda post: post["file"]["ext"] in ["png", "jpg", "jpeg"], posts))
