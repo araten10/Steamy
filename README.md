@@ -39,3 +39,5 @@ Example:
 Most of the tags should be fairly self explanatory, but `ignore` is for games that should be skipped- things like 18+ games that already have horny art, etc.
 
 Additionally, there is a "Search" function that allows you to search steam and print the results in a text box for you to copy. This is handy if you don't own a game but know you want to add it. The "CC" code is country code, and a full list can be found [here](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2).
+
+Feel free to submit pull requests with your added games, but only do this if you know what you're doing and have tested out the tags on your end. 
