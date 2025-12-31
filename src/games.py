@@ -7,7 +7,7 @@ from time import sleep
 
 import PyQt6.QtWidgets as QtW
 import requests
-from PyQt6.QtCore import QThread, pyqtSignal
+from PyQt6.QtCore import QSize, QThread, pyqtSignal
 from voluptuous import ALLOW_EXTRA, Number, Optional, Schema
 
 from steam import Steam
@@ -48,25 +48,22 @@ def get_game_db() -> dict[str, Game]:
     return game_db
 
 
-# def sort_game_db() -> None:
-# path = Path(__file__).parent.parent / "resources" / "game_database.json"
-
-# with open(path, "w", encoding="utf8") as f:
-# json.dump(self.dump, f, indent=2, ensure_ascii=False)
-
-
 def search_games(search_term: str, cc: str) -> None:
     # Search params: ?term=: search term, &l=english: language, &cc=: country code
     search_url = "https://store.steampowered.com/api/storesearch/?term=" + search_term + "&l=english&cc=" + cc
-    results = requests.get(search_url).json()["items"]
-    output_path = Path(__file__).parent.parent / "resources" / "search_results.json"
-    search_dict = {}
-    for game in results:
-        search_dict[game["id"]] = {"name": game["name"]}
+    result = requests.get(search_url).json()
+    games = {game["id"]: {"name": game["name"]} for game in result["items"]}
 
-    with open(output_path, "w", encoding="utf8") as f:
-        json.dump(search_dict, f, indent=2, ensure_ascii=False)
-        logging.info(f"Search results saved to {output_path}.")
+    dialog = QtW.QDialog()
+    dialog.resize(QSize(350, 500))
+
+    layout = QtW.QVBoxLayout()
+    text = QtW.QTextEdit()
+    text.setPlainText(json.dumps(games, indent=2, ensure_ascii=False))
+
+    layout.addWidget(text)
+    dialog.setLayout(layout)
+    dialog.exec()
 
 
 class LibraryDumperThread(QThread):
@@ -91,7 +88,7 @@ class LibraryDumperThread(QThread):
         logging.info(f"There are {len(self.game_db)} games already in the database. These will be skipped if detected.")
 
         checkpoint = 10
-        for index, game_id in enumerate(self.steam.game_ids[0:2]):
+        for index, game_id in enumerate(self.steam.game_ids):
             self.find_name(game_id)
             self.progress.emit()
 

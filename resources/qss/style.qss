@@ -1,0 +1,66 @@
+QWidget {
+  background-color: #171d25;
+  font-family: Mona Sans;
+  font-size: 11pt;
+  color: #cacbcd;
+}
+
+QLabel#Title {
+  color: #5b636a;
+  font-size: 9pt;
+  border-top-left-radius: 5px;
+}
+
+QToolButton {
+  border: 0;
+}
+
+QToolButton#Close {
+  border-top-right-radius: 5px;
+}
+
+QPlainTextEdit#AsciiLogo {
+  font-family: Consolas;
+  font-size: 7pt;
+  border: 0;
+}
+
+QComboBox {
+  background-color: #25272c;
+}
+
+QPushButton {
+  background-color: #25272c;
+}
+
+QProgressBar {
+  background-color: #151619;
+  height: 4px;
+  border: 1px black;
+}
+
+QProgressBar::chunk {
+  background-color: #245ecf;
+}
+
+QTabWidget {
+  border: 2px solid #ffffff;
+}
+
+QWidget#Tab {
+  background-color: #292e37;
+}
+
+QGroupBox {
+  border: 1px solid #5b636a;
+  font-family: Consolas;
+  font-size: 9pt;
+}
+
+QLineEdit {
+  background-color: #1d2026
+}
+
+QTextEdit {
+  font-family: Consolas;
+}

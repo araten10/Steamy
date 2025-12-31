@@ -23,9 +23,8 @@ if __name__ == "__main__":
     app.setWindowIcon(QIcon("resources/steamylogo.ico"))
     QFontDatabase.addApplicationFont("resources/MonaSans-Regular.ttf")
     QFontDatabase.addApplicationFont("resources/Consolas-Regular.ttf")
-    with open("resources/steamystyle.qss", "r") as f:
-        style = f.read()
-        app.setStyleSheet(style)
+    with open("resources/qss/style.qss", "r") as f1, open("resources/qss/buttons.qss", "r") as f2:
+        app.setStyleSheet(f1.read() + f2.read())
     window = SteamyMainWindow()
     window.setAttribute(Qt.WidgetAttribute.WA_TranslucentBackground)
 
