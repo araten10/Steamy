@@ -7,11 +7,11 @@ from utils import info_message
 
 
 class SteamyDanbooru(booru.Danbooru):
-    def __init__(self) -> None:
+    def __init__(self, config: Config) -> None:
         super().__init__()
 
-        self.base_query = "order:random"
-        self.fallback_query = "age:<1month"
+        self.base_query = config.dan_base_query
+        self.fallback_query = config.dan_fallback_query
 
         self.file_url = ["file_url"]
         self.sample_url = ["large_file_url"]
@@ -35,8 +35,8 @@ class SteamyRule34(booru.Rule34):
         super().__init__()
         self.specs = {"api_key": config.r34_api_key, "user_id": config.r34_user_id}
 
-        self.base_query = "sort:random score:>500 -video -animated"
-        self.fallback_query = "-rating:safe"
+        self.base_query = config.r34_base_query
+        self.fallback_query = config.r34_fallback_query
 
         self.file_url = ["file_url"]
         self.sample_url = ["sample_url"]
@@ -59,8 +59,8 @@ class SteamyE621(booru.E621):
         super().__init__()
         self.specs = {"api_key": config.e621_api_key, "login": config.e621_username}
 
-        self.base_query = "order:random score:>500 -animated"
-        self.fallback_query = "-rating:safe"
+        self.base_query = config.e621_base_query
+        self.fallback_query = config.e621_fallback_query
 
         self.file_url = ["file", "url"]
         self.sample_url = ["sample", "url"]
@@ -101,4 +101,4 @@ async def get_booru(config: Config) -> SteamyDanbooru | SteamyRule34 | SteamyE62
         )
         return
 
-    return option or SteamyDanbooru()
+    return option or SteamyDanbooru(config)

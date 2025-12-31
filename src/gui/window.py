@@ -327,11 +327,19 @@ class SteamyMainWindow(QtW.QMainWindow):
         self.config.raw = {
             "default_booru": self.booru_dropdown.currentText(),
             "concurrent_downloads": self.concurrent_downloads_spin_box.value(),
+            "danbooru": {
+                "base_query": self.config.dan_base_query,
+                "fallback_query": self.config.dan_fallback_query,
+            },
             "rule34": {
+                "base_query": self.config.r34_base_query,
+                "fallback_query": self.config.r34_fallback_query,
                 "api_key": self.r34_api_key_edit.text() or None,
                 "user_id": get_user_id("Rule34", self.r34_user_id_edit.text()),
             },
             "e621": {
+                "base_query": self.config.e621_base_query,
+                "fallback_query": self.config.e621_fallback_query,
                 "api_key": self.e621_api_key_edit.text() or None,
                 "username": self.e621_username_edit.text() or None,
             },
