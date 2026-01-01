@@ -48,14 +48,19 @@ class PornifyThread(QThread):
         self.booru = asyncio.run(get_booru(config))
         self.concurrent_downloads = config.concurrent_downloads
 
+        # Queue of games to search in a booru
         self.search_queue: list[Game] = [self.game_db.get(game_id, Game(game_id)) for game_id in steam.game_ids]
         self.search_lock = asyncio.Lock()
         self.search_done = False
 
+        # Queue of games and their respective booru search results to download images
         self.download_queue: list[Game, list] = []
         self.download_lock = asyncio.Lock()
         self.download_start = asyncio.Event()
 
+        # First determine if pornify should run at all by checking if valid API
+        # credentials have been provided for the default booru, whether Steam is
+        # already pornified, or a porn backup exists
         self.should_run = bool(self.booru)
 
         if self.should_run and self.grid.path.exists():
@@ -114,9 +119,11 @@ class PornifyThread(QThread):
 
             posts = task.result()
             if posts is None:
+                # Something went wrong with the search, requeue for searching
                 async with self.search_lock:
                     self.search_queue.append(game)
             elif len(posts) > 3:
+                # Search completed with enough results, queue for download
                 async with self.download_lock:
                     self.download_queue.append((game, posts))
                     self.download_start.set()
@@ -124,6 +131,7 @@ class PornifyThread(QThread):
                 logging.warning(f'Not enough results for query "{self.booru.get_query(game)}", got {len(posts)} but expected at least 3')
 
         while len(tasks) > 0 or len(self.search_queue) > 0:
+            # Create new search tasks according to the rate limit of the booru
             while len(self.search_queue) > 0:
                 async with self.search_lock:
                     game = self.search_queue.pop(0)
@@ -137,6 +145,8 @@ class PornifyThread(QThread):
                 await asyncio.sleep(random.uniform(self.booru.rate_limit, self.booru.rate_limit * 1.25))
 
             if tasks:
+                # Only wait for one task in case a game was requeued and a new
+                # task needs to be created
                 await asyncio.wait(tasks, return_when=asyncio.FIRST_COMPLETED)
 
         self.search_done = True
@@ -151,8 +161,12 @@ class PornifyThread(QThread):
                 tasks.remove(task)
             self.progress.emit()
 
+        # Wait until at least one booru search has completed to begin downloading
         await self.download_start.wait()
+
         while len(tasks) > 0 or len(self.download_queue) > 0 or not self.search_done:
+            # Create new download tasks until the maximum number of concurrent
+            # downloads is reached or the download queue is empty
             while len(tasks) < self.concurrent_downloads and len(self.download_queue) > 0:
                 async with self.download_lock:
                     game, posts = self.download_queue.pop(0)
@@ -163,9 +177,11 @@ class PornifyThread(QThread):
                 task.add_done_callback(lambda t: asyncio.create_task(callback(t)))
 
             if tasks:
+                # Only wait for one task to ensure maximum concurrency
                 await asyncio.wait(tasks, return_when=asyncio.FIRST_COMPLETED)
             else:
-                await asyncio.sleep(self.booru.rate_limit)  # No download tasks ready, wait for more booru results
+                # No download tasks ready, wait for more booru search results
+                await asyncio.sleep(self.booru.rate_limit)
 
         logging.info("Image downloads done")
 
