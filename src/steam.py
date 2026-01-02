@@ -110,7 +110,8 @@ class Steam:
 
                 subprocess.Popen(self.linux_steam_args, start_new_session=True)
             case "Windows":
-                subprocess.run(["taskkill", "/im", "steam.exe"])
+                subprocess.run(["taskkill", "/f", "/im", "steam.exe"])
+                sleep(0.5)
                 subprocess.Popen([f"{self.path}/steam.exe"], creationflags=subprocess.DETACHED_PROCESS)
 
 
