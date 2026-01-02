@@ -118,9 +118,7 @@ class SteamyMainWindow(QtW.QMainWindow):
         top_middle_layout.addLayout(progress_layout)
 
         self.progress = QtW.QProgressBar()
-        self.progress.setGeometry(50, 100, 250, 4)
         self.progress.setRange(0, len(self.steam.game_ids))
-        self.progress.setValue(200)
         progress_layout.addWidget(self.progress)
 
         # === TAB WIDGET ===
