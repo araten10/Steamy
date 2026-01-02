@@ -35,7 +35,7 @@ QPushButton {
 
 QProgressBar {
   background-color: #151619;
-  height: 4px;
+  max-height: 4px;
   border: 1px black;
 }
 

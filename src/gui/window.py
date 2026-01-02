@@ -113,8 +113,9 @@ class SteamyMainWindow(QtW.QMainWindow):
         top_layout.addLayout(progress_layout)
 
         self.progress = QtW.QProgressBar()
-        self.progress.setGeometry(50, 100, 250, 30)
+        self.progress.setGeometry(50, 100, 250, 4)
         self.progress.setRange(0, len(self.steam.game_ids))
+        self.progress.setValue(200)
         progress_layout.addWidget(self.progress)
 
         # === TAB WIDGET ===
@@ -142,7 +143,6 @@ class SteamyMainWindow(QtW.QMainWindow):
         tab_booru.layout.addWidget(booru_dropdown_gb)
 
         api_container = QtW.QWidget()
-        # Have to manually set the background colour on these ones for stylistic purposes
         api_layout = QtW.QHBoxLayout(api_container)
         api_layout.setContentsMargins(0, 0, 0, 0)
 
