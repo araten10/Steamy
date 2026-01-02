@@ -94,8 +94,13 @@ class SteamyMainWindow(QtW.QMainWindow):
 
         # === BUTTONS ===
 
+        # "top_middle_layout" is to keep the buttons and progressbar tight together
+
+        top_middle_layout = QtW.QVBoxLayout()
+        top_layout.addLayout(top_middle_layout)
+
         button_layout = QtW.QHBoxLayout()
-        top_layout.addLayout(button_layout)
+        top_middle_layout.addLayout(button_layout)
 
         self.pornify_button = QtW.QPushButton("PORNIFY")
         self.pornify_button.setObjectName("Pornify")
@@ -110,7 +115,7 @@ class SteamyMainWindow(QtW.QMainWindow):
         # === PROGRESS BAR ===
 
         progress_layout = QtW.QHBoxLayout()
-        top_layout.addLayout(progress_layout)
+        top_middle_layout.addLayout(progress_layout)
 
         self.progress = QtW.QProgressBar()
         self.progress.setGeometry(50, 100, 250, 4)
