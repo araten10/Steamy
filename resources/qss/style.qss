@@ -27,6 +27,23 @@ QPlainTextEdit#AsciiLogo {
 
 QComboBox {
   background-color: #25272c;
+  padding: 1px 18px 1px 3px;
+  border-radius: 5px;
+}
+
+QComboBox QAbstractItemView {
+  background-color: #25272c;
+}
+
+QComboBox::drop-down {
+  width: 16px;
+  border: 0px;
+  padding: 1px 3px 1px 18px;
+}
+
+QComboBox::down-arrow {
+    image: url(resources/dropdown_arrow.png);
+    width: 12px;
 }
 
 QPushButton {
