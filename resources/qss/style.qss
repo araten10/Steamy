@@ -5,6 +5,11 @@ QWidget {
   color: #cacbcd;
 }
 
+QWidget#Bottom {
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
 QLabel#Title {
   color: #5b636a;
   font-size: 9pt;
@@ -27,10 +32,35 @@ QPlainTextEdit#AsciiLogo {
 
 QComboBox {
   background-color: #25272c;
+  padding: 1px 18px 1px 3px;
+  border-radius: 5px;
+}
+
+QComboBox QAbstractItemView {
+  background-color: #25272c;
+}
+
+QComboBox::drop-down {
+  width: 16px;
+  border: 0px;
+  padding: 1px 3px 1px 18px;
+}
+
+QComboBox::down-arrow {
+    image: url(resources/dropdown_arrow.png);
+    width: 12px;
 }
 
 QPushButton {
+  padding: 1px;
   background-color: #25272c;
+  background-clip: padding-box;
+}
+
+QPushButton#Dark {
+  padding: 1px;
+  background-color: #171d25;
+  background-clip: padding-box;
 }
 
 QProgressBar {

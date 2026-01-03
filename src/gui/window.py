@@ -61,7 +61,7 @@ class SteamyMainWindow(QtW.QMainWindow):
         # Contains the settings notebook and anything inside of it
         bottom_container = QtW.QWidget()
         bottom_container.setFixedSize(QSize(400, 300))
-        bottom_container.setStyleSheet("border-bottom-left-radius: 5px; border-bottom-right-radius: 5px")
+        bottom_container.setObjectName("Bottom")
         bottom_layout = QtW.QVBoxLayout(bottom_container)
 
         # === LOGO ===
@@ -118,9 +118,7 @@ class SteamyMainWindow(QtW.QMainWindow):
         top_middle_layout.addLayout(progress_layout)
 
         self.progress = QtW.QProgressBar()
-        self.progress.setGeometry(50, 100, 250, 4)
         self.progress.setRange(0, len(self.steam.game_ids))
-        self.progress.setValue(200)
         progress_layout.addWidget(self.progress)
 
         # === TAB WIDGET ===
@@ -193,6 +191,7 @@ class SteamyMainWindow(QtW.QMainWindow):
 
         # Save
         booru_save_button = QtW.QPushButton("Save")
+        booru_save_button.setObjectName("Dark")
         booru_save_button.clicked.connect(self.on_save_click)
         tab_booru.layout.addWidget(booru_save_button)
 
@@ -202,12 +201,14 @@ class SteamyMainWindow(QtW.QMainWindow):
         tab_dev.layout = QtW.QVBoxLayout()
 
         self.dump_button = QtW.QPushButton("Dump Game Library")
+        self.dump_button.setObjectName("Dark")
         self.dump_button.clicked.connect(self.on_dump_click)
         tab_dev.layout.addWidget(self.dump_button)
 
-        folder_button = QtW.QPushButton("Open Steam Config Folder")
-        folder_button.clicked.connect(self.on_folder_click)
-        tab_dev.layout.addWidget(folder_button)
+        self.folder_button = QtW.QPushButton("Open Steam Config Folder")
+        self.folder_button.setObjectName("Dark")
+        self.folder_button.clicked.connect(self.on_folder_click)
+        tab_dev.layout.addWidget(self.folder_button)
 
         search_groupbox = QtW.QGroupBox("Steam Store Search")
         search_groupbox.setFixedHeight(100)
