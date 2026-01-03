@@ -61,7 +61,7 @@ class SteamyMainWindow(QtW.QMainWindow):
         # Contains the settings notebook and anything inside of it
         bottom_container = QtW.QWidget()
         bottom_container.setFixedSize(QSize(400, 300))
-        bottom_container.setStyleSheet("border-bottom-left-radius: 5px; border-bottom-right-radius: 5px")
+        bottom_container.setObjectName("Bottom")
         bottom_layout = QtW.QVBoxLayout(bottom_container)
 
         # === LOGO ===

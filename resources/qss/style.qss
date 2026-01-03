@@ -5,6 +5,11 @@ QWidget {
   color: #cacbcd;
 }
 
+QWidget#Bottom {
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
 QLabel#Title {
   color: #5b636a;
   font-size: 9pt;
