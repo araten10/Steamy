@@ -191,6 +191,7 @@ class SteamyMainWindow(QtW.QMainWindow):
 
         # Save
         booru_save_button = QtW.QPushButton("Save")
+        booru_save_button.setObjectName("Dark")
         booru_save_button.clicked.connect(self.on_save_click)
         tab_booru.layout.addWidget(booru_save_button)
 
@@ -200,12 +201,14 @@ class SteamyMainWindow(QtW.QMainWindow):
         tab_dev.layout = QtW.QVBoxLayout()
 
         self.dump_button = QtW.QPushButton("Dump Game Library")
+        self.dump_button.setObjectName("Dark")
         self.dump_button.clicked.connect(self.on_dump_click)
         tab_dev.layout.addWidget(self.dump_button)
 
-        folder_button = QtW.QPushButton("Open Steam Config Folder")
-        folder_button.clicked.connect(self.on_folder_click)
-        tab_dev.layout.addWidget(folder_button)
+        self.folder_button = QtW.QPushButton("Open Steam Config Folder")
+        self.folder_button.setObjectName("Dark")
+        self.folder_button.clicked.connect(self.on_folder_click)
+        tab_dev.layout.addWidget(self.folder_button)
 
         search_groupbox = QtW.QGroupBox("Steam Store Search")
         search_groupbox.setFixedHeight(100)
