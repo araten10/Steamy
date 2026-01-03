@@ -96,22 +96,25 @@ class Steam:
             self.usernames.append(username)
             self.username_to_id[username] = user_id
 
+    def is_running(self) -> bool:
+        match platform.system():
+            case "Linux":
+                return subprocess.run(["pgrep", "steam"], capture_output=True).returncode == 0
+            case "Windows":
+                return False
+
     def restart(self) -> None:
         match platform.system():
             case "Linux":
                 subprocess.run(["pkill", "steam"])
 
-                # Wait until no Steam processes are found
-                wait = True
-                while wait:
+                while self.is_running():
                     sleep(0.5)
-                    result = subprocess.run(["pgrep", "steam"], capture_output=True)
-                    wait = result.returncode == 0
 
                 subprocess.Popen(self.linux_steam_args, start_new_session=True)
             case "Windows":
                 subprocess.run(["taskkill", "/f", "/im", "steam.exe"])
-                sleep(0.5)
+                sleep(0.5)  # TODO: Properly wait until process is killed
                 subprocess.Popen([f"{self.path}/steam.exe"], creationflags=subprocess.DETACHED_PROCESS)
 
 

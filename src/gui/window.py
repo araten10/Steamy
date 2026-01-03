@@ -277,7 +277,10 @@ class SteamyMainWindow(QtW.QMainWindow):
 
         def on_done() -> None:
             self.set_buttons_enabled(True)
-            self.ask_restart("Pornify")  # TODO: Should not ask if pornify was cancelled somehow
+            if self.steam.is_running():
+                self.ask_restart("Pornify")  # TODO: Should not ask if pornify was cancelled somehow
+            else:
+                info_message(QtW.QMessageBox.Icon.NoIcon, "Pornify Done", "When you start Steam, it will be using porn images.")
 
         self.pornify_thread = PornifyThread(self.config, self.steam, self.game_db, self.user_dropdown.currentText())
         self.pornify_thread.done.connect(on_done)
@@ -286,7 +289,10 @@ class SteamyMainWindow(QtW.QMainWindow):
 
     def on_resteam_click(self) -> None:
         resteam(self.steam, self.user_dropdown.currentText())
-        self.ask_restart("Resteam")  # TODO: Should not ask if resteam was cancelled somehow
+        if self.steam.is_running():
+            self.ask_restart("Resteam")  # TODO: Should not ask if resteam was cancelled somehow
+        else:
+            info_message(QtW.QMessageBox.Icon.NoIcon, "Resteam Done", "When you start Steam, it will be back to normal.")
 
     def on_dump_click(self) -> None:
         self.set_buttons_enabled(False)
