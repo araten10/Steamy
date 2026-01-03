@@ -99,15 +99,17 @@ class Steam:
     def is_running(self) -> bool:
         match platform.system():
             case "Linux":
-                return subprocess.run(["pgrep", "steam"], capture_output=True).returncode == 0
+                # Exact match only because otherwise this may catch unrelated processes
+                return subprocess.run(["pgrep", "-x", "steam"], capture_output=True).returncode == 0
             case "Windows":
                 return False
 
     def restart(self) -> None:
         match platform.system():
             case "Linux":
-                subprocess.run(["pkill", "steam"])
+                subprocess.run(["pkill", "-x", "steam"])
 
+                # TODO: Are there other Steam processes we should check for?
                 while self.is_running():
                     sleep(0.5)
 
