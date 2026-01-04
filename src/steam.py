@@ -97,26 +97,31 @@ class Steam:
             self.username_to_id[username] = user_id
 
     def is_running(self) -> bool:
+        # TODO: Are there other Steam processes we should check for?
         match platform.system():
             case "Linux":
                 # Exact match only because otherwise this may catch unrelated processes
-                return subprocess.run(["pgrep", "-x", "steam"], capture_output=True).returncode == 0
+                res = subprocess.run(["pgrep", "-x", "steam"], capture_output=True)
+                return res.returncode == 0
             case "Windows":
-                return False
+                res = subprocess.run(["tasklist", "/fi", "ImageName eq steam.exe", "/fo", "csv"], capture_output=True)
+                return "steam.exe" in str(res.stdout)
 
     def restart(self) -> None:
         match platform.system():
             case "Linux":
                 subprocess.run(["pkill", "-x", "steam"])
 
-                # TODO: Are there other Steam processes we should check for?
                 while self.is_running():
                     sleep(0.5)
 
                 subprocess.Popen(self.linux_steam_args, start_new_session=True)
             case "Windows":
                 subprocess.run(["taskkill", "/f", "/im", "steam.exe"])
-                sleep(0.5)  # TODO: Properly wait until process is killed
+
+                while self.is_running():
+                    sleep(0.5)
+
                 subprocess.Popen([f"{self.path}/steam.exe"], creationflags=subprocess.DETACHED_PROCESS)
 
 
