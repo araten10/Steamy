@@ -517,10 +517,223 @@
       "e621": "balatro"
     },
     "362870": {
-      "name": "RPG Maker 2003"
+      "name": "RPG Maker 2003",
+      "danbooru": "yume_nikki",
+      "rule34": "yume_nikki",
+      "e621": "yume_nikki"
     },
     "650700": {
-      "name": "Yume Nikki"
-    }
+      "name": "Yume Nikki",
+      "danbooru": "yume_nikki",
+      "rule34": "yume_nikki",
+      "e621": "yume_nikki"
+    },
+    "774811": {
+      "name": "YUMENIKKI -DREAM DIARY-",
+      "danbooru": "yume_nikki",
+      "rule34": "yume_nikki",
+      "e621": "yume_nikki"
+    },
+    "200900": {
+      "name": "Cave Story+",
+      "danbooru": "cave_story",
+      "rule34": "cave_story",
+      "e621": "cave_story"
+    },
+    "1191630": {
+      "name": "Shantae and the Seven Sirens",
+      "danbooru": "shantae_(series)",
+      "rule34": "shantae",
+      "e621": "shantae"
+    },
+    "764300": {
+      "name": "Shantae: Half-Genie Hero Ultimate Edition",
+      "danbooru": "shantae_(series)",
+      "rule34": "shantae",
+      "e621": "shantae"
+    },
+    "3055950": {
+      "name": "Shantae Advance: Risky Revolution",
+      "danbooru": "shantae_(series)",
+      "rule34": "shantae",
+      "e621": "shantae"
+    },
+    "345820": {
+      "name": "Shantae and the Pirate's Curse",
+      "danbooru": "shantae_(series)",
+      "rule34": "shantae",
+      "e621": "shantae"
+    },
+    "277890": {
+      "name": "Shantae: Risky's Revenge - Director's Cut",
+      "danbooru": "shantae_(series)",
+      "rule34": "shantae",
+      "e621": "shantae"
+    },
+    "253840": {
+      "name": "Shantae: Half-Genie Hero",
+      "danbooru": "shantae_(series)",
+      "rule34": "shantae",
+      "e621": "shantae"
+    },
+    "99900": {
+      "name": "Spiral Knights",
+      "rule34": "spiral_knights",
+      "e621": "spiral_knights"
+    },
+    "1466860": {
+      "name": "Age of Empires IV: Anniversary Edition",
+      "danbooru": "medieval",
+      "rule34": "medieval armor",
+      "e621": "medieval armor"
+    },
+    "813780": {
+      "name": "Age of Empires II: Definitive Edition",
+      "danbooru": "medieval",
+      "rule34": "medieval armor",
+      "e621": "medieval armor"
+    },
+    "1017900": {
+      "name": "Age of Empires: Definitive Edition",
+      "danbooru": "hoplite",
+      "rule34": "hoplite",
+      "e621": "hoplite"
+    },
+    "230410": {
+      "name": "Warframe",
+      "danbooru": "warframe",
+      "rule34": "warframe",
+      "e621": "warframe"
+    },
+    "1657630": {
+      "name": "Slime Rancher 2",
+      "danbooru": "slime_girl",
+      "rule34": "slime_girl",
+      "e621": "slime_girl"
+    },
+    "433340": {
+      "name": "Slime Rancher",
+      "danbooru": "slime_girl",
+      "rule34": "slime_girl",
+      "e621": "slime_girl"
+    },
+    "939480": {
+      "name": "Slime Rancher: VR Playground",
+      "danbooru": "slime_girl",
+      "rule34": "slime_girl",
+      "e621": "slime_girl"
+    },
+    "960090": {
+      "name": "Bloons TD 6",
+      "rule34": "bloons",
+      "e621": "bloons"
+    },
+    "438100": {
+      "name": "VRChat",
+      "danbooru": "vrchat",
+      "rule34": "vrchat",
+      "e621": "vrchat"
+    },
+    "524220": {
+      "name": "NieR:Automata™",
+      "danbooru": "nier_automata",
+      "rule34": "nier_automata",
+      "e621": "nier_automata"
+    },
+    "1113560": {
+      "name": "NieR Replicant™ ver.1.22474487139...",
+      "danbooru": "kaine_(nier)",
+      "rule34": "kaine_(nier)",
+      "e621": "kaine_(nier)"
+    },
+    "553850": {
+      "name": "HELLDIVERS™ 2",
+      "danbooru": "helldivers_(series)",
+      "rule34": "helldivers",
+      "e621": "helldivers"
+    },
+    "1256670": {
+      "name": "Library Of Ruina",
+      "danbooru": "library_of_ruina",
+      "rule34": "library_of_ruina",
+      "e621": "library_of_ruina"
+    },
+    "1973530": {
+      "name": "Limbus Company",
+      "danbooru": "limbus_company",
+      "rule34": "limbus_company",
+      "e621": "limbus_company"
+    },
+    "1172470": {
+      "name": "Apex Legends™",
+      "danbooru": "apex_legends",
+      "rule34": "apex_legends",
+      "e621": "apex_legends"
+    },
+    "428550": {
+      "name": "Momodora: Reverie Under The Moonlight",
+      "danbooru": "momodora:_reverie_under_the_moonlight",
+      "rule34": "momodora:_reverie_under_the_moonlight"
+    },
+    "1034900": {
+      "name": "Blaster Master Zero",
+      "danbooru": "blaster_master_zero",
+      "rule34": "blaster_master_zero",
+      "e621": "blaster_master_zero"
+    },
+    "1588380": {
+      "name": "Blaster Master Zero 3",
+      "danbooru": "blaster_master_zero",
+      "rule34": "blaster_master_zero",
+      "e621": "blaster_master_zero"
+    },
+    "1034910": {
+      "name": "Blaster Master Zero 2",
+      "danbooru": "blaster_master_zero",
+      "rule34": "blaster_master_zero",
+      "e621": "blaster_master_zero"
+    },
+    "374320": {
+      "name": "DARK SOULS™ III",
+      "danbooru": "dark_souls_3",
+      "rule34": "dark_souls_3",
+      "e621": "dark_souls_3"
+    },
+    "570940": {
+      "name": "DARK SOULS™: REMASTERED",
+      "danbooru": "dark_souls_i",
+      "rule34": "dark_souls",
+      "e621": "dark_souls_i"
+    },
+    "335300": {
+      "name": "DARK SOULS™ II: Scholar of the First Sin",
+      "danbooru": "dark_souls_2",
+      "rule34": "dark_souls_2",
+      "e621": "dark_souls_2"
+    },
+    "236430": {
+      "name": "DARK SOULS™ II",
+      "danbooru": "dark_souls_2",
+      "rule34": "dark_souls_2",
+      "e621": "dark_souls_2"
+    },
+    "211420": {
+      "name": "DARK SOULS™: Prepare To Die™ Edition",
+      "danbooru": "dark_souls_i",
+      "rule34": "dark_souls",
+      "e621": "dark_souls_i"
+    },
+    "1245620": {
+      "name": "ELDEN RING",
+      "danbooru": "elden_ring",
+      "rule34": "elden_ring -elden_ring_nightreign",
+      "e621": "elden_ring -elden_ring_nightreign"
+    },
+    "2622380": {
+      "name": "ELDEN RING NIGHTREIGN",
+      "danbooru": "elden_ring_nightreign",
+      "rule34": "elden_ring_nightreign",
+      "e621": "elden_ring_nightreign"
+    },
   }
 }
