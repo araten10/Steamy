@@ -41,9 +41,9 @@ Example:
 ```
 Most of the tags should be fairly self explanatory, but `ignore` is for games that should be skipped- things like 18+ games that already have horny art, etc.
 
-Additionally, there is a "Search" function that allows you to search Steam and print the results in a text box for you to copy. This is handy if you don't own a game but know you want to add it. The "CC" code is country code, and a full list can be found [here](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2).
+Additionally, there is a "Search" function that allows you to search Steam and print the results in a text box for you to copy. This is handy if you don't own a game but know you want to add it. The "CC" code is country code, and a full list can be found [here](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2). The search function only shows a maximum of 10 games at the moment, this is due to a limitation of the Steam store API.
 
-Feel free to submit pull requests with your added games, but only do this if you know what you're doing and have tested out the tags on your end.
+Feel free to submit pull requests with your added games, but only do this if you know what you're doing and have tested out the tags on your end. **Please do not contact us elsewhere or submit an issue if you would like games added**, submitting them via changes to `game_database.json` is the most surefire way to get them added to the main branch.
 
 # License
 
