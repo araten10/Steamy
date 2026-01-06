@@ -5,8 +5,12 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-22.04, windows-latest]
-  
+
     runs-on: ${{ matrix.os }}
+    defaults:
+      run:
+        shell: bash
+
     steps:
       - uses: actions/checkout@v5
 
@@ -19,10 +23,27 @@ jobs:
         run: pip install -r requirements.txt
 
       - name: Build
-        run: pyinstaller -F -n steamy-${{ startsWith(matrix.os, 'ubuntu') && 'linux' || 'windows.exe' }} src/__main__.py
+        run: pyinstaller -n steamy src/__main__.py
+
+      - name: Copy resources
+        run: cp -r resources LICENSE README.md dist/steamy
+
+      - name: Create archive (Linux)
+        if: startsWith(matrix.os, 'ubuntu')
+        run: tar czvf steamy_linux.tar.gz --directory dist/steamy/ .
+
+      - name: Create archive (Windows)
+        if: startsWith(matrix.os, 'windows')
+        run: tar cvf steamy_windows.zip --directory dist/steamy/ .
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: steamy_${{ startsWith(matrix.os, 'ubuntu') && 'linux' || 'windows' }}
+          path: dist/steamy/*
 
       - name: Release
         uses: softprops/action-gh-release@v2
         if: github.ref_type == 'tag'
         with:
-          files: dist/steamy-*
+          files: steamy_*
