@@ -849,6 +849,211 @@
       "rule34": "kijin_seija",
       "e621": "touhou"
     },
-
+    "678960": {
+      "name": "CODE VEIN",
+      "danbooru": "code_vein",
+      "rule34": "code_vein",
+    },
+    "1237970": {
+      "name": "Titanfall® 2",
+      "danbooru": "titanfall"
+    },
+    "262060": {
+      "name": "Darkest Dungeon®",
+      "danbooru": "darkest_dungeon",
+      "rule34": "darkest_dungeon",
+      "e621": "darkest_dungeon"
+    },
+    "1940340": {
+      "name": "Darkest Dungeon® II",
+      "danbooru": "darkest_dungeon",
+      "rule34": "darkest_dungeon",
+      "e621": "darkest_dungeon"
+    },
+    "2357570": {
+      "name": "Overwatch® 2",
+      "danbooru": "overwatch",
+      "rule34": "overwatch",
+      "e621": "overwatch"
+    },
+    "814380": {
+      "name": "Sekiro™: Shadows Die Twice - GOTY Edition",
+      "danbooru": "sekiro:_shadows_die_twice",
+      "rule34": "sekiro:_shadows_die_twice",
+      "e621": "sekiro:_shadows_die_twice"
+    },
+    "20900": {
+      "name": "The Witcher: Enhanced Edition Director's Cut",
+      "danbooru": "the_witcher",
+      "rule34": "the_witcher",
+      "e621": "the_witcher"
+    },
+    "20920": {
+      "name": "The Witcher 2: Assassins of Kings Enhanced Edition",
+      "danbooru": "the_witcher",
+      "rule34": "the_witcher",
+      "e621": "the_witcher"
+    },
+    "292030": {
+      "name": "The Witcher 3: Wild Hunt",
+      "danbooru": "the_witcher",
+      "rule34": "the_witcher",
+      "e621": "the_witcher"
+    },
+    "22380": {
+      "name": "Fallout: New Vegas",
+      "danbooru": "fallout",
+      "rule34": "fallout",
+      "e621": "fallout"
+    },
+    "38400": {
+      "name": "Fallout: A Post Nuclear Role Playing Game",
+      "danbooru": "fallout",
+      "rule34": "fallout",
+      "e621": "fallout"
+    },
+    "377160": {
+      "name": "Fallout 4",
+      "danbooru": "fallout",
+      "rule34": "fallout",
+      "e621": "fallout"
+    },
+    "1151340": {
+      "name": "Fallout 76",
+      "danbooru": "fallout",
+      "rule34": "fallout",
+      "e621": "fallout"
+    },
+    "588430": {
+      "name": "Fallout Shelter",
+      "danbooru": "fallout",
+      "rule34": "fallout",
+      "e621": "fallout"
+    },
+    "22300": {
+      "name": "Fallout 3",
+      "danbooru": "fallout",
+      "rule34": "fallout",
+      "e621": "fallout"
+    },
+    "289070": {
+      "name": "Sid Meier’s Civilization® VI",
+      "danbooru": "ancient_egyptian_clothes dark_skin",
+      "rule34": "ancient_egyptian_clothes dark_skin",
+      "e621": "egyptian_clothes"
+    },
+    "1085660": {
+      "name": "Destiny 2",
+      "rule34": "destiny_2",
+      "e621": "destiny_2"
+    },
+    "33900": {
+      "name": "Arma 2",
+      "danbooru": "military assault_rifle",
+      "rule34": "military assault_rifle",
+      "e621": "military assault_rifle"
+    },
+    "33910": {
+      "name": "ARMA 2",
+      "danbooru": "military assault_rifle",
+      "rule34": "military assault_rifle",
+      "e621": "military assault_rifle"
+    },
+    "33930": {
+      "name": "Arma 2: Operation Arrowhead",
+      "danbooru": "military assault_rifle",
+      "rule34": "military assault_rifle",
+      "e621": "military assault_rifle"
+    },
+    "107410": {
+      "name": "Arma 3",
+      "danbooru": "military assault_rifle",
+      "rule34": "military assault_rifle",
+      "e621": "military assault_rifle"
+    },
+    "838310": {
+      "name": "Bloodstained: Curse of the Moon",
+      "danbooru": "bloodstained:_ritual_of_the_night",
+      "rule34": "bloodstained:_ritual_of_the_night",
+      "e621": "bloodstained:_ritual_of_the_night"
+    },
+    "692850": {
+      "name": "Bloodstained: Ritual of the Night",
+      "danbooru": "bloodstained:_ritual_of_the_night",
+      "rule34": "bloodstained:_ritual_of_the_night",
+      "e621": "bloodstained:_ritual_of_the_night"
+    },
+    "1257360": {
+      "name": "Bloodstained: Curse of the Moon 2",
+      "danbooru": "bloodstained:_ritual_of_the_night",
+      "rule34": "bloodstained:_ritual_of_the_night",
+      "e621": "bloodstained:_ritual_of_the_night"
+    },
+    "99910": {
+      "name": "Puzzle Pirates",
+      "danbooru": "pirate -one_piece",
+      "rule34": "pirate -one_piece",
+      "e621": "pirate -one_piece"
+    },
+    "552110": {
+      "name": "Puzzle Pirates: Dark Seas",
+      "danbooru": "pirate -one_piece",
+      "rule34": "pirate -one_piece",
+      "e621": "pirate -one_piece"
+    },
+    "1172620": {
+      "name": "Sea of Thieves: 2025 Edition",
+      "danbooru": "pirate -one_piece",
+      "rule34": "pirate -one_piece",
+      "e621": "pirate -one_piece"
+    },
+    "3061810": {
+      "name": "Like a Dragon: Pirate Yakuza in Hawaii",
+      "danbooru": "pirate -one_piece",
+      "rule34": "pirate -one_piece",
+      "e621": "pirate -one_piece"
+    },
+    "3920": {
+      "name": "Sid Meier's Pirates!",
+      "danbooru": "pirate -one_piece",
+      "rule34": "pirate -one_piece",
+      "e621": "pirate -one_piece"
+    },
+    "2918150": {
+      "name": "ONE PIECE Bounty Rush",
+      "danbooru": "one_piece",
+      "rule34": "one_piece",
+      "e621": "one_piece"
+    },
+    "814000": {
+      "name": "ONE PIECE ODYSSEY",
+      "danbooru": "one_piece",
+      "rule34": "one_piece",
+      "e621": "one_piece"
+    },
+    "1089090": {
+      "name": "ONE PIECE: PIRATE WARRIORS 4",
+      "danbooru": "one_piece",
+      "rule34": "one_piece",
+      "e621": "one_piece"
+    },
+    "755500": {
+      "name": "ONE PIECE World Seeker",
+      "danbooru": "one_piece",
+      "rule34": "one_piece",
+      "e621": "one_piece"
+    },
+    "425220": {
+      "name": "One Piece Burning Blood",
+      "danbooru": "one_piece",
+      "rule34": "one_piece",
+      "e621": "one_piece"
+    },
+    "331600": {
+      "name": "One Piece Pirate Warriors 3",
+      "danbooru": "one_piece",
+      "rule34": "one_piece",
+      "e621": "one_piece"
+    },
   }
 }
