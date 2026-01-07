@@ -852,7 +852,7 @@
     "678960": {
       "name": "CODE VEIN",
       "danbooru": "code_vein",
-      "rule34": "code_vein",
+      "rule34": "code_vein"
     },
     "1237970": {
       "name": "Titanfall® 2",
@@ -1258,6 +1258,6 @@
       "danbooru": "bridget_(guilty_gear)",
       "rule34": "bridget_(guilty_gear)",
       "e621": "bridget_(guilty_gear)"
-    },
+    }
   }
 }

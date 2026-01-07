@@ -93,6 +93,11 @@ QGroupBox {
   font-size: 9pt;
 }
 
+QGroupBox::title {
+  subcontrol-position: top center;
+  border: 1px solid #5b636a;
+}
+
 QLineEdit {
   background-color: #1d2026
 }

@@ -143,6 +143,8 @@ class SteamyMainWindow(QtW.QMainWindow):
         booru_dropdown_layout.addWidget(self.booru_dropdown)
         booru_dropdown_gb = QtW.QGroupBox("Default Booru")
         booru_dropdown_gb.setLayout(booru_dropdown_layout)
+        # This margin set is for the title, remember to add it for every QGroupBox
+        booru_dropdown_layout.setContentsMargins(5, 15, 5, 5)
         tab_booru.layout.addWidget(booru_dropdown_gb)
 
         api_container = QtW.QWidget()
@@ -152,6 +154,7 @@ class SteamyMainWindow(QtW.QMainWindow):
         # Rule34 API
         api_r34 = QtW.QGroupBox("rule34")
         r34_layout = QtW.QVBoxLayout(api_r34)
+        r34_layout.setContentsMargins(5, 15, 5, 5)
 
         r34_key_layout = QtW.QHBoxLayout()
         r34_key_layout.addWidget(QtW.QLabel(parent=self, text="API Key:"))
@@ -170,6 +173,7 @@ class SteamyMainWindow(QtW.QMainWindow):
         # E621 API
         api_e621 = QtW.QGroupBox("e621")
         e621_layout = QtW.QVBoxLayout(api_e621)
+        e621_layout.setContentsMargins(5, 15, 5, 5)
 
         e621_key_layout = QtW.QHBoxLayout()
         e621_key_layout.addWidget(QtW.QLabel(parent=self, text="API Key:"))
@@ -213,6 +217,7 @@ class SteamyMainWindow(QtW.QMainWindow):
         search_groupbox = QtW.QGroupBox("Steam Store Search")
         search_groupbox.setFixedHeight(100)
         search_layout = QtW.QVBoxLayout(search_groupbox)
+        search_layout.setContentsMargins(5, 15, 5, 5)
 
         search_params_layout = QtW.QHBoxLayout()
         search_params_layout.addWidget(QtW.QLabel(parent=self, text="Search:"))
