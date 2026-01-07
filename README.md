@@ -18,7 +18,7 @@ To get your E621 API Key, go to https://e621.net/users/settings, then click "Vie
 
 By default Steamy should detect every game you own and overwrite their images, but if you want a game to have art with specific tags, you can add it in yourself. There are no plans for there to be a GUI editor for this, but it is fairly simple to do with only a few steps.
 
-Firstly, you can run **Dump Game Library** in the **Tools** tab, selecting which folder you want to save the resulting JSON file to. It will go through every one of your Steam games and tie the game ID to the game's name. This can take over an hour if you have a good amount of games, but shouldn't take up too much processing power so you can safely leave it on in the background. The process is deliberately rate limited so that Steam doesn't block your requests.
+Firstly, you can run **Dump Game Library** in the **Tools** tab, selecting which folder you want to save the resulting JSON file to. It will go through every one of your Steam games and match the game ID to the game's name for any entries missing from Steamy's list. This can take over an hour if you have a good amount of games that aren't added into Steamy, but shouldn't take up too much processing power so you can safely leave it on in the background. The process is deliberately rate limited so that Steam doesn't block your requests.
 
 Once finished, you can then open up `resources/game_database.json` and add any games from your newly created `dumped_game_database.json` into there. You can use prior entries as an example for doing this, but this is a full list of potential parameters you can give an entry:
 ```
