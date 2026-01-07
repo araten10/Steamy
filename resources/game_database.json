@@ -1211,5 +1211,53 @@
       "rule34": "armored_core_6",
       "e621": "~esix ~hexerade"
     },
+    "850980": {
+      "name": "GUILTY GEAR",
+      "danbooru": "baiken",
+      "rule34": "baiken",
+      "e621": "baiken"
+    },
+    "437000": {
+      "name": "GUILTY GEAR 2 -OVERTURE-",
+      "danbooru": "valentine_(guilty_gear)",
+      "rule34": "valentine_(guilty_gear)",
+      "e621": "guilty_gear"
+    },
+    "348550": {
+      "name": "GUILTY GEAR XX ACCENT CORE PLUS R",
+      "danbooru": "i-no",
+      "rule34": "i-no",
+      "e621": "bridget_(guilty_gear)"
+    },
+    "314030": {
+      "name": "Guilty Gear X2 #Reload",
+      "danbooru": "i-no",
+      "rule34": "i-no",
+      "e621": "bridget_(guilty_gear)"
+    },
+    "520440": {
+      "name": "GUILTY GEAR Xrd REV 2",
+      "danbooru": "ramlethal_valentine",
+      "rule34": "ramlethal_valentine",
+      "e621": "ramlethal_valentine"
+    },
+    "376300": {
+      "name": "GUILTY GEAR Xrd -SIGN-",
+      "danbooru": "elphelt_valentine",
+      "rule34": "elphelt_valentine",
+      "e621": "elphelt_valentine"
+    },
+    "267900": {
+      "name": "Guilty Gear Isuka",
+      "danbooru": "a.b.a",
+      "rule34": "a.b.a",
+      "e621": "guilty_gear"
+    },
+    "1384160": {
+      "name": "GUILTY GEAR -STRIVE-",
+      "danbooru": "bridget_(guilty_gear)",
+      "rule34": "bridget_(guilty_gear)",
+      "e621": "bridget_(guilty_gear)"
+    },
   }
 }
