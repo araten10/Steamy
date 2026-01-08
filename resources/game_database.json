@@ -1405,9 +1405,9 @@
     },
     "71250": {
       "name": "Sonic Adventure DX",
-      "danbooru": "sonic_(series)",
-      "rule34": "sonic_(series)",
-      "e621": "sonic_(series)"
+      "danbooru": "tikal_the_echidna",
+      "rule34": "tikal_the_echidna",
+      "e621": "tikal_the_echidna"
     },
     "71340": {
       "name": "Sonic Generations Collection",
@@ -1417,9 +1417,9 @@
     },
     "200940": {
       "name": "Sonic CD",
-      "danbooru": "sonic_(series)",
-      "rule34": "sonic_(series)",
-      "e621": "sonic_(series)"
+      "danbooru": "sonic_cd",
+      "rule34": "sonic_cd",
+      "e621": "sonic_cd"
     },
     "202530": {
       "name": "Sonic the Hedgehog 4 - Episode I",
@@ -1435,15 +1435,15 @@
     },
     "213610": {
       "name": "Sonic Adventure 2",
-      "danbooru": "sonic_(series)",
-      "rule34": "sonic_(series)",
-      "e621": "sonic_(series)"
+      "danbooru": "rouge_the_bat",
+      "rule34": "rouge_the_bat",
+      "e621": "rouge_the_bat"
     },
     "217900": {
       "name": "SONIC ADVENTURE 2: BATTLE",
-      "danbooru": "sonic_(series)",
-      "rule34": "sonic_(series)",
-      "e621": "sonic_(series)"
+      "danbooru": "rouge_the_bat",
+      "rule34": "rouge_the_bat",
+      "e621": "rouge_the_bat"
     },
     "584400": {
       "name": "Sonic Mania",
@@ -1684,6 +1684,108 @@
       "danbooru": "stranger_of_paradise:_final_fantasy_origin",
       "rule34": "stranger_of_paradise:_final_fantasy_origin",
       "e621": "final_fantasy"
-    }
+    },
+    "208650": {
+      "name": "Batman™: Arkham Knight",
+      "danbooru": "batman_(series)",
+      "rule34": "batman_(series)",
+      "e621": "batman_(series)"
+    },
+    "209000": {
+      "name": "Batman™: Arkham Origins",
+      "danbooru": "batman_(series)",
+      "rule34": "batman_(series)",
+      "e621": "batman_(series)"
+    },
+    "498240": {
+      "name": "Batman - The Telltale Series",
+      "danbooru": "batman_(series)",
+      "rule34": "batman_(series)",
+      "e621": "batman_(series)"
+    },
+    "675260": {
+      "name": "Batman: The Enemy Within - The Telltale Series",
+      "danbooru": "batman_(series)",
+      "rule34": "batman_(series)",
+      "e621": "batman_(series)"
+    },
+    "200260": {
+      "name": "Batman: Arkham City - Game of the Year Edition",
+      "danbooru": "batman_(series)",
+      "rule34": "batman_(series)",
+      "e621": "batman_(series)"
+    },
+    "35140": {
+      "name": "Batman: Arkham Asylum Game of the Year Edition",
+      "danbooru": "batman_(series)",
+      "rule34": "batman_(series)",
+      "e621": "batman_(series)"
+    },
+    "427190": {
+      "name": "DEAD RISING®",
+      "danbooru": "zombie",
+      "rule34": "zombie",
+      "e621": "zombie"
+    },
+    "45740": {
+      "name": "Dead Rising® 2",
+      "danbooru": "zombie",
+      "rule34": "zombie",
+      "e621": "zombie"
+    },
+    "543460": {
+      "name": "Dead Rising 4",
+      "danbooru": "zombie",
+      "rule34": "zombie",
+      "e621": "zombie"
+    },
+    "265550": {
+      "name": "Dead Rising 3 Apocalypse Edition",
+      "danbooru": "zombie",
+      "rule34": "zombie",
+      "e621": "zombie"
+    },
+    "2527390": {
+      "name": "Dead Rising Deluxe Remaster",
+      "danbooru": "zombie",
+      "rule34": "zombie",
+      "e621": "zombie"
+    },
+    "460790": {
+      "name": "Bayonetta",
+      "danbooru": "bayonetta",
+      "rule34": "bayonetta",
+      "e621": "bayonetta"
+    },
+    "454650": {
+      "name": "DRAGON BALL XENOVERSE 2",
+      "danbooru": "dragon_ball",
+      "rule34": "dragon_ball",
+      "e621": "dragon_ball"
+    },
+    "1790600": {
+      "name": "DRAGON BALL: Sparking! ZERO",
+      "danbooru": "dragon_ball",
+      "rule34": "dragon_ball",
+      "e621": "dragon_ball"
+    },
+    "2072560": {
+      "name": "DRAGON BALL GEKISHIN SQUADRA",
+      "danbooru": "dragon_ball",
+      "rule34": "dragon_ball",
+      "e621": "dragon_ball"
+    },
+    "678950": {
+      "name": "DRAGON BALL FighterZ",
+      "danbooru": "dragon_ball",
+      "rule34": "dragon_ball",
+      "e621": "dragon_ball"
+    },
+    "851850": {
+      "name": "DRAGON BALL Z: KAKAROT",
+      "danbooru": "dragon_ball",
+      "rule34": "dragon_ball",
+      "e621": "dragon_ball"
+    },
   }
 }
