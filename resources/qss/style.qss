@@ -59,14 +59,10 @@ QComboBox::down-arrow:on {
 
 QPushButton {
   padding: 1px;
-  background-color: #25272c;
+  background: #25272c;
   background-clip: padding-box;
-}
-
-QPushButton#Dark {
-  padding: 1px;
-  background-color: #171d25;
-  background-clip: padding-box;
+  border: 1px solid #525252;
+  border-radius: 2px;
 }
 
 QProgressBar {

@@ -1,3 +1,11 @@
+QPushButton#Dark {
+  padding: 1px;
+  background: #171d25;
+  background-clip: padding-box;
+  border: 1px solid #303030;
+  border-radius: 3px;
+}
+
 QPushButton#Pornify {
   font-family: Mona Sans;
   font-size: 16pt;
@@ -6,6 +14,7 @@ QPushButton#Pornify {
   border-radius: 2px;
   height: 45px;
   color: #ffffff;
+  border: 0px;
 }
 
 QPushButton#Pornify:hover {
@@ -25,6 +34,7 @@ QPushButton#Resteam {
   border-radius: 2px;
   height: 45px;
   color: #ffffff;
+  border: 0px;
 }
 
 QPushButton#Resteam:hover {
