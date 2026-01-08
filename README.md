@@ -45,7 +45,7 @@ Additionally, there is a "Search" function that allows you to search Steam and p
 
 Feel free to submit pull requests with your added games, but only do this if you know what you're doing and have tested out the tags on your end. **Please do not contact us elsewhere or submit an issue if you would like games added**, submitting them via changes to `game_database.json` is the most surefire way to get them added to the main branch.
 
-Finally, the game list was initially composed of four different users' Steam lists (with some gaps filled in on missing entries in series). This means that I haven't played all the games on the game list, and might have made errors due to not enough research. If more users submit additions to the game list, errors like this might increase! Feel free to make corrections with pull requests, but if you're changing any prior content make sure to **state your case** while submitting. We are happy to admit we are wrong (especially with so many games out there!), we just want to know the reason why before we push it!
+Finally, the game list was initially composed of four different users' Steam lists, but the data was only entered by one person (the same one writing this, Araten!). This means that I haven't played all the games on the game list, and might have made errors due to not enough research. If more users submit additions to the game list, errors like this might increase! Feel free to make corrections with pull requests, but if you're changing any prior content make sure to **state your case** while submitting. We are happy to admit we are wrong (especially with so many games out there!), we just want to know the reason why before we push it!
 
 # License
 
