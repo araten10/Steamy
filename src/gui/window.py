@@ -17,6 +17,7 @@
 
 import os
 import platform
+import json
 from pathlib import Path
 
 import PyQt6.QtWidgets as QtW
@@ -28,6 +29,7 @@ from gui.title import SteamyTitleBar
 from pornify import PornifyThread, resteam
 from steam import Steam
 from utils import info_message
+import resources
 
 LOGO = r"""      :::::::: ::::::::::: ::::::::::     :::       :::   :::  :::   :::
     :+:    :+:    :+:     :+:          :+: :+:    :+:+: :+:+: :+:   :+:
@@ -204,6 +206,12 @@ class SteamyMainWindow(QtW.QMainWindow):
         # === DEV TAB ===
         tab_dev.layout = QtW.QVBoxLayout()
 
+        # Button that can be enabled for developers to sort the game database by ID
+        self.sort_button = QtW.QPushButton("Sort Game Database")
+        self.sort_button.setObjectName("Dark")
+        self.sort_button.clicked.connect(self.on_sort_click)
+        tab_dev.layout.addWidget(self.sort_button)
+
         self.dump_button = QtW.QPushButton("Dump Game Library")
         self.dump_button.setObjectName("Dark")
         self.dump_button.clicked.connect(self.on_dump_click)
@@ -311,6 +319,13 @@ class SteamyMainWindow(QtW.QMainWindow):
         self.dump_thread.done.connect(on_done)
         self.dump_thread.progress.connect(self.update_progress)
         self.dump_thread.start()
+
+    def on_sort_click(self) -> None:
+        with open(resources.GAME_DATABASE, 'r') as f:
+            data = json.load(f)
+        with open(resources.GAME_DATABASE, 'w') as f:
+            json.dump(data, f, indent=2, sort_keys=True)
+        print("Sort finished.")
 
     def on_folder_click(self) -> None:
         match platform.system():
