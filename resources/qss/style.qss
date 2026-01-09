@@ -83,8 +83,28 @@ QProgressBar::chunk {
   background-color: #245ecf;
 }
 
-QTabWidget {
-  border: 2px solid #ffffff;
+QTabWidget::pane {
+  border: 1px solid #272d34;
+  background-color: #292e37;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+QTabBar {
+  background: 0;
+}
+
+QTabBar::tab {
+  border: 1px solid #272d34;
+  padding: 2px 4px 2px 4px;
+  margin-bottom: -1px;
+  margin-right: 2px;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+
+QTabBar::tab:selected {
+  background: #292e37;
 }
 
 QWidget#Tab {
@@ -104,6 +124,10 @@ QGroupBox::title {
 
 QLineEdit {
   background-color: #1d2026
+}
+
+QLineEdit::hover {
+  background-color: #2a2d33
 }
 
 QTextEdit {
