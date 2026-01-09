@@ -36,6 +36,10 @@ QComboBox {
   border-radius: 5px;
 }
 
+QComboBox::hover {
+  background-color: #2c2f36;
+}
+
 QComboBox QAbstractItemView {
   background-color: #25272c;
 }
@@ -123,11 +127,11 @@ QGroupBox::title {
 }
 
 QLineEdit {
-  background-color: #1d2026
+  background-color: #1d2026;
 }
 
 QLineEdit::hover {
-  background-color: #2a2d33
+  background-color: #2c2f36;
 }
 
 QTextEdit {
