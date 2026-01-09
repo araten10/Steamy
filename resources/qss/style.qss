@@ -65,6 +65,14 @@ QPushButton {
   border-radius: 2px;
 }
 
+QPushButton::hover {
+  background: #2c2f36;
+}
+
+QPushButton::pressed {
+  background: #1e2024;
+}
+
 QProgressBar {
   background-color: #151619;
   max-height: 4px;

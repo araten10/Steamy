@@ -6,6 +6,14 @@ QPushButton#Dark {
   border-radius: 3px;
 }
 
+QPushButton#Dark:hover {
+  background: #1e2530;
+}
+
+QPushButton#Dark:pressed {
+  background: #151a21;
+}
+
 QPushButton#Pornify {
   font-family: Mona Sans;
   font-size: 16pt;
