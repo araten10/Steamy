@@ -1786,6 +1786,403 @@
       "danbooru": "dragon_ball",
       "rule34": "dragon_ball",
       "e621": "dragon_ball"
+    },
+    "2358720": {
+      "name": "Black Myth: Wukong",
+      "danbooru": "black_myth:_wukong",
+      "rule34": "black_myth:_wukong",
+      "e621": "black_myth:_wukong"
+    },
+    "1086940": {
+      "name": "Baldur's Gate 3",
+      "danbooru": "baldur's_gate_3",
+      "rule34": "baldur's_gate_3",
+      "e621": "baldur's_gate_3"
+    },
+    "1966720": {
+      "name": "Lethal Company",
+      "danbooru": "lethal_company",
+      "rule34": "lethal_company",
+      "e621": "lethal_company"
+    },
+    "739630": {
+      "name": "Phasmophobia",
+      "danbooru": "sadako_yamamura",
+      "rule34": "sadako_yamamura",
+      "e621": "sadako_yamamura"
+    },
+    "1145350": {
+      "name": "Hades II",
+      "danbooru": "hades_2",
+      "rule34": "hades_2",
+      "e621": "hades_2_(game)"
+    },
+    "1145360": {
+      "name": "Hades",
+      "danbooru": "hades_(game)",
+      "rule34": "hades_(game)",
+      "e621": "hades_(game)"
+    },
+    "284160": {
+      "name": "BeamNG.drive",
+      "danbooru": "on_car",
+      "rule34": "on_car",
+      "e621": "on_car"
+    },
+    "548430": {
+      "name": "Deep Rock Galactic",
+      "danbooru": "dwarf",
+      "rule34": "dwarf",
+      "e621": "dwarf"
+    },
+    "2321470": {
+      "name": "Deep Rock Galactic: Survivor",
+      "danbooru": "dwarf",
+      "rule34": "dwarf",
+      "e621": "dwarf"
+    },
+    "1962700": {
+      "name": "Subnautica 2",
+      "danbooru": "anthro fish",
+      "rule34": "anthro fish",
+      "e621": "anthro fish"
+    },
+    "264710": {
+      "name": "Subnautica",
+      "danbooru": "anthro fish",
+      "rule34": "anthro fish",
+      "e621": "anthro fish"
+    },
+    "2868840": {
+      "name": "Slay the Spire 2",
+      "danbooru": "slay_the_spire",
+      "rule34": "slay_the_spire",
+      "e621": "slay_the_spire"
+    },
+    "646570": {
+      "name": "Slay the Spire",
+      "danbooru": "slay_the_spire",
+      "rule34": "slay_the_spire",
+      "e621": "slay_the_spire"
+    },
+    "22100": {
+      "name": "Mount & Blade",
+      "danbooru": "medieval sword",
+      "rule34": "medieval sword",
+      "e621": "medieval sword"
+    },
+    "48700": {
+      "name": "Mount & Blade: Warband",
+      "danbooru": "medieval sword",
+      "rule34": "medieval sword",
+      "e621": "medieval sword"
+    },
+    "261550": {
+      "name": "Mount & Blade II: Bannerlord",
+      "danbooru": "medieval sword",
+      "rule34": "medieval sword",
+      "e621": "medieval sword"
+    },
+    "892970": {
+      "name": "Valheim",
+      "danbooru": "viking",
+      "rule34": "viking",
+      "e621": "viking"
+    },
+    "1388880": {
+      "name": "Doki Doki Literature Club Plus!",
+      "danbooru": "doki_doki_literature_club",
+      "rule34": "doki_doki_literature_club",
+      "e621": "doki_doki_literature_club"
+    },
+    "698780": {
+      "name": "Doki Doki Literature Club!",
+      "danbooru": "doki_doki_literature_club",
+      "rule34": "doki_doki_literature_club",
+      "e621": "doki_doki_literature_club"
+    },
+    "2527500": {
+      "name": "MiSide",
+      "danbooru": "miside",
+      "rule34": "miside",
+      "e621": "miside"
+    },
+    "1903340": {
+      "name": "Clair Obscur: Expedition 33",
+      "danbooru": "clair_obscur:_expedition_33",
+      "rule34": "clair_obscur:_expedition_33"
+    },
+    "1623730": {
+      "name": "Palworld",
+      "danbooru": "palworld",
+      "rule34": "palworld",
+      "e621": "palworld"
+    },
+    "1671210": {
+      "name": "DELTARUNE",
+      "danbooru": "deltarune",
+      "rule34": "deltarune",
+      "e621": "deltarune"
+    },
+    "1174180": {
+      "name": "Red Dead Redemption 2",
+      "danbooru": "cowboy gun",
+      "rule34": "cowboy gun",
+      "e621": "cowboy gun"
+    },
+    "2668510": {
+      "name": "Red Dead Redemption",
+      "danbooru": "cowboy gun",
+      "rule34": "cowboy gun",
+      "e621": "cowboy gun"
+    },
+    "601150": {
+      "name": "Devil May Cry 5",
+      "danbooru": "devil_may_cry_5",
+      "rule34": "devil_may_cry_5",
+      "e621": "devil_may_cry_5"
+    },
+    "329050": {
+      "name": "Devil May Cry 4 Special Edition",
+      "danbooru": "devil_may_cry_4",
+      "rule34": "devil_may_cry_4",
+      "e621": "devil_may_cry_4"
+    },
+    "631510": {
+      "name": "Devil May Cry HD Collection",
+      "danbooru": "devil_may_cry_(series)",
+      "rule34": "devil_may_cry_(series)",
+      "e621": "devil_may_cry_(series)"
+    },
+    "632360": {
+      "name": "Risk of Rain 2",
+      "danbooru": "risk_of_rain_2",
+      "rule34": "risk_of_rain_2",
+      "e621": "risk_of_rain_2"
+    },
+    "420530": {
+      "name": "OneShot",
+      "danbooru": "oneshot_(game)",
+      "rule34": "oneshot",
+      "e621": "oneshot_(game)"
+    },
+    "2915460": {
+      "name": "OneShot: World Machine Edition",
+      "danbooru": "oneshot_(game)",
+      "rule34": "oneshot",
+      "e621": "oneshot_(game)"
+    },
+    "1313140": {
+      "name": "Cult of the Lamb",
+      "danbooru": "cult_of_the_lamb",
+      "rule34": "cult_of_the_lamb",
+      "e621": "cult_of_the_lamb"
+    },
+    "2420510": {
+      "name": "HoloCure - Save the Fans!",
+      "danbooru": "hololive",
+      "rule34": "hololive",
+      "e621": "hololive"
+    },
+    "253230": {
+      "name": "A Hat in Time",
+      "danbooru": "a_hat_in_time",
+      "rule34": "a_hat_in_time",
+      "e621": "a_hat_in_time"
+    },
+    "32470": {
+      "name": "STAR WARS™ Empire at War - Gold Pack",
+      "danbooru": "star_wars",
+      "rule34": "star_wars",
+      "e621": "star_wars"
+    },
+    "1343370": {
+      "name": "Old School RuneScape",
+      "danbooru": "old_school_runescape",
+      "rule34": "old_school_runescape",
+      "e621": "old_school_runescape"
+    },
+    "787480": {
+      "name": "Phoenix Wright: Ace Attorney Trilogy",
+      "danbooru": "ace_attorney",
+      "rule34": "ace_attorney",
+      "e621": "ace_attorney"
+    },
+    "2187220": {
+      "name": "Apollo Justice: Ace Attorney Trilogy",
+      "danbooru": "ace_attorney",
+      "rule34": "ace_attorney",
+      "e621": "ace_attorney"
+    },
+    "1158850": {
+      "name": "The Great Ace Attorney Chronicles",
+      "danbooru": "the_great_ace_attorney",
+      "rule34": "the_great_ace_attorney",
+      "e621": "ace_attorney"
+    },
+    "3489700": {
+      "name": "Stellar Blade™",
+      "danbooru": "stellar_blade",
+      "rule34": "stellar_blade",
+      "e621": "stellar_blade"
+    },
+    "3508770": {
+      "name": "Haydee 3",
+      "rule34": "haydee",
+      "e621": "haydee"
+    },
+    "1444650": {
+      "name": "Haydee 2",
+      "rule34": "haydee",
+      "e621": "haydee"
+    },
+    "530890": {
+      "name": "Haydee",
+      "rule34": "haydee",
+      "e621": "haydee"
+    },
+    "1217060": {
+      "name": "Gunfire Reborn",
+      "rule34": "gunfire_reborn",
+      "e621": "gunfire_reborn"
+    },
+    "1392820": {
+      "name": "Milk inside a bag of milk inside a bag of milk",
+      "danbooru": "milk_inside_a_bag_of_milk_inside_a_bag_of_milk",
+      "rule34": "milk-chan"
+    },
+    "1604000": {
+      "name": "Milk outside a bag of milk outside a bag of milk",
+      "danbooru": "milk_inside_a_bag_of_milk_inside_a_bag_of_milk",
+      "rule34": "milk-chan"
+    },
+    "1262350": {
+      "name": "SIGNALIS",
+      "danbooru": "signalis",
+      "rule34": "signalis",
+      "e621": "signalis"
+    },
+    "2694490": {
+      "name": "Path of Exile 2",
+      "danbooru": "path_of_exile",
+      "rule34": "path_of_exile",
+      "e621": "path_of_exile"
+    },
+    "238960": {
+      "name": "Path of Exile",
+      "danbooru": "path_of_exile",
+      "rule34": "path_of_exile",
+      "e621": "path_of_exile"
+    },
+    "2807960": {
+      "name": "Battlefield™ 6",
+      "danbooru": "military_combat_uniform gun",
+      "rule34": "military_uniform gun",
+      "e621": "military_uniform gun"
+    },
+    "3028330": {
+      "name": "Battlefield™ REDSEC",
+      "danbooru": "military_combat_uniform gun",
+      "rule34": "military_uniform gun",
+      "e621": "military_uniform gun"
+    },
+    "1238840": {
+      "name": "Battlefield™ 1",
+      "danbooru": "world_war_i",
+      "rule34": "world_war_1",
+      "e621": "world_war_i"
+    },
+    "1238810": {
+      "name": "Battlefield™ V",
+      "danbooru": "military_combat_uniform gun",
+      "rule34": "military_uniform gun",
+      "e621": "military_uniform gun"
+    },
+    "1238860": {
+      "name": "Battlefield 4™",
+      "danbooru": "military_combat_uniform gun",
+      "rule34": "military_uniform gun",
+      "e621": "military_uniform gun"
+    },
+    "1517290": {
+      "name": "Battlefield™ 2042",
+      "danbooru": "science_fiction military_uniform",
+      "rule34": "science_fiction military_combat_uniform",
+      "e621": "science_fiction military_uniform"
+    },
+    "3564740": {
+      "name": "Where Winds Meet",
+      "danbooru": "where_winds_meet",
+      "rule34": "where_winds_meet"
+    },
+    "3513350": {
+      "name": "Wuthering Waves",
+      "danbooru": "wuthering_waves",
+      "rule34": "wuthering_waves",
+      "e621": "wuthering_waves"
+    },
+    "381210": {
+      "name": "Dead by Daylight",
+      "danbooru": "dead_by_daylight",
+      "rule34": "dead_by_daylight",
+      "e621": "dead_by_daylight"
+    },
+    "1203220": {
+      "name": "NARAKA: BLADEPOINT",
+      "danbooru": "naraka:_bladepoint",
+      "rule34": "naraka:_bladepoint"
+    },
+    "2246340": {
+      "name": "Monster Hunter Wilds",
+      "danbooru": "monster_hunter_wilds",
+      "rule34": "monster_hunter_wilds",
+      "e621": "monster_hunter_wilds"
+    },
+    "582010": {
+      "name": "Monster Hunter: World",
+      "danbooru": "monster_hunter:_world",
+      "rule34": "monster_hunter:_world",
+      "e621": "monster_hunter:_world"
+    },
+    "1446780": {
+      "name": "MONSTER HUNTER RISE",
+      "danbooru": "monster_hunter_rise",
+      "rule34": "monster_hunter_rise",
+      "e621": "monster_hunter_rise"
+    },
+    "2356560": {
+      "name": "Monster Hunter Stories",
+      "danbooru": "monster_hunter_(series)",
+      "rule34": "monster_hunter_(series)",
+      "e621": "monster_hunter_(series)"
+    },
+    "1030300": {
+      "name": "Hollow Knight: Silksong",
+      "danbooru": "hornet_(hollow_knight)",
+      "rule34": "hornet_(hollow_knight)",
+      "e621": "hornet_(hollow_knight)"
+    },
+    "216150": {
+      "name": "MapleStory",
+      "danbooru": "maplestory",
+      "rule34": "maplestory",
+      "e621": "maplestory"
+    },
+    "960170": {
+      "name": "DJMAX RESPECT V",
+      "danbooru": "djmax_respect",
+      "rule34": "djmax_respect"
+    },
+    "2739990": {
+      "name": "Mahjong Soul",
+      "danbooru": "mahjong_soul",
+      "rule34": "mahjong_soul",
+      "e621": "mahjong_soul"
+    },
+    "1954420": {
+      "name": "Riichi City",
+      "danbooru": "riichi_city",
+      "rule34": "riichi_city"
     }
   }
 }
