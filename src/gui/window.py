@@ -15,21 +15,22 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with Steamy.  If not, see <https://www.gnu.org/licenses/>.
 
+import json
+import logging
 import os
 import platform
-import json
 from pathlib import Path
 
 import PyQt6.QtWidgets as QtW
 from PyQt6.QtCore import QSize, Qt
 
+import resources
 from config import Config
 from games import LibraryDumperThread, get_game_db, search_games
 from gui.title import SteamyTitleBar
 from pornify import PornifyThread, resteam
 from steam import Steam
 from utils import info_message
-import resources
 
 LOGO = r"""      :::::::: ::::::::::: ::::::::::     :::       :::   :::  :::   :::
     :+:    :+:    :+:     :+:          :+: :+:    :+:+: :+:+: :+:   :+:
@@ -207,10 +208,10 @@ class SteamyMainWindow(QtW.QMainWindow):
         tab_dev.layout = QtW.QVBoxLayout()
 
         # Button that can be enabled for developers to sort the game database by ID
-        self.sort_button = QtW.QPushButton("Sort Game Database")
-        self.sort_button.setObjectName("Dark")
-        self.sort_button.clicked.connect(self.on_sort_click)
-        tab_dev.layout.addWidget(self.sort_button)
+        # self.sort_button = QtW.QPushButton("Sort Game Database")
+        # self.sort_button.setObjectName("Dark")
+        # self.sort_button.clicked.connect(self.on_sort_click)
+        # tab_dev.layout.addWidget(self.sort_button)
 
         self.dump_button = QtW.QPushButton("Dump Game Library")
         self.dump_button.setObjectName("Dark")
@@ -321,11 +322,13 @@ class SteamyMainWindow(QtW.QMainWindow):
         self.dump_thread.start()
 
     def on_sort_click(self) -> None:
-        with open(resources.GAME_DATABASE, 'r') as f:
+        with open(resources.GAME_DATABASE, "r+") as f:
             data = json.load(f)
-        with open(resources.GAME_DATABASE, 'w') as f:
-            json.dump(data, f, indent=2, sort_keys=True)
-        print("Sort finished.")
+        sorted_data = dict(sorted(data["games"].items(), key=lambda item: int(item[0])))
+        data["games"] = sorted_data
+        with open(resources.GAME_DATABASE, "w") as f:
+            json.dump(data, f, indent=2, ensure_ascii=False)
+        logging.info("Sort finished.")
 
     def on_folder_click(self) -> None:
         match platform.system():
