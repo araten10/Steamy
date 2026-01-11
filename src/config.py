@@ -57,17 +57,17 @@ class Config:
             "default_booru": "danbooru",
             "concurrent_downloads": 10,
             "danbooru": {
-                "base_query": "order:random -rating:safe score:>500",
+                "base_query": "order:random -rating:safe score:>100",
                 "fallback_query": "",
             },
             "rule34": {
-                "base_query": "sort:random -rating:safe score:>500 -video -animated -ai_generated",
+                "base_query": "sort:random -rating:safe score:>100 -video -animated -text -comic -ai_generated",
                 "fallback_query": "",
                 "api_key": None,
                 "user_id": None,
             },
             "e621": {
-                "base_query": "order:random -rating:safe score:>500 -video -animated",
+                "base_query": "order:random -rating:safe score:>100 -video -animated -text -comic",
                 "fallback_query": "",
                 "api_key": None,
                 "username": None,
