@@ -15,6 +15,8 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with Steamy.  If not, see <https://www.gnu.org/licenses/>.
 
+import logging
+
 import booru
 import PyQt6.QtWidgets as QtW
 
@@ -107,14 +109,16 @@ async def get_booru(config: Config) -> SteamyDanbooru | SteamyRule34 | SteamyE62
     if option:
         try:
             await option.search(Game(""))
-        except Exception:
+        except Exception as e:
+            logging.warning(f"Test query to {config.default_booru} failed with error: {e}")
             test_error = True
 
     if (config.default_booru != "danbooru" and not option) or test_error:
         info_message(
             QtW.QMessageBox.Icon.Warning,
             f"Can't Use {config.default_booru}",
-            "Make sure you have provided your API key and user ID or username and that they are correct.",
+            "Make sure you have provided your API key and user ID or username and that they are correct. "
+            "If your credentials are correct, you may be getting blocked by Cloudflare.",
         )
         return
 

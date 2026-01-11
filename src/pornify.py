@@ -129,6 +129,7 @@ class PornifyThread(QThread):
                     self.download_start.set()
             else:
                 logging.warning(f'Not enough results for query "{self.booru.get_query(game)}", got {len(posts)} but expected at least 3')
+                self.progress.emit()
 
         while len(tasks) > 0 or len(self.search_queue) > 0:
             # Create new search tasks according to the rate limit of the booru
@@ -139,7 +140,11 @@ class PornifyThread(QThread):
 
                 async with task_lock:
                     tasks.append(task)
-                task.add_done_callback(lambda t: asyncio.create_task(callback(t, game)))
+
+                # The game needs to be passed to the callback explicitly,
+                # otherwise games may get paired with incorrect booru results,
+                # multiple results, or no results at all
+                task.add_done_callback(lambda t, game=game: asyncio.create_task(callback(t, game)))
 
                 # Chance to be slightly slower than required to be on the safe side
                 await asyncio.sleep(random.uniform(self.booru.rate_limit, self.booru.rate_limit * 1.25))

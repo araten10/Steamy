@@ -8,6 +8,8 @@ There is no adult content included in the Steamy installation, but the implicati
 
 asdfg write installation here when its finalized
 
+Linux users must have at least glibc version 2.35 (Ubuntu 22.04) or equivalent.
+
 By default, Steamy only supports Danbooru. Rule34 and E621 both require API keys to download images from their servers. We highly recommend providing an API key for at least one other booru as Danbooru only supports a maximum of two tags for search queries. If you want to use these boorus, you need to make an account on these sites and generate a key. Rule34 does not require an email to sign up, but E621 does. For those who prefer the imageset of Danbooru but want more tags, we may add Gelbooru support in the future!
 
 To get your Rule34 API Key, go to https://rule34.xxx/index.php?page=account&s=options. Under "API Access Credentials", click "Generate New Key". The key comes in the format `&api_key=<api_key>&user_id=<user_id>`, so you will have to take out the API key and user ID (*not* your username!) from this and put it into Steamy. Make sure you don't copy `&api_key=` and `&user_id=` while doing this.
@@ -39,13 +41,15 @@ Example:
       "e621": "source_filmmaker"
     },
 ```
-Most of the tags should be fairly self explanatory, but `ignore` is for games that should be skipped- things like 18+ games that already have horny art, etc.
+Most of the entries should be fairly self explanatory, but `ignore` is for games that should be skipped- things like 18+ games that already have horny art, etc.
 
 Additionally, there is a "Search" function that allows you to search Steam and print the results in a text box for you to copy. This is handy if you don't own a game but know you want to add it. The "CC" code is country code, and a full list can be found [here](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2). The search function only shows a maximum of 10 games at the moment, this is due to a limitation of the Steam store API.
 
 Feel free to submit pull requests with your added games, but only do this if you know what you're doing and have tested out the tags on your end. **Please do not contact us elsewhere or submit an issue if you would like games added**, submitting them via changes to `game_database.json` is the most surefire way to get them added to the main branch.
 
 Finally, the game list was initially composed of four different users' Steam lists, but the data was only entered by one person (the same one writing this, Araten!). This means that I haven't played all the games on the game list, and might have made errors due to not enough research. If more users submit additions to the game list, errors like this might increase! Feel free to make corrections with pull requests, but if you're changing any prior content make sure to **state your case** while submitting. We are happy to admit we are wrong (especially with so many games out there!), we just want to know the reason why before we push it!
+
+In addition to game specific tags, each booru has a *base query* defined in `resources/config.json` generated on first launch of Steamy. The base query is appended to any game specific tags for all booru searches, for example if the game's tag is `source_filmmaker` and the base query is `sort:score`, the full query becomes `source_filmmaker sort:score`. In case a game is not in the database or does not provide tags for the booru you are using, the booru's *fallback* query is used in place of the game specific tags and the base query is similarly appended to it. You may edit these queries manually in the config file if you disagree with the defaults. There are plans for these to become modifiable from the GUI in the future.
 
 # License
 
