@@ -25,7 +25,7 @@ QToolButton#Close {
 }
 
 QPlainTextEdit#AsciiLogo {
-  font-family: Consolas;
+  font-family: JetBrains Mono;
   font-size: 7pt;
   border: 0;
 }
@@ -117,7 +117,7 @@ QWidget#Tab {
 
 QGroupBox {
   border: 1px solid #5b636a;
-  font-family: Consolas;
+  font-family: JetBrains Mono;
   font-size: 9pt;
 }
 
@@ -135,5 +135,5 @@ QLineEdit::hover {
 }
 
 QTextEdit {
-  font-family: Consolas;
+  font-family: JetBrains Mono;
 }
