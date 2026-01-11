@@ -24,9 +24,17 @@ QToolButton#Close {
   border-top-right-radius: 5px;
 }
 
-QPlainTextEdit#AsciiLogo {
+QPlainTextEdit#AsciiLogoWindows {
   font-family: JetBrains Mono;
+  letter-spacing: 0.1px;
   font-size: 7pt;
+  border: 0;
+}
+
+QPlainTextEdit#AsciiLogoLinux {
+  font-family: JetBrains Mono;
+  letter-spacing: 0.3px;
+  font-size: 8.4px;
   border: 0;
 }
 

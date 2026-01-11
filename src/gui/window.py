@@ -72,7 +72,11 @@ class SteamyMainWindow(QtW.QMainWindow):
         top_layout.addLayout(logo_layout)
 
         logo_ascii = QtW.QPlainTextEdit()
-        logo_ascii.setObjectName("AsciiLogo")
+        match platform.system():
+            case "Linux":
+                logo_ascii.setObjectName("AsciiLogoLinux")
+            case "Windows":
+                logo_ascii.setObjectName("AsciiLogoWindows")
         logo_ascii.setReadOnly(True)
         logo_ascii.setTextInteractionFlags(Qt.TextInteractionFlag.NoTextInteraction)
         logo_ascii.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
