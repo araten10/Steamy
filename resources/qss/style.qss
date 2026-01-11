@@ -25,7 +25,7 @@ QToolButton#Close {
 }
 
 QPlainTextEdit#AsciiLogo {
-  font-family: JetBrains Mono NL;
+  font-family: JetBrains Mono;
   font-size: 7pt;
   border: 0;
 }
