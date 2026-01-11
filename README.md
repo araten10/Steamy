@@ -41,13 +41,15 @@ Example:
       "e621": "source_filmmaker"
     },
 ```
-Most of the tags should be fairly self explanatory, but `ignore` is for games that should be skipped- things like 18+ games that already have horny art, etc.
+Most of the entries should be fairly self explanatory, but `ignore` is for games that should be skipped- things like 18+ games that already have horny art, etc.
 
 Additionally, there is a "Search" function that allows you to search Steam and print the results in a text box for you to copy. This is handy if you don't own a game but know you want to add it. The "CC" code is country code, and a full list can be found [here](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2). The search function only shows a maximum of 10 games at the moment, this is due to a limitation of the Steam store API.
 
 Feel free to submit pull requests with your added games, but only do this if you know what you're doing and have tested out the tags on your end. **Please do not contact us elsewhere or submit an issue if you would like games added**, submitting them via changes to `game_database.json` is the most surefire way to get them added to the main branch.
 
 Finally, the game list was initially composed of four different users' Steam lists, but the data was only entered by one person (the same one writing this, Araten!). This means that I haven't played all the games on the game list, and might have made errors due to not enough research. If more users submit additions to the game list, errors like this might increase! Feel free to make corrections with pull requests, but if you're changing any prior content make sure to **state your case** while submitting. We are happy to admit we are wrong (especially with so many games out there!), we just want to know the reason why before we push it!
+
+In addition to game specific tags, each booru has a *base query* defined in `resources/config.json` generated on first launch of Steamy. The base query is appended to any game specific tags for all booru searches, for example if the game's tag is `source_filmmaker` and the base query is `sort:score`, the full query becomes `source_filmmaker sort:score`. In case a game is not in the database or does not provide tags for the booru you are using, the booru's *fallback* query is used in place of the game specific tags and the base query is similarly appended to it. You may edit these queries manually in the config file if you disagree with the defaults. There are plans for these to become modifiable from the GUI in the future.
 
 # License
 
