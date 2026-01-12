@@ -6,9 +6,19 @@ There is no adult content included in the Steamy installation, but the implicati
 
 # Installation
 
-asdfg write installation here when its finalized
+* Head over to the [releases page](https://github.com/araten10/Steamy/releases/), then download the newest release for your operating system.
+* Extract the folder to any desired location, then run the program. That's it!
+* Note: Linux users must have at least glibc version 2.35 (Ubuntu 22.04) or equivalent. This shouldn't pose too much of an issue if you've been keeping up with updates to your operating system.
 
-Linux users must have at least glibc version 2.35 (Ubuntu 22.04) or equivalent.
+## For Developers:
+
+* Install Python and pip
+* Clone the repo `git clone https://github.com/araten10/Steamy.git` or download it as a ZIP
+* (Optional) create a virtual env `python -m venv .venv` and activate it `.\venv\Scripts\activate.bat` (`source .venv/bin/activate` on Linux)
+* Install requirements `python -m pip install -r requirements.txt`
+* Run __main__.py
+
+## Installing Booru APIs
 
 By default, Steamy only supports Danbooru. Rule34 and E621 both require API keys to download images from their servers. We highly recommend providing an API key for at least one other booru as Danbooru only supports a maximum of two tags for search queries. If you want to use these boorus, you need to make an account on these sites and generate a key. Rule34 does not require an email to sign up, but E621 does. For those who prefer the imageset of Danbooru but want more tags, we may add Gelbooru support in the future!
 
