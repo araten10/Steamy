@@ -58,7 +58,7 @@ class Config:
             "concurrent_downloads": 10,
             "danbooru": {
                 "base_query": "order:random -rating:safe score:>100",
-                "fallback_query": "",
+                "fallback_query": "age:<1month",
             },
             "rule34": {
                 "base_query": "sort:random -rating:safe score:>100 -video -animated -text -comic -ai_generated",

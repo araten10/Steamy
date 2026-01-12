@@ -36,7 +36,7 @@ class SteamyDanbooru(booru.Danbooru):
         self.sample_url = ["large_file_url"]
         self.width = ["image_width"]
         self.height = ["image_height"]
-        self.rate_limit = 0.1
+        self.rate_limit = 0.5  # We could go faster but most of the time will be spent waiting for downloads regardless
 
     def get_query(self, game: Game) -> str:
         return f"{game.danbooru or self.fallback_query} {self.base_query}"
