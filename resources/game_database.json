@@ -148,7 +148,7 @@
     },
     "3320": {
       "name": "Insaniquarium Deluxe",
-      "danbooru": "furry shark",
+      "danbooru": "shark_tail",
       "rule34": "anthro shark",
       "e621": "anthro shark"
     },
@@ -160,19 +160,19 @@
     },
     "3480": {
       "name": "Peggle Deluxe",
-      "danbooru": "unicorn -my_little_pony",
+      "danbooru": "unicorn",
       "rule34": "unicorn -my_little_pony",
       "e621": "peggle"
     },
     "3483": {
       "name": "Peggle Extreme",
-      "danbooru": "unicorn -my_little_pony",
+      "danbooru": "unicorn",
       "rule34": "unicorn -my_little_pony",
       "e621": "peggle"
     },
     "3540": {
       "name": "Peggle™ Nights",
-      "danbooru": "unicorn -my_little_pony",
+      "danbooru": "unicorn",
       "rule34": "unicorn -my_little_pony",
       "e621": "peggle"
     },
@@ -194,12 +194,12 @@
     },
     "3910": {
       "name": "Sid Meier's Civilization® III Complete",
-      "danbooru": "musket military_uniform",
+      "danbooru": "musket",
       "e621": "musket military_uniform"
     },
     "3920": {
       "name": "Sid Meier's Pirates!",
-      "danbooru": "pirate -one_piece",
+      "danbooru": "pirate",
       "rule34": "pirate -one_piece",
       "e621": "pirate -one_piece"
     },
@@ -318,7 +318,7 @@
     },
     "22100": {
       "name": "Mount & Blade",
-      "danbooru": "medieval sword",
+      "danbooru": "medieval",
       "rule34": "medieval sword",
       "e621": "medieval sword"
     },
@@ -360,19 +360,19 @@
     },
     "33900": {
       "name": "Arma 2",
-      "danbooru": "military assault_rifle",
+      "danbooru": "assault_rifle",
       "rule34": "military assault_rifle",
       "e621": "military assault_rifle"
     },
     "33910": {
       "name": "ARMA 2",
-      "danbooru": "military assault_rifle",
+      "danbooru": "assault_rifle",
       "rule34": "military assault_rifle",
       "e621": "military assault_rifle"
     },
     "33930": {
       "name": "Arma 2: Operation Arrowhead",
-      "danbooru": "military assault_rifle",
+      "danbooru": "assault_rifle",
       "rule34": "military assault_rifle",
       "e621": "military assault_rifle"
     },
@@ -414,7 +414,7 @@
     },
     "48700": {
       "name": "Mount & Blade: Warband",
-      "danbooru": "medieval sword",
+      "danbooru": "medieval",
       "rule34": "medieval sword",
       "e621": "medieval sword"
     },
@@ -443,7 +443,7 @@
     },
     "99910": {
       "name": "Puzzle Pirates",
-      "danbooru": "pirate -one_piece",
+      "danbooru": "pirate",
       "rule34": "pirate -one_piece",
       "e621": "pirate -one_piece"
     },
@@ -455,7 +455,7 @@
     },
     "107410": {
       "name": "Arma 3",
-      "danbooru": "military assault_rifle",
+      "danbooru": "assault_rifle",
       "rule34": "military assault_rifle",
       "e621": "military assault_rifle"
     },
@@ -647,7 +647,7 @@
     },
     "261550": {
       "name": "Mount & Blade II: Bannerlord",
-      "danbooru": "medieval sword",
+      "danbooru": "medieval",
       "rule34": "medieval sword",
       "e621": "medieval sword"
     },
@@ -659,7 +659,7 @@
     },
     "264710": {
       "name": "Subnautica",
-      "danbooru": "anthro fish",
+      "danbooru": "fish_tail",
       "rule34": "anthro fish",
       "e621": "anthro fish"
     },
@@ -701,7 +701,7 @@
     },
     "289070": {
       "name": "Sid Meier’s Civilization® VI",
-      "danbooru": "ancient_egyptian_clothes dark_skin",
+      "danbooru": "ancient_egyptian_clothes",
       "rule34": "ancient_egyptian_clothes dark_skin",
       "e621": "egyptian_clothes"
     },
@@ -1031,7 +1031,7 @@
     },
     "552110": {
       "name": "Puzzle Pirates: Dark Seas",
-      "danbooru": "pirate -one_piece",
+      "danbooru": "pirate",
       "rule34": "pirate -one_piece",
       "e621": "pirate -one_piece"
     },
@@ -1469,7 +1469,7 @@
     },
     "1172620": {
       "name": "Sea of Thieves: 2025 Edition",
-      "danbooru": "pirate -one_piece",
+      "danbooru": "pirate",
       "rule34": "pirate -one_piece",
       "e621": "pirate -one_piece"
     },
@@ -1511,7 +1511,7 @@
     },
     "1174180": {
       "name": "Red Dead Redemption 2",
-      "danbooru": "cowboy gun",
+      "danbooru": "cowboy",
       "rule34": "cowboy gun",
       "e621": "cowboy gun"
     },
@@ -1549,7 +1549,7 @@
     },
     "1238810": {
       "name": "Battlefield™ V",
-      "danbooru": "military_combat_uniform gun",
+      "danbooru": "military_combat_uniform",
       "rule34": "military_uniform gun",
       "e621": "military_uniform gun"
     },
@@ -1561,7 +1561,7 @@
     },
     "1238860": {
       "name": "Battlefield 4™",
-      "danbooru": "military_combat_uniform gun",
+      "danbooru": "military_combat_uniform",
       "rule34": "military_uniform gun",
       "e621": "military_uniform gun"
     },
@@ -1685,7 +1685,7 @@
     },
     "1517290": {
       "name": "Battlefield™ 2042",
-      "danbooru": "science_fiction military_uniform",
+      "danbooru": "science_fiction",
       "rule34": "science_fiction military_combat_uniform",
       "e621": "science_fiction military_uniform"
     },
@@ -1815,7 +1815,7 @@
     },
     "1962700": {
       "name": "Subnautica 2",
-      "danbooru": "anthro fish",
+      "danbooru": "fish_tail",
       "rule34": "anthro fish",
       "e621": "anthro fish"
     },
@@ -2028,7 +2028,7 @@
     },
     "2668510": {
       "name": "Red Dead Redemption",
-      "danbooru": "cowboy gun",
+      "danbooru": "cowboy",
       "rule34": "cowboy gun",
       "e621": "cowboy gun"
     },
@@ -2052,7 +2052,7 @@
     },
     "2807960": {
       "name": "Battlefield™ 6",
-      "danbooru": "military_combat_uniform gun",
+      "danbooru": "military_combat_uniform",
       "rule34": "military_uniform gun",
       "e621": "military_uniform gun"
     },
@@ -2088,7 +2088,7 @@
     },
     "3028330": {
       "name": "Battlefield™ REDSEC",
-      "danbooru": "military_combat_uniform gun",
+      "danbooru": "military_combat_uniform",
       "rule34": "military_uniform gun",
       "e621": "military_uniform gun"
     },
@@ -2106,7 +2106,7 @@
     },
     "3061810": {
       "name": "Like a Dragon: Pirate Yakuza in Hawaii",
-      "danbooru": "pirate -one_piece",
+      "danbooru": "pirate",
       "rule34": "pirate -one_piece",
       "e621": "pirate -one_piece"
     },
