@@ -8,13 +8,13 @@ There is no adult content included in the Steamy installation, but the implicati
 
 * Head over to the [releases page](https://github.com/araten10/Steamy/releases/), then download the newest release for your operating system.
 * Extract the folder to any desired location, then run the program. That's it!
-* Note: Linux users must have at least glibc version 2.35 (Ubuntu 22.04) or equivalent. This shouldn't pose too much of an issue if you've been keeping up with updates to your operating system.
+* *Note: Linux users must have at least glibc version 2.35 (Ubuntu 22.04) or equivalent. This shouldn't pose too much of an issue if you've been keeping up with updates to your operating system.*
 
 ## For Developers:
 
 * Install Python and pip
 * Clone the repo `git clone https://github.com/araten10/Steamy.git` or download it as a ZIP
-* (Optional) create a virtual env `python -m venv .venv` and activate it `.\venv\Scripts\activate.bat` (`source .venv/bin/activate` on Linux)
+* *(Optional) create a virtual env `python -m venv .venv` and activate it `.\venv\Scripts\activate.bat` (`source .venv/bin/activate` on Linux)*
 * Install requirements `python -m pip install -r requirements.txt`
 * Run __main__.py
 
