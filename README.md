@@ -15,7 +15,7 @@ There is no adult content included in the Steamy installation, but the implicati
 
 * Install Python and pip.
 * Clone the repository `git clone https://github.com/araten10/Steamy.git` or download it as a ZIP.
-* *(Optional) create a virtual environment `python -m venv .venv` and activate it `.\venv\Scripts\activate.bat` (`source .venv/bin/activate` on Linux).*
+* *(Optional) create a virtual environment `python -m venv .venv` and activate it `.\.venv\Scripts\activate.bat` (`source .venv/bin/activate` on Linux).*
 * Install the requirements `python -m pip install -r requirements.txt`.
 * Run `__main__.py`, or from the command line `python src`.
 
