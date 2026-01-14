@@ -16,6 +16,7 @@
 # along with Steamy.  If not, see <https://www.gnu.org/licenses/>.
 
 import logging
+import os
 import platform
 import shutil
 import subprocess
@@ -27,6 +28,7 @@ from time import sleep
 import PyQt6.QtWidgets as QtW
 import vdf
 
+import resources
 from utils import get_dir_names, info_message
 
 
@@ -73,8 +75,44 @@ class Steam:
                         break
 
         if not self.path:
-            info_message(QtW.QMessageBox.Icon.Critical, "Steam Not Found", "Could not find Steam installation location, unable to run.")
-            sys.exit()
+            if os.path.isfile(resources.STEAM_PATH):
+                with open(resources.STEAM_PATH, "r") as f:
+                    checkpath = Path(f.read())
+                    if (checkpath / "userdata").is_dir():
+                        self.path = Path(checkpath)
+                    else:
+                        info_message(
+                            QtW.QMessageBox.Icon.Critical,
+                            "Steam Not Found",
+                            "Steam not found in the saved custom path file. Try relaunching Steamy and select Steam's folder again.",
+                        )
+                        os.remove(resources.STEAM_PATH)
+                        sys.exit()
+            else:
+                message = QtW.QMessageBox()
+                message.setIcon(QtW.QMessageBox.Icon.Critical)
+                message.setText("Steam Not Found")
+                message.setInformativeText("We could not find Steam in the default directories. Would you like to select the folder containing Steam?")
+
+                message.setStandardButtons(QtW.QMessageBox.StandardButton.Yes | QtW.QMessageBox.StandardButton.No)
+                if message.exec() == QtW.QMessageBox.StandardButton.Yes:
+                    dialog = QtW.QFileDialog()
+                    dialog.setWindowTitle("Steam Directory")
+                    dialog.setFileMode(QtW.QFileDialog.FileMode.Directory)
+                    dialog.exec()
+
+                    user_path = Path(dialog.selectedFiles()[0])
+
+                    if (user_path / "userdata").is_dir():
+                        self.path = user_path
+                        with open(resources.STEAM_PATH, "w") as f:
+                            f.write(str(user_path))
+                    else:
+                        info_message(QtW.QMessageBox.Icon.Critical, "Steam Not Found", "Could not find Steam installation location, unable to run.")
+                        sys.exit()
+                else:
+                    info_message(QtW.QMessageBox.Icon.Critical, "Steam Not Found", "Could not find Steam installation location, unable to run.")
+                    sys.exit()
 
         self.game_ids = get_dir_names(self.path / "appcache" / "librarycache")
         self.game_ids.sort(key=int)

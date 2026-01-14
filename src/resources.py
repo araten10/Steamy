@@ -22,6 +22,7 @@ ROOT = Path(__file__).parent.parent / "resources"
 ICON = ROOT / "steamy.ico"
 CONFIG = ROOT / "config.json"
 GAME_DATABASE = ROOT / "game_database.json"
+STEAM_PATH = ROOT / "steam_path.dat"
 
 FONT_DIR = ROOT / "font"
 FONTS = list(FONT_DIR.iterdir())
