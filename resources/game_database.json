@@ -901,6 +901,18 @@
       "rule34": "bioshock",
       "e621": "bioshock"
     },
+    "411370": {
+      "name": "Melty Blood Actress Again Current Code",
+      "danbooru": "melty_blood",
+      "rule34": "melty_blood",
+      "e621": "melty_blood"
+    },
+    "412830": {
+      "name": "STEINS;GATE",
+      "danbooru": "steins;gate",
+      "rule34": "steins;gate",
+      "e621": "steins;gate"
+    },
     "413150": {
       "name": "Stardew Valley",
       "danbooru": "stardew_valley",
@@ -1242,6 +1254,18 @@
       "rule34": "sekiro:_shadows_die_twice",
       "e621": "sekiro:_shadows_die_twice"
     },
+    "819030": {
+      "name": "STEINS;GATE ELITE",
+      "danbooru": "steins;gate",
+      "rule34": "steins;gate",
+      "e621": "steins;gate"
+    },
+    "825630": {
+      "name": "STEINS;GATE 0",
+      "danbooru": "steins;gate_0",
+      "rule34": "steins;gate_0",
+      "e621": "steins;gate"
+    },
     "838310": {
       "name": "Bloodstained: Curse of the Moon",
       "danbooru": "bloodstained:_ritual_of_the_night",
@@ -1278,6 +1302,12 @@
       "rule34": "usami_sumireko",
       "e621": "touhou"
     },
+    "930910": {
+      "name": "STEINS;GATE: Linear Bounded Phenogram",
+      "danbooru": "steins;gate",
+      "rule34": "steins;gate",
+      "e621": "steins;gate"
+    },
     "937570": {
       "name": "Danmaku Amanojaku ~ Impossible Spell Card.",
       "danbooru": "kijin_seija",
@@ -1306,11 +1336,23 @@
       "danbooru": "djmax_respect",
       "rule34": "djmax_respect"
     },
+    "970560": {
+      "name": "STEINS;GATE: My Darling's Embrace",
+      "danbooru": "steins;gate",
+      "rule34": "steins;gate",
+      "e621": "steins;gate"
+    },
     "996580": {
       "name": "Spyro™ Reignited Trilogy",
       "danbooru": "spyro_(series)",
       "rule34": "spyro_(series)",
       "e621": "spyro_(series)"
+    },
+    "1002300": {
+      "name": "Fear & Hunger",
+      "danbooru": "fear_and_hunger",
+      "rule34": "fear_and_hunger",
+      "e621": "fear_and_hunger"
     },
     "1004640": {
       "name": "FINAL FANTASY TACTICS - The Ivalice Chronicles",
@@ -1619,6 +1661,12 @@
       "rule34": "stranger_of_paradise:_final_fantasy_origin",
       "e621": "final_fantasy"
     },
+    "1372280": {
+      "name": "MELTY BLOOD: TYPE LUMINA",
+      "danbooru": "melty_blood",
+      "rule34": "melty_blood",
+      "e621": "melty_blood"
+    },
     "1382330": {
       "name": "Persona® 5 Strikers",
       "danbooru": "persona_5",
@@ -1724,6 +1772,12 @@
       "danbooru": "blaster_master_zero",
       "rule34": "blaster_master_zero",
       "e621": "blaster_master_zero"
+    },
+    "1590580": {
+      "name": "MELTY BLOOD ARCHIVES",
+      "danbooru": "melty_blood",
+      "rule34": "melty_blood",
+      "e621": "melty_blood"
     },
     "1602010": {
       "name": "Persona 4 Arena Ultimax",
@@ -1871,6 +1925,12 @@
       "danbooru": "ena:_dream_bbq",
       "rule34": "dream_bbq",
       "e621": "ena_dream_bbq"
+    },
+    "2171440": {
+      "name": "Fear & Hunger 2: Termina",
+      "danbooru": "fear_and_hunger:_termina",
+      "rule34": "fear_and_hunger:_termina",
+      "e621": "fear_and_hunger:_termina"
     },
     "2178330": {
       "name": "Glory & Miserable Survivors DX",
@@ -2165,6 +2225,12 @@
       "name": "Danganronpa 2x2",
       "danbooru": "danganronpa_(series)",
       "rule34": "danganronpa_(series)"
+    },
+    "4012810": {
+      "name": "STEINS;GATE RE:BOOT",
+      "danbooru": "steins;gate",
+      "rule34": "steins;gate",
+      "e621": "steins;gate"
     },
     "4223290": {
       "name": "Mega Man: Dual Override",
