@@ -16,12 +16,10 @@
 # along with Steamy.  If not, see <https://www.gnu.org/licenses/>.
 
 import logging
-import os
 import platform
 import shutil
 import subprocess
 import sys
-import json
 from dataclasses import dataclass
 from pathlib import Path
 from time import sleep
@@ -78,18 +76,18 @@ class Steam:
 
         if not self.path:
             if self.config.custom_steam_path:
-                    checkpath = Path(self.config.custom_steam_path)
-                    if (checkpath / "userdata").is_dir():
-                        self.path = checkpath
-                    else:
-                        info_message(
-                            QtW.QMessageBox.Icon.Critical,
-                            "Steam Not Found",
-                            "Steam not found in the saved custom path file. Try relaunching Steamy and select Steam's folder again.",
-                        )
-                        self.config.raw["custom_steam_path"] = None
-                        self.config.save()
-                        sys.exit()
+                checkpath = Path(self.config.custom_steam_path)
+                if (checkpath / "userdata").is_dir():
+                    self.path = checkpath
+                else:
+                    info_message(
+                        QtW.QMessageBox.Icon.Critical,
+                        "Steam Not Found",
+                        "Steam not found in the saved custom path file. Try relaunching Steamy and select Steam's folder again.",
+                    )
+                    self.config.raw["custom_steam_path"] = None
+                    self.config.save()
+                    sys.exit()
             else:
                 message = QtW.QMessageBox()
                 message.setIcon(QtW.QMessageBox.Icon.Critical)
