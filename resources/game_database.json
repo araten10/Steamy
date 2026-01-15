@@ -609,6 +609,12 @@
       "rule34": "metal_gear",
       "e621": "metal_gear"
     },
+    "236390": {
+      "name": "War Thunder",
+      "danbooru": "tank",
+      "rule34": "tank",
+      "e621": "tank_(vehicle)"
+    },
     "236430": {
       "name": "DARK SOULS™ II",
       "danbooru": "dark_souls_2",
@@ -970,6 +976,12 @@
       "rule34": "vrchat",
       "e621": "vrchat"
     },
+    "444200": {
+      "name": "World of Tanks Blitz",
+      "danbooru": "tank",
+      "rule34": "tank",
+      "e621": "tank_(vehicle)"
+    },
     "447530": {
       "name": "VA-11 Hall-A: Cyberpunk Bartender Action",
       "danbooru": "va-11_hall-a",
@@ -1047,6 +1059,12 @@
       "rule34": "pirate -one_piece",
       "e621": "pirate -one_piece"
     },
+    "552990": {
+      "name": "World of Warships",
+      "danbooru": "battleship",
+      "rule34": "battleship",
+      "e621": "battleship"
+    },
     "553850": {
       "name": "HELLDIVERS™ 2",
       "danbooru": "helldivers_(series)",
@@ -1098,6 +1116,12 @@
       "danbooru": "devil_may_cry_5",
       "rule34": "devil_may_cry_5",
       "e621": "devil_may_cry_5"
+    },
+    "601510": {
+      "name": "Yu-Gi-Oh! Duel Links",
+      "danbooru": "yu-gi-oh",
+      "rule34": "yu-gi-oh",
+      "e621": "yu-gi-oh"
     },
     "611670": {
       "name": "The Elder Scrolls V: Skyrim VR",
@@ -1690,6 +1714,12 @@
       "danbooru": "milk_inside_a_bag_of_milk_inside_a_bag_of_milk",
       "rule34": "milk-chan"
     },
+    "1407200": {
+      "name": "World of Tanks",
+      "danbooru": "tank",
+      "rule34": "tank",
+      "e621": "tank_(vehicle)"
+    },
     "1420650": {
       "name": "Touhou Bunkachou ～ Shoot the Bullet.",
       "danbooru": "shameimaru_aya",
@@ -1718,6 +1748,12 @@
       "danbooru": "monster_hunter_rise",
       "rule34": "monster_hunter_rise",
       "e621": "monster_hunter_rise"
+    },
+    "1449850": {
+      "name": "Yu-Gi-Oh! Master Duel",
+      "danbooru": "yu-gi-oh",
+      "rule34": "yu-gi-oh",
+      "e621": "yu-gi-oh"
     },
     "1462040": {
       "name": "FINAL FANTASY VII REMAKE INTERGRADE",
@@ -1897,6 +1933,12 @@
       "rule34": "kirisame_marisa",
       "e621": "kirisame_marisa"
     },
+    "2100280": {
+      "name": "World of Tanks: HEAT",
+      "danbooru": "tank",
+      "rule34": "tank",
+      "e621": "tank_(vehicle)"
+    },
     "2121980": {
       "name": "Void Stranger",
       "danbooru": "void_stranger",
@@ -1925,6 +1967,12 @@
       "danbooru": "ena:_dream_bbq",
       "rule34": "dream_bbq",
       "e621": "ena_dream_bbq"
+    },
+    "2141910": {
+      "name": "Magic: The Gathering Arena",
+      "danbooru": "magic:_the_gathering",
+      "rule34": "magic:_the_gathering",
+      "e621": "magic:_the_gathering"
     },
     "2171440": {
       "name": "Fear & Hunger 2: Termina",
@@ -2145,6 +2193,18 @@
       "danbooru": "persona_4",
       "rule34": "persona_4",
       "e621": "persona_4"
+    },
+    "2964090": {
+      "name": "World of Warships: Legends",
+      "danbooru": "battleship",
+      "rule34": "battleship",
+      "e621": "battleship"
+    },
+    "3013550": {
+      "name": "Yu-Gi-Oh! EARLY DAYS COLLECTION",
+      "danbooru": "yu-gi-oh",
+      "rule34": "yu-gi-oh",
+      "e621": "yu-gi-oh"
     },
     "3028330": {
       "name": "Battlefield™ REDSEC",
