@@ -21,6 +21,7 @@ import platform
 import shutil
 import subprocess
 import sys
+import json
 from dataclasses import dataclass
 from pathlib import Path
 from time import sleep
@@ -29,6 +30,7 @@ import PyQt6.QtWidgets as QtW
 import vdf
 
 import resources
+import config
 from utils import get_dir_names, info_message
 
 
@@ -67,26 +69,26 @@ class Steam:
                         break
             case "Windows":
                 for path in [
-                    Path("C:/Program Files (x86)/Steam"),
-                    Path("C:/Program Files/Steam"),
+                    Path("G:/Program Files (x86)/Steam"),
+                    Path("G:/Program Files/Steam"),
                 ]:
                     if path.is_dir():
                         self.path = path
                         break
 
         if not self.path:
-            if os.path.isfile(resources.STEAM_PATH):
-                with open(resources.STEAM_PATH, "r") as f:
-                    checkpath = Path(f.read())
+            if config.custom_steam_path:
+                    checkpath = Path(config.custom_steam_path)
                     if (checkpath / "userdata").is_dir():
-                        self.path = Path(checkpath)
+                        self.path = checkpath
                     else:
                         info_message(
                             QtW.QMessageBox.Icon.Critical,
                             "Steam Not Found",
                             "Steam not found in the saved custom path file. Try relaunching Steamy and select Steam's folder again.",
                         )
-                        os.remove(resources.STEAM_PATH)
+                        config.raw["custom_steam_path"] = None
+                        config.save()
                         sys.exit()
             else:
                 message = QtW.QMessageBox()
@@ -105,8 +107,7 @@ class Steam:
 
                     if (user_path / "userdata").is_dir():
                         self.path = user_path
-                        with open(resources.STEAM_PATH, "w") as f:
-                            f.write(str(user_path))
+                        config.raw["custom_steam_path"] = str(user_path)
                     else:
                         info_message(QtW.QMessageBox.Icon.Critical, "Steam Not Found", "Could not find Steam installation location, unable to run.")
                         sys.exit()

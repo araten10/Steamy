@@ -31,6 +31,7 @@ class Config:
             {
                 "default_booru": Any(*self.supported_boorus),
                 "concurrent_downloads": All(int, Range(min=1)),
+                "custom_steam_path": Any(str, None),
                 "danbooru": {
                     "base_query": str,
                     "fallback_query": str,
@@ -56,6 +57,7 @@ class Config:
         self.raw = {
             "default_booru": "danbooru",
             "concurrent_downloads": 10,
+            "custom_steam_path": None,
             "danbooru": {
                 "base_query": "order:random -rating:safe score:>100",
                 "fallback_query": "age:<1month",
@@ -79,6 +81,7 @@ class Config:
     def load(self) -> None:
         self.default_booru = self.raw["default_booru"]
         self.concurrent_downloads = self.raw["concurrent_downloads"]
+        self.custom_steam_path = self.raw["custom_steam_path"]
 
         self.dan_base_query = self.raw["danbooru"]["base_query"]
         self.dan_fallback_query = self.raw["danbooru"]["fallback_query"]
