@@ -46,7 +46,7 @@ class SteamyMainWindow(QtW.QMainWindow):
         super().__init__()
 
         self.config = Config()
-        self.steam = Steam()
+        self.steam = Steam(self.config)
         self.game_db = get_game_db()
 
         self.setWindowTitle("Steamy")

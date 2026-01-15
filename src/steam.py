@@ -28,7 +28,7 @@ import PyQt6.QtWidgets as QtW
 import vdf
 
 from config import Config
-from utils import get_dir_names, info_message
+from utils import get_dir_names
 
 
 @dataclass
@@ -49,8 +49,7 @@ class Art:
 
 
 class Steam:
-    def __init__(self) -> None:
-        self.config = Config()
+    def __init__(self, config: Config) -> None:
         self.path = None
         match platform.system():
             case "Linux":
@@ -75,44 +74,29 @@ class Steam:
                         break
 
         if not self.path:
-            if self.config.custom_steam_path:
-                checkpath = Path(self.config.custom_steam_path)
-                if (checkpath / "userdata").is_dir():
-                    self.path = checkpath
+            while not (Path(config.custom_steam_path) / "userdata").is_dir():
+                if config.custom_steam_path:
+                    informative_text = "The custom Steam path appears to be incorrect. Please select the installation location of Steam."
                 else:
-                    info_message(
-                        QtW.QMessageBox.Icon.Critical,
-                        "Steam Not Found",
-                        "Steam not found in the saved custom path file. Try relaunching Steamy and select Steam's folder again.",
-                    )
-                    self.config.raw["custom_steam_path"] = None
-                    self.config.save()
-                    sys.exit()
-            else:
+                    informative_text = "Steam could not be found in the default directories. Please select the installation location of Steam."
+
                 message = QtW.QMessageBox()
-                message.setIcon(QtW.QMessageBox.Icon.Critical)
+                message.setIcon(QtW.QMessageBox.Icon.Warning)
                 message.setText("Steam Not Found")
-                message.setInformativeText("We could not find Steam in the default directories. Would you like to select the folder containing Steam?")
-
-                message.setStandardButtons(QtW.QMessageBox.StandardButton.Yes | QtW.QMessageBox.StandardButton.No)
-                if message.exec() == QtW.QMessageBox.StandardButton.Yes:
-                    dialog = QtW.QFileDialog()
-                    dialog.setWindowTitle("Steam Directory")
-                    dialog.setFileMode(QtW.QFileDialog.FileMode.Directory)
-                    dialog.exec()
-
-                    user_path = Path(dialog.selectedFiles()[0])
-
-                    if (user_path / "userdata").is_dir():
-                        self.path = user_path
-                        self.config.raw["custom_steam_path"] = str(user_path)
-                        self.config.save()
-                    else:
-                        info_message(QtW.QMessageBox.Icon.Critical, "Steam Not Found", "Could not find Steam installation location, unable to run.")
-                        sys.exit()
-                else:
-                    info_message(QtW.QMessageBox.Icon.Critical, "Steam Not Found", "Could not find Steam installation location, unable to run.")
+                message.setInformativeText(informative_text)
+                message.setStandardButtons(QtW.QMessageBox.StandardButton.Ok | QtW.QMessageBox.StandardButton.Cancel)
+                if message.exec() != QtW.QMessageBox.StandardButton.Ok:
                     sys.exit()
+
+                dialog = QtW.QFileDialog()
+                dialog.setWindowTitle("Steam Directory")
+                dialog.setFileMode(QtW.QFileDialog.FileMode.Directory)
+                dialog.exec()
+
+                config.raw["custom_steam_path"] = dialog.selectedFiles()[0]
+                config.save()
+
+            self.path = Path(config.custom_steam_path)
 
         self.game_ids = get_dir_names(self.path / "appcache" / "librarycache")
         self.game_ids.sort(key=int)
