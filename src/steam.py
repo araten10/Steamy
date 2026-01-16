@@ -74,7 +74,7 @@ class Steam:
                         break
 
         if not self.path:
-            while not (Path(config.custom_steam_path) / "userdata").is_dir():
+            while not (config.custom_steam_path and (Path(config.custom_steam_path) / "userdata").is_dir()):
                 if config.custom_steam_path:
                     informative_text = "The custom Steam path appears to be incorrect. Please select the installation location of Steam."
                 else:
