@@ -21,7 +21,7 @@ There is no adult content included in the Steamy installation, but the implicati
 
 ## Installing Booru APIs
 
-By default, Steamy only supports Danbooru. Rule34 and E621 both require API keys to download images from their servers. We highly recommend providing an API key for at least one other booru as Danbooru only supports a maximum of two tags for search queries. If you want to use these boorus, you need to make an account on these sites and generate a key. Rule34 does not require an email to sign up, but E621 does. For those who prefer the imageset of Danbooru but want more tags, we may add Gelbooru support in the future!
+By default, Steamy only supports Danbooru. Rule34 and E621 both require API keys to download images from their servers. We highly recommend providing an API key for at least one other booru as Danbooru only supports a maximum of two tags for search queries. Danbooru also tends to have more safe for work images, but of course this has an element of randomness. If you want to use these boorus, you need to make an account on these sites and generate a key. Rule34 does not require an email to sign up, but E621 does. For those who prefer the imageset of Danbooru but want more tags, we may add Gelbooru support in the future!
 
 To get your Rule34 API Key, go to https://rule34.xxx/index.php?page=account&s=options. Under "API Access Credentials", click "Generate New Key". The key comes in the format `&api_key=<api_key>&user_id=<user_id>`, so you will have to take out the API key and user ID (*not* your username!) from this and put it into Steamy. Make sure you don't copy `&api_key=` and `&user_id=` while doing this.
 
