@@ -21,6 +21,7 @@ from json.decoder import JSONDecodeError
 from pathlib import Path
 
 import PyQt6.QtWidgets as QtW
+from PIL import Image
 from voluptuous import Schema
 from voluptuous.error import Invalid
 
@@ -60,3 +61,26 @@ def get_nested(d: dict, keys: list[str]) -> object:
     for key in keys:
         value = value[key]
     return value
+
+
+def paste_logo(background: str, logo: str) -> None:
+    im1 = Image.open(background)
+    im1x, im1y = im1.size
+    im2 = Image.open(logo)
+    im2x, im2y = im2.size
+
+    # Both images need to be the same size for alpha_composite to work, so we paste in both
+    background = Image.new("RGBA", im1.size, (0, 0, 0))
+    background.paste(im1)
+
+    overlay_image = Image.new("RGBA", im1.size, (0, 0, 0))
+    overlay_image.putalpha(0)
+    overlay_pos_x = int((im1x * 0.50) - (im2x * 0.50))
+    # TODO: add if toplogo im1y*0.01, if bottomlogo im1y*0.99-im2y, maybe random
+    overlay_pos_y = int((im1y * 0.99) - im2y)
+    overlay_image.paste(im2, (overlay_pos_x, overlay_pos_y))
+
+    image = Image.alpha_composite(background, overlay_image)
+
+    # Placeholder for time being, figure out what should be done with the output
+    image.save("newimg.png", format="PNG")
