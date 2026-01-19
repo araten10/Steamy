@@ -31,7 +31,8 @@ from boorus import get_booru
 from config import Config
 from games import Game
 from steam import Art, Grid, Steam
-from utils import get_nested
+from utils import get_nested, paste_logo
+from PIL import Image
 
 NO_RESULTS_ERROR = "no results, make sure you spelled everything right"
 
@@ -45,11 +46,12 @@ class PornifyThread(QThread):
 
         self.game_db = game_db
         self.grid = Grid(steam, username)
+        self.steam = steam
         self.booru = asyncio.run(get_booru(config))
         self.concurrent_downloads = config.concurrent_downloads
 
         # Queue of games to search in a booru
-        self.search_queue: list[Game] = [self.game_db.get(game_id, Game(game_id)) for game_id in steam.game_ids]
+        self.search_queue: list[Game] = [self.game_db.get(game_id, Game(game_id)) for game_id in self.steam.game_ids]
         self.search_lock = asyncio.Lock()
         self.search_done = False
 
@@ -230,8 +232,14 @@ class PornifyThread(QThread):
                 try:
                     async with aiohttp.ClientSession() as session:
                         async with session.get(url) as image_res:
-                            with open(self.grid.path / f"{game.id}{art.suffix}.png", "wb") as f:
+                            # This background_image path is also used to save the final image when logo is on
+                            background_image = self.grid.path / f"{game.id}{art.suffix}.png"
+                            with open(background_image, "wb") as f:
                                 f.write(await image_res.read())
+                            logo_image = self.steam.path / "appcache" / "librarycache" / game.id / "logo.png"
+                            logging.getLogger("PIL").setLevel(logging.CRITICAL)
+                            combined_image = paste_logo(background_image, logo_image)
+                            combined_image.save(str(background_image), format="PNG")
                             break
                 except ClientError as e:
                     logging.warning(f"Image download failed with {type(e).__name__}: {e}, retrying...")
