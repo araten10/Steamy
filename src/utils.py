@@ -67,6 +67,11 @@ def paste_logo(background: Path, logo: Path) -> Image:
     im1 = Image.open(background)
     im1x, im1y = im1.size
     im2 = Image.open(logo)
+
+    # Resize logo because some things like the TF2 logo are insanely huge
+    wpercent = (im1x * 0.90) / float(im2.size[0])
+    im2_max_size = int((float(im2.size[1]) * float(wpercent)))
+    im2 = im2.resize(((int(im1x * 0.90)), im2_max_size), Image.Resampling.LANCZOS)
     im2x, im2y = im2.size
 
     # Both images need to be the same size for alpha_composite to work, so we paste in both
@@ -82,6 +87,4 @@ def paste_logo(background: Path, logo: Path) -> Image:
 
     image = Image.alpha_composite(background, overlay_image)
 
-
     return image
-    #image.save("newimg.png", format="PNG")

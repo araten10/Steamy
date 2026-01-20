@@ -32,7 +32,6 @@ from config import Config
 from games import Game
 from steam import Art, Grid, Steam
 from utils import get_nested, paste_logo
-from PIL import Image
 
 NO_RESULTS_ERROR = "no results, make sure you spelled everything right"
 
@@ -232,14 +231,18 @@ class PornifyThread(QThread):
                 try:
                     async with aiohttp.ClientSession() as session:
                         async with session.get(url) as image_res:
-                            # This background_image path is also used to save the final image when logo is on
-                            background_image = self.grid.path / f"{game.id}{art.suffix}.png"
-                            with open(background_image, "wb") as f:
-                                f.write(await image_res.read())
                             logo_image = self.steam.path / "appcache" / "librarycache" / game.id / "logo.png"
-                            logging.getLogger("PIL").setLevel(logging.CRITICAL)
-                            combined_image = paste_logo(background_image, logo_image)
-                            combined_image.save(str(background_image), format="PNG")
+                            if art.name == "Cover" and logo_image.is_file():
+                                # This background_image path is also used to save the final image when logo is on
+                                background_image = self.grid.path / f"{game.id}{art.suffix}.png"
+                                with open(background_image, "wb") as f:
+                                    f.write(await image_res.read())
+                                logging.getLogger("PIL").setLevel(logging.CRITICAL)
+                                combined_image = paste_logo(background_image, logo_image)
+                                combined_image.save(str(background_image), format="PNG")
+                            else:
+                                with open(self.grid.path / f"{game.id}{art.suffix}.png", "wb") as f:
+                                    f.write(await image_res.read())
                             break
                 except ClientError as e:
                     logging.warning(f"Image download failed with {type(e).__name__}: {e}, retrying...")
