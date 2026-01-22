@@ -16,11 +16,6 @@ QLabel#Title {
   border-top-left-radius: 5px;
 }
 
-QLabel#VersionDisplay {
-  color: #5b636a;
-  font-size: 6pt;
-}
-
 QToolButton {
   border: 0;
 }

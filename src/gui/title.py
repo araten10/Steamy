@@ -28,20 +28,12 @@ class SteamyTitleBar(QtW.QWidget):
         title_bar_layout.setContentsMargins(0, 0, 0, 0)
         title_bar_layout.setSpacing(0)
 
-        # Title
         title = QtW.QLabel("Steamy", self)
         title.setObjectName("Title")
         title.setContentsMargins(5, 5, 0, 0)
 
         title.setAlignment(Qt.AlignmentFlag.AlignLeft)
         title_bar_layout.addWidget(title)
-
-        # Version
-        version = QtW.QLabel("v.Error", self)
-        version.setObjectName("VersionDisplay")
-        version.setContentsMargins(10, 5, 0, 0)
-
-        title_bar_layout.addWidget(version)
 
         # Min button
         min_button = QtW.QToolButton(self)
