@@ -16,6 +16,18 @@ QLabel#Title {
   border-top-left-radius: 5px;
 }
 
+QLabel#TitleMinorRel {
+  color: #8c7857;
+  font-size: 9pt;
+  border-top-left-radius: 5px;
+}
+
+QLabel#TitleMajorRel {
+  color: #c25a2c;
+  font-size: 9pt;
+  border-top-left-radius: 5px;
+}
+
 QToolButton {
   border: 0;
 }

@@ -28,8 +28,24 @@ class SteamyTitleBar(QtW.QWidget):
         title_bar_layout.setContentsMargins(0, 0, 0, 0)
         title_bar_layout.setSpacing(0)
 
+        version_number = 1.1
+        latest_release = 1.1
+
         title = QtW.QLabel("Steamy", self)
-        title.setObjectName("Title")
+        if latest_release == version_number:
+            title.setObjectName("Title")
+            title.setToolTip(f"v{version_number}\nSteamy is up to date.")
+        # int() truncates last digits so (should) always round down
+        elif latest_release > (int(version_number) + 0.99):
+            title.setObjectName("TitleMajorRel")
+            title.setToolTip(
+                f"v{version_number}\nSteamy has a new update! Click here to go to the download page.\nThis is a major release that most likely has brand new features or overhauls!"
+            )
+        elif latest_release > version_number:
+            title.setObjectName("TitleMinorRel")
+            title.setToolTip(
+                f"v{version_number}\nSteamy has a new update! Click here to go to the download page.\nThis is a minor release that usually fixes bugs or adds to the game database."
+            )
         title.setContentsMargins(5, 5, 0, 0)
 
         title.setAlignment(Qt.AlignmentFlag.AlignLeft)
