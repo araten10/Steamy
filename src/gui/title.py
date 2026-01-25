@@ -15,6 +15,8 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with Steamy.  If not, see <https://www.gnu.org/licenses/>.
 
+import webbrowser
+
 import PyQt6.QtWidgets as QtW
 from PyQt6.QtCore import QSize, Qt
 from PyQt6.QtGui import QMouseEvent
@@ -32,6 +34,7 @@ class SteamyTitleBar(QtW.QWidget):
         latest_release = 1.1
 
         title = QtW.QLabel("Steamy", self)
+        title.setFixedWidth(60)
         if latest_release == version_number:
             title.setObjectName("Title")
             title.setToolTip(f"v{version_number}\nSteamy is up to date.")
@@ -41,15 +44,20 @@ class SteamyTitleBar(QtW.QWidget):
             title.setToolTip(
                 f"v{version_number}\nSteamy has a new update! Click here to go to the download page.\nThis is a major release that most likely has brand new features or overhauls!"
             )
+            title.mousePressEvent = lambda click: webbrowser.open("https://github.com/araten10/Steamy/releases")
         elif latest_release > version_number:
             title.setObjectName("TitleMinorRel")
             title.setToolTip(
                 f"v{version_number}\nSteamy has a new update! Click here to go to the download page.\nThis is a minor release that usually fixes bugs or adds to the game database."
             )
+            title.mousePressEvent = lambda click: webbrowser.open("https://github.com/araten10/Steamy/releases")
         title.setContentsMargins(5, 5, 0, 0)
 
         title.setAlignment(Qt.AlignmentFlag.AlignLeft)
         title_bar_layout.addWidget(title)
+
+        title_padding = QtW.QLabel()
+        title_bar_layout.addWidget(title_padding)
 
         # Min button
         min_button = QtW.QToolButton(self)

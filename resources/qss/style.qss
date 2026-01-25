@@ -14,6 +14,7 @@ QLabel#Title {
   color: #5b636a;
   font-size: 9pt;
   border-top-left-radius: 5px;
+  border: 0px;
 }
 
 QLabel#TitleMinorRel {
