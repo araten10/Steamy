@@ -15,11 +15,11 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with Steamy.  If not, see <https://www.gnu.org/licenses/>.
 
-import webbrowser
 import logging
-import requests
+import webbrowser
 
 import PyQt6.QtWidgets as QtW
+import requests
 from PyQt6.QtCore import QSize, Qt
 from PyQt6.QtGui import QMouseEvent
 
@@ -36,7 +36,6 @@ class SteamyTitleBar(QtW.QWidget):
         result = requests.get(version_url).json()
         version_number = "1.1"
         release_number = result["tag_name"].replace("v", "")
-        print(release_number)
         merged_number = self.numberMerge(version_number)
         latest_release = self.numberMerge(release_number)
 
