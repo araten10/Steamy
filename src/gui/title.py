@@ -16,6 +16,8 @@
 # along with Steamy.  If not, see <https://www.gnu.org/licenses/>.
 
 import webbrowser
+import logging
+import requests
 
 import PyQt6.QtWidgets as QtW
 from PyQt6.QtCore import QSize, Qt
@@ -30,27 +32,34 @@ class SteamyTitleBar(QtW.QWidget):
         title_bar_layout.setContentsMargins(0, 0, 0, 0)
         title_bar_layout.setSpacing(0)
 
-        version_number = 1.1
-        latest_release = 1.1
+        version_url = "https://api.github.com/repos/araten10/Steamy/releases/latest"
+        result = requests.get(version_url).json()
+        version_number = "1.1"
+        release_number = result["tag_name"].replace("v", "")
+        print(release_number)
+        merged_number = self.numberMerge(version_number)
+        latest_release = self.numberMerge(release_number)
 
         title = QtW.QLabel("Steamy", self)
         title.setFixedWidth(60)
-        if latest_release == version_number:
+        if latest_release == merged_number:
             title.setObjectName("Title")
             title.setToolTip(f"v{version_number}\nSteamy is up to date.")
-        # int() truncates last digits so (should) always round down
-        elif latest_release > (int(version_number) + 0.99):
+        elif latest_release > (int(merged_number) + 9):
             title.setObjectName("TitleMajorRel")
             title.setToolTip(
                 f"v{version_number}\nSteamy has a new update! Click here to go to the download page.\nThis is a major release that most likely has brand new features or overhauls!"
             )
             title.mousePressEvent = lambda _: webbrowser.open("https://github.com/araten10/Steamy/releases")
-        elif latest_release > version_number:
+        elif latest_release > merged_number:
             title.setObjectName("TitleMinorRel")
             title.setToolTip(
                 f"v{version_number}\nSteamy has a new update! Click here to go to the download page.\nThis is a minor release that usually fixes bugs or adds to the game database."
             )
             title.mousePressEvent = lambda _: webbrowser.open("https://github.com/araten10/Steamy/releases")
+        else:
+            title.setObjectName("Title")
+            logging.warning("Steamy version mismatch. Version number might somehow be more recent than the latest release.")
         title.setContentsMargins(5, 5, 0, 0)
 
         title.setAlignment(Qt.AlignmentFlag.AlignLeft)
@@ -82,3 +91,9 @@ class SteamyTitleBar(QtW.QWidget):
             self.window().windowHandle().startSystemMove()
         super().mousePressEvent(event)
         event.accept()
+
+    def numberMerge(self, str_number: str) -> int:
+        version_number = str_number
+        version_number = version_number.split(".")
+        version_number = int("".join(version_number))
+        return version_number
