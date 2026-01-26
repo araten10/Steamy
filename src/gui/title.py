@@ -44,13 +44,13 @@ class SteamyTitleBar(QtW.QWidget):
             title.setToolTip(
                 f"v{version_number}\nSteamy has a new update! Click here to go to the download page.\nThis is a major release that most likely has brand new features or overhauls!"
             )
-            title.mousePressEvent = lambda click: webbrowser.open("https://github.com/araten10/Steamy/releases")
+            title.mousePressEvent = lambda _: webbrowser.open("https://github.com/araten10/Steamy/releases")
         elif latest_release > version_number:
             title.setObjectName("TitleMinorRel")
             title.setToolTip(
                 f"v{version_number}\nSteamy has a new update! Click here to go to the download page.\nThis is a minor release that usually fixes bugs or adds to the game database."
             )
-            title.mousePressEvent = lambda click: webbrowser.open("https://github.com/araten10/Steamy/releases")
+            title.mousePressEvent = lambda _: webbrowser.open("https://github.com/araten10/Steamy/releases")
         title.setContentsMargins(5, 5, 0, 0)
 
         title.setAlignment(Qt.AlignmentFlag.AlignLeft)
