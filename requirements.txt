@@ -1,6 +1,7 @@
 aiohttp
 booru
 certifi
+pillow
 pyinstaller
 PyQt6
 requests
