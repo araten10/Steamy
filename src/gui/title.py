@@ -36,21 +36,21 @@ class SteamyTitleBar(QtW.QWidget):
         result = requests.get(version_url).json()
         version_number = "1.1"
         release_number = result["tag_name"].replace("v", "")
-        merged_number = self.numberMerge(version_number)
-        latest_release = self.numberMerge(release_number)
+        local_version = self.numberSplit(version_number)
+        latest_release = self.numberSplit(release_number)
 
         title = QtW.QLabel("Steamy", self)
         title.setFixedWidth(60)
-        if latest_release == merged_number:
+        if latest_release == local_version:
             title.setObjectName("Title")
             title.setToolTip(f"v{version_number}\nSteamy is up to date.")
-        elif latest_release > (int(merged_number) + 9):
+        elif (int(latest_release[0]) > int(local_version[0])) or (int(latest_release[1]) > int(local_version[1])):
             title.setObjectName("TitleMajorRel")
             title.setToolTip(
                 f"v{version_number}\nSteamy has a new update! Click here to go to the download page.\nThis is a major release that most likely has brand new features or overhauls!"
             )
             title.mousePressEvent = lambda _: webbrowser.open("https://github.com/araten10/Steamy/releases")
-        elif latest_release > merged_number:
+        elif int(latest_release[2]) > int(local_version[2]):
             title.setObjectName("TitleMinorRel")
             title.setToolTip(
                 f"v{version_number}\nSteamy has a new update! Click here to go to the download page.\nThis is a minor release that usually fixes bugs or adds to the game database."
@@ -91,8 +91,10 @@ class SteamyTitleBar(QtW.QWidget):
         super().mousePressEvent(event)
         event.accept()
 
-    def numberMerge(self, str_number: str) -> int:
+    def numberSplit(self, str_number: str) -> int:
         version_number = str_number
         version_number = version_number.split(".")
-        version_number = int("".join(version_number))
+        while len(version_number) < 3:
+            version_number.append("0")
+
         return version_number
