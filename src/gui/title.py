@@ -36,8 +36,8 @@ class SteamyTitleBar(QtW.QWidget):
         result = requests.get(version_url).json()
         version_number = "1.1"
         release_number = result["tag_name"].replace("v", "")
-        local_version = self.numberSplit(version_number)
-        latest_release = self.numberSplit(release_number)
+        local_version = self.number_split(version_number)
+        latest_release = self.number_split(release_number)
 
         title = QtW.QLabel("Steamy", self)
         title.setFixedWidth(60)
@@ -91,7 +91,7 @@ class SteamyTitleBar(QtW.QWidget):
         super().mousePressEvent(event)
         event.accept()
 
-    def numberSplit(self, str_number: str) -> int:
+    def number_split(self, str_number: str) -> int:
         version_number = str_number
         version_number = version_number.split(".")
         while len(version_number) < 3:

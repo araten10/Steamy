@@ -354,6 +354,7 @@ class SteamyMainWindow(QtW.QMainWindow):
         self.config.raw = {
             "default_booru": self.booru_dropdown.currentText(),
             "concurrent_downloads": self.config.concurrent_downloads,
+            "custom_steam_path": self.config.custom_steam_path,
             "danbooru": {
                 "base_query": self.config.dan_base_query,
                 "fallback_query": self.config.dan_fallback_query,
