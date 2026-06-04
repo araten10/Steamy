@@ -326,11 +326,11 @@ class SteamyMainWindow(QtW.QMainWindow):
         self.dump_thread.start()
 
     def on_sort_click(self) -> None:
-        with open(resources.GAME_DATABASE, "r+") as f:
+        with open(resources.GAME_DATABASE, "r+", encoding="utf-8") as f:
             data = json.load(f)
         sorted_data = dict(sorted(data["games"].items(), key=lambda item: int(item[0])))
         data["games"] = sorted_data
-        with open(resources.GAME_DATABASE, "w") as f:
+        with open(resources.GAME_DATABASE, "w", encoding="utf-8") as f:
             json.dump(data, f, indent=2, ensure_ascii=False)
         logging.info("Sort finished.")
 

@@ -111,7 +111,7 @@ class Steam:
                 logging.warning(f"User ID {user_id} has no localconfig.vdf file. Skipping...")
                 continue
 
-            vdf_str = vdf.dumps(vdf.load(open(localconfig, encoding="utf8")))
+            vdf_str = vdf.dumps(vdf.load(open(localconfig, encoding="utf-8")))
             vdf_dict = vdf.loads(vdf_str)
 
             username = vdf_dict["UserLocalConfigStore"]["friends"]["PersonaName"]

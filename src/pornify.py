@@ -235,13 +235,13 @@ class PornifyThread(QThread):
                             if art.name == "Cover" and logo_image.is_file():
                                 # This background_image path is also used to save the final image when logo is on
                                 background_image = self.grid.path / f"{game.id}{art.suffix}.png"
-                                with open(background_image, "wb") as f:
+                                with open(background_image, "wb", encoding="utf-8") as f:
                                     f.write(await image_res.read())
                                 logging.getLogger("PIL").setLevel(logging.CRITICAL)
                                 combined_image = paste_logo(background_image, logo_image)
                                 combined_image.save(str(background_image), format="PNG")
                             else:
-                                with open(self.grid.path / f"{game.id}{art.suffix}.png", "wb") as f:
+                                with open(self.grid.path / f"{game.id}{art.suffix}.png", "wb", encoding="utf-8") as f:
                                     f.write(await image_res.read())
                             break
                 except ClientError as e:

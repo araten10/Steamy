@@ -102,14 +102,14 @@ class Config:
             self.raw = raw
         else:
             logging.info(f"Writing {resources.CONFIG} with default values.")
-            with open(resources.CONFIG, "w") as f:
+            with open(resources.CONFIG, "w", encoding="utf-8") as f:
                 json.dump(self.raw, f, indent=2)
 
         self.load()
         logging.info(f"Config loaded {self.censor()}")
 
     def save(self) -> None:
-        with open(resources.CONFIG, "w") as f:
+        with open(resources.CONFIG, "w", encoding="utf-8") as f:
             json.dump(self.raw, f, indent=2)
 
         self.load()

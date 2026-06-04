@@ -45,7 +45,7 @@ if __name__ == "__main__":
 
     full_style = ""
     for style in resources.STYLES:
-        with open(style, "r") as f:
+        with open(style, "r", encoding="utf-8") as f:
             full_style += f.read()
     app.setStyleSheet(full_style)
 

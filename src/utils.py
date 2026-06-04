@@ -28,7 +28,7 @@ from voluptuous.error import Invalid
 
 def load_json(path: Path, schema: Schema) -> dict | None:
     try:
-        with open(path) as f:
+        with open(path, encoding="utf-8") as f:
             data = json.load(f)
             schema(data)
             logging.info(f"{path} loaded successfully.")

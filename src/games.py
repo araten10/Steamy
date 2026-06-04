@@ -133,5 +133,5 @@ class LibraryDumperThread(QThread):
         logging.info(f"{name} added to dump. Total games: {len(self.dump)}")
 
     def write_dump(self) -> None:
-        with open(self.output_dir, "w", encoding="utf8") as f:
+        with open(self.output_dir, "w", encoding="utf-8") as f:
             json.dump(self.dump, f, indent=2, ensure_ascii=False)
