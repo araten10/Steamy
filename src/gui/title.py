@@ -24,6 +24,10 @@ from PyQt6.QtCore import QSize, Qt
 from PyQt6.QtGui import QMouseEvent
 
 
+def open_releases(_: QMouseEvent) -> None:
+    webbrowser.open("https://github.com/araten10/Steamy/releases")
+
+
 class SteamyTitleBar(QtW.QWidget):
     def __init__(self, parent: QtW.QWidget) -> None:
         super().__init__(parent)
@@ -49,13 +53,13 @@ class SteamyTitleBar(QtW.QWidget):
             title.setToolTip(
                 f"v{version_number}\nSteamy has a new update! Click here to go to the download page.\nThis is a major release that most likely has brand new features or overhauls!"
             )
-            title.mousePressEvent = lambda _: webbrowser.open("https://github.com/araten10/Steamy/releases")
+            title.mousePressEvent = open_releases  # Using a lambda causes a crash
         elif int(latest_release[2]) > int(local_version[2]):
             title.setObjectName("TitleMinorRel")
             title.setToolTip(
                 f"v{version_number}\nSteamy has a new update! Click here to go to the download page.\nThis is a minor release that usually fixes bugs or adds to the game database."
             )
-            title.mousePressEvent = lambda _: webbrowser.open("https://github.com/araten10/Steamy/releases")
+            title.mousePressEvent = open_releases  # Using a lambda causes a crash
         else:
             title.setObjectName("Title")
             logging.warning("Steamy version mismatch. Version number might somehow be more recent than the latest release.")
